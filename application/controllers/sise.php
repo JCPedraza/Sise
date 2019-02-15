@@ -108,8 +108,8 @@ class sise extends CI_Controller {
 
 						$data['clave_aspirante'] = $this->uri->segment(3);
 						$data['aspirante'] = $this->sise_model->datos_aspirante($data['clave_aspirante']);
-						var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
-						die();
+						#var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
+						#die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/formulario_editar_aspirante',$data);
@@ -752,10 +752,5 @@ class sise extends CI_Controller {
 						$normales=array("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E","N","","","_","");
 						return str_replace($especiales, $normales, $nombre);
 					}
-
-					public function hola(){
-						echo "hola papi, como estas nene";
-					}
-
 		        #fin eliminar caracteres especiales
 }
