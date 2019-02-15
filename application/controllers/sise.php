@@ -108,8 +108,8 @@ class sise extends CI_Controller {
 
 						$data['clave_aspirante'] = $this->uri->segment(3);
 						$data['aspirante'] = $this->sise_model->datos_aspirante($data['clave_aspirante']);
-						//var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
-						//die();
+						var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
+						die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/formulario_editar_aspirante',$data);
