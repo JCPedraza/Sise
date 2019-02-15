@@ -234,6 +234,7 @@ class sise extends CI_Controller {
 					}
 				#fin de privilegios con las secciones
 				#muetra 
+					
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -292,279 +293,284 @@ class sise extends CI_Controller {
 					#el que sube los archivos
 
 		//-----Formularios------------
-			#Formulario de Registro de un aspirante
-				public function formulario_registro()
-				{
-					$this->load->library('form_validation');
-					$this->load->helper('form','url');
+			//juan carlos
 
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					  <strong>Alerta </strong>','</div>');
+					#Formulario de Registro de un aspirante
+						public function formulario_registro()
+						{
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
 
-					$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
-					$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('Email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
-					$this->form_validation->set_rules('ciudad','Ciudad', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
-					//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
-					//$this->form_validation->set_rules('g', 'Género', 'required');
-					$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
-					//$this->form_validation->set_rules('e','Estado Civil', 'required');
-					$this->form_validation->set_rules('direc','Dirección', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
-					$this->form_validation->set_rules('ins','Institución', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('car','Cargo', 'required|min_length[2]|max_length[25]');
-					$this->form_validation->set_rules('contra','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
-					$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
-					
-					$data_registro= array(
-						'nombre_aspirante'=> $this->input->post('nombre'),
-						'ap_pa_aspirante'=> $this->input->post('a_p'),
-						'ap_ma_aspirante'=> $this->input->post('a_m'),
-						'email_aspirante'=> $this->input->post('email'),
-						'ciudad_aspirante'=> $this->input->post('ciudad'),
-						'estado_aspirante'=>$this->input->post('estado'),
-						'pais_aspirante'=> $this->input->post('pais'),
-						'fec_nac_aspirante'=>$this->input->post('fecha'),
-						'genero_aspirante'=> $this->input->post('g'),
-						'RFC_aspirante'=> $this->input->post('rfc'),
-						'CURP_aspirante'=> $this->input->post('curp'),
-						'estado_civil_aspirante'=> $this->input->post('e'),
-						'residencia_aspirante'=> $this->input->post('direc'),
-						'telefono_aspirante' => $this->input->post('tel'),
-						'institucion_aspirante'=>$this->input->post('ins'),
-						'cargo_aspirante'=>$this->input->post('car')
-					);
-					$clave_aspirante=$this->sise_model->insertar_aspirante($data_registro);
-					$data_usuario= array(
-						'usuario'=>$this->input->post('email'),
-						'contrasena'=>md5($this->input->post('contra')),
-						'id_persona'=>$clave_aspirante,
-						'id_privilegio'=>1,
-						'activo'=>1
-					);
-					$usuario=$this->sise_model->inserta_usuario($data_usuario);
-					$this->load->view('templates/registro/header');
-					$this->load->view('templates/registro/login');
-					$this->load->view('templates/registro/footer');
-				  }
-		    #fin formulario de registro
-			#Formulario editar el privilegio
-				public function edita_privilegio(){
-					$this->sise_model->valida_sesion();
-					$this->load->library('form_validation');
-					$this->load->helper(array('form', 'url'));
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
 
-					
-
-					if(!empty($this->uri->segment(3))){
-
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-
-					$data['clave_privilegio'] = $this->uri->segment(3);
-					$data['privilegio'] = $this->sise_model->datos_privilegio($data['clave_privilegio']);
-
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>Alerta </strong>','</div>');
-
-					$this->form_validation->set_rules('nom_pri','Nombre Privilegio','required');
-					$this->form_validation->set_rules('des_pri','Descripcion del Privilegio', 'required');
-
-
-					if ($this->form_validation->run() == FALSE){
-
-					$data['id_privilegio'] = $this->uri->segment(3);
-					$data['privilegio'] = $this->sise_model->datos_privilegio($data['id_privilegio']);
-
-					$this->load->view('templates/panel/header',$data);
-					$this->load->view('templates/panel/menu',$data);
-					$this->load->view('templates/panel/formulario_editar_privilegio',$data);
-					$this->load->view('templates/panel/footer');
-					
-					}else{
-						$data_edita_pri=array(
-							'nombre_privilegio'=>$this->input->post('nom_pri'),
-							'descripcion'=>$this->input->post('des_pri'),
-							'publico'=>0
-						);
-							$this->sise_model->actualiza_datos_privilegio($this->input->post('id_privilegio'),$data_edita_pri);
-							header('Location:'.base_url('index.php/sise/privilegios').'');
-						}
-					}else{
-						header('Location:'.base_url('index.php/sise/privilegios').'');}
-				}
-			#fin del formulario de registro
-			#Formulario de regitro nuevo
-				public function registro_nuevo_privilegio(){
-					$this->load->library('form_validation');
-					$this->load->helper('form','url');
-					$this->sise_model->valida_sesion();
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-					$data['privilegio']=$this->sise_model->devuelve_privilegio();
-
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					  <strong>Alerta </strong>','</div>');
-					$this->form_validation->set_rules('nom_pri','Nombre Privilegio','required');
-					$this->form_validation->set_rules('des_pri','Descripcion del privilegio', 'required');
-
-					if ($this->form_validation->run() == FALSE){
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/nuevo_privilegio');
-						$this->load->view('templates/panel/footer');
-					}else{
-						$data_nuevo_pri=array(
-							'nombre_privilegio'=>$this->input->post('nom_pri'),
-							'descripcion'=>$this->input->post('des_pri'),
-							'publico'=>0
-						);
-						//var_dump($data_nuevo_pri);
-						//die();
-						$u=$this->sise_model->registro_nuevo_privilegio($data_nuevo_pri);
-						header('Location:'.base_url('index.php/sise/privilegios').'');
-					}	
-				}
-			#fin formulario de uevo privilegio
-			#formulario registro nueva seccion
-				public function registra_nueva_seccion(){
-					$this->load->library('form_validation');
-					$this->load->helper('form','url');
-					$this->sise_model->valida_sesion();
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					  <strong>Alerta </strong>','</div>');
-					$this->form_validation->set_rules('nom_sec','Nombre de la Sección','required');
-					$this->form_validation->set_rules('des_sec','Descripcion de la Sección', 'required');
-					$this->form_validation->set_rules('url','url', 'required');
-
-					if ($this->form_validation->run() == FALSE){
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/nueva_seccion');
-						$this->load->view('templates/panel/footer');
-					}else{
-						$a="";
-						$data_nueva_sec=array(
-							'nombre_seccion'=>$this->input->post('nom_sec'),
-							'icono'=>$a,
-							'descripcion'=>$this->input->post('des_sec'),
-							'url'=>$this->input->post('url'),
-							'activo'=>0
-						);
-						//var_dump($data_nueva_sec);
-						//die();
-						$seccion=$this->sise_model->registra_nueva_seccion($data_nueva_sec);
-						header('Location:'.base_url('index.php/sise/secciones').'');
-					}	
-				}
-			#fin de registro nueva seccion
-			#formulario edita seccion
-				public function edita_seccion(){
-					$this->sise_model->valida_sesion();
-					$this->load->library('form_validation');
-					$this->load->helper(array('form', 'url'));
-
-					
-
-					if(!empty($this->uri->segment(3))){
-
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-
-					$data['id_seccion'] = $this->uri->segment(3);
-					$data['seccion'] = $this->sise_model->datos_privilegio($data['id_seccion']);
-
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>Alerta </strong>','</div>');
-
-					$this->form_validation->set_rules('nom_sec','Nombre Privilegio','required');
-					$this->form_validation->set_rules('des_sec','Descripcion de la sección', 'required');
-					$this->form_validation->set_rules('url','URL', 'required');
-
-
-					if ($this->form_validation->run() == FALSE){
-
-					$data['id_seccion'] = $this->uri->segment(3);
-					$data['seccion'] = $this->sise_model->datos_seccion($data['id_seccion']);
-
-					$this->load->view('templates/panel/header',$data);
-					$this->load->view('templates/panel/menu',$data);
-					$this->load->view('templates/panel/formulario_editar_seccion',$data);
-					$this->load->view('templates/panel/footer');
-					
-					}else{
-						$data_edita_sec=array(
-							'nombre_seccion'=>$this->input->post('nom_sec'),
-							'icono'=>$this->input->post('icono'),
-							'descripcion'=>$this->input->post('des_sec'),
-							'url'=>$this->input->post('url'),
-							'activo'=>$this->input->post('activo')
-						);
-							$this->sise_model->actualiza_datos_seccion($this->input->post('id_seccion'),$data_edita_sec);
-							header('Location:'.base_url('index.php/sise/secciones').'');
-						}
-					}else{
-						header('Location:'.base_url('index.php/sise/secciones').'');}
-				}
-			#fin editar seccion
-			#formulario agregar seccion al privilegio
-				public function agrega_seccion(){
-				$this->load->library('form_validation');
-					$this->load->helper('form','url');
-					$this->sise_model->valida_sesion();
-
-				if(!empty($this->uri->segment(3))){
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-
-					//$data['secciones']'' = $this->Modelo_proyecto->secciones_privilegio($this->uri->segment(3));
-					$data['secciones_faltan'] = $this->sise_model->drop_secciones_faltantes($this->uri->segment(3));
-					$data['id_privilegio'] = $this->uri->segment(3);
-					$data['secciones'] = $this->sise_model->secciones_privilegio($this->uri->segment(3));
-					$data['datos_privilegio'] = $this->sise_model->datos_privilegio($this->uri->segment(3));
-					//die(var_dump($data['datos_privilegio']));
-
-					$this->load->library('form_validation');
-					$this->load->helper(array('form', 'url'));
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>Alerta </strong>','</div>');
-					$this->form_validation->set_rules('campo_seccion','Sección', 'required');
-
-					if($this->form_validation->run()==FALSE){
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/agrega_seccion_privilegio',$data);
-						$this->load->view('templates/panel/footer');
-					}else{
-						$data = array(
-							'id_seccion' => $this->input->post('campo_seccion'),
-							'id_privilegio' => $this->input->post('id_privilegio'),
-							'menu' => '1'
+							$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
+							$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('Email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
+							$this->form_validation->set_rules('ciudad','Ciudad', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
+							//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
+							//$this->form_validation->set_rules('g', 'Género', 'required');
+							$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
+							//$this->form_validation->set_rules('e','Estado Civil', 'required');
+							$this->form_validation->set_rules('direc','Dirección', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
+							$this->form_validation->set_rules('ins','Institución', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('car','Cargo', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('contra','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
+							$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
+							
+							$data_registro= array(
+								'nombre_aspirante'=> $this->input->post('nombre'),
+								'ap_pa_aspirante'=> $this->input->post('a_p'),
+								'ap_ma_aspirante'=> $this->input->post('a_m'),
+								'email_aspirante'=> $this->input->post('email'),
+								'ciudad_aspirante'=> $this->input->post('ciudad'),
+								'estado_aspirante'=>$this->input->post('estado'),
+								'pais_aspirante'=> $this->input->post('pais'),
+								'fec_nac_aspirante'=>$this->input->post('fecha'),
+								'genero_aspirante'=> $this->input->post('g'),
+								'RFC_aspirante'=> $this->input->post('rfc'),
+								'CURP_aspirante'=> $this->input->post('curp'),
+								'estado_civil_aspirante'=> $this->input->post('e'),
+								'residencia_aspirante'=> $this->input->post('direc'),
+								'telefono_aspirante' => $this->input->post('tel'),
+								'institucion_aspirante'=>$this->input->post('ins'),
+								'cargo_aspirante'=>$this->input->post('car')
 							);
-						//var_dump($data);
-						//die();
-						$this->sise_model->inserta_privilegio_seccion($data);
-						header('Location:'.base_url('index.php/sise/agrega_seccion/'.$this->input->post('id_privilegio').'').'');
-					}
-				}else{
-					header('Location:'.base_url('index.php/sise/privilegios_secciones').'');
-				}
-			 }
-			#fin formulario agregar seccion al privilegio
-			 
+							$clave_aspirante=$this->sise_model->insertar_aspirante($data_registro);
+							$data_usuario= array(
+								'usuario'=>$this->input->post('email'),
+								'contrasena'=>md5($this->input->post('contra')),
+								'id_persona'=>$clave_aspirante,
+								'id_privilegio'=>1,
+								'activo'=>1
+							);
+							$usuario=$this->sise_model->inserta_usuario($data_usuario);
+							$this->load->view('templates/registro/header');
+							$this->load->view('templates/registro/login');
+							$this->load->view('templates/registro/footer');
+						  }
+				    #fin formulario de registro
+					#Formulario editar el privilegio
+						public function edita_privilegio(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['clave_privilegio'] = $this->uri->segment(3);
+							$data['privilegio'] = $this->sise_model->datos_privilegio($data['clave_privilegio']);
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_pri','Nombre Privilegio','required');
+							$this->form_validation->set_rules('des_pri','Descripcion del Privilegio', 'required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['id_privilegio'] = $this->uri->segment(3);
+							$data['privilegio'] = $this->sise_model->datos_privilegio($data['id_privilegio']);
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_privilegio',$data);
+							$this->load->view('templates/panel/footer');
+							
+							}else{
+								$data_edita_pri=array(
+									'nombre_privilegio'=>$this->input->post('nom_pri'),
+									'descripcion'=>$this->input->post('des_pri'),
+									'publico'=>0
+								);
+									$this->sise_model->actualiza_datos_privilegio($this->input->post('id_privilegio'),$data_edita_pri);
+									header('Location:'.base_url('index.php/sise/privilegios').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/privilegios').'');}
+						}
+					#fin del formulario de registro
+					#Formulario de regitro nuevo
+						public function registro_nuevo_privilegio(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['privilegio']=$this->sise_model->devuelve_privilegio();
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_pri','Nombre Privilegio','required');
+							$this->form_validation->set_rules('des_pri','Descripcion del privilegio', 'required');
+
+							if ($this->form_validation->run() == FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nuevo_privilegio');
+								$this->load->view('templates/panel/footer');
+							}else{
+								$data_nuevo_pri=array(
+									'nombre_privilegio'=>$this->input->post('nom_pri'),
+									'descripcion'=>$this->input->post('des_pri'),
+									'publico'=>0
+								);
+								//var_dump($data_nuevo_pri);
+								//die();
+								$u=$this->sise_model->registro_nuevo_privilegio($data_nuevo_pri);
+								header('Location:'.base_url('index.php/sise/privilegios').'');
+							}	
+						}
+					#fin formulario de uevo privilegio
+					#formulario registro nueva seccion
+						public function registra_nueva_seccion(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_sec','Nombre de la Sección','required');
+							$this->form_validation->set_rules('des_sec','Descripcion de la Sección', 'required');
+							$this->form_validation->set_rules('url','url', 'required');
+
+							if ($this->form_validation->run() == FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nueva_seccion');
+								$this->load->view('templates/panel/footer');
+							}else{
+								$a="";
+								$data_nueva_sec=array(
+									'nombre_seccion'=>$this->input->post('nom_sec'),
+									'icono'=>$a,
+									'descripcion'=>$this->input->post('des_sec'),
+									'url'=>$this->input->post('url'),
+									'activo'=>0
+								);
+								//var_dump($data_nueva_sec);
+								//die();
+								$seccion=$this->sise_model->registra_nueva_seccion($data_nueva_sec);
+								header('Location:'.base_url('index.php/sise/secciones').'');
+							}	
+						}
+					#fin de registro nueva seccion
+					#formulario edita seccion
+						public function edita_seccion(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['id_seccion'] = $this->uri->segment(3);
+							$data['seccion'] = $this->sise_model->datos_privilegio($data['id_seccion']);
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_sec','Nombre Privilegio','required');
+							$this->form_validation->set_rules('des_sec','Descripcion de la sección', 'required');
+							$this->form_validation->set_rules('url','URL', 'required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['id_seccion'] = $this->uri->segment(3);
+							$data['seccion'] = $this->sise_model->datos_seccion($data['id_seccion']);
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_seccion',$data);
+							$this->load->view('templates/panel/footer');
+							
+							}else{
+								$data_edita_sec=array(
+									'nombre_seccion'=>$this->input->post('nom_sec'),
+									'icono'=>$this->input->post('icono'),
+									'descripcion'=>$this->input->post('des_sec'),
+									'url'=>$this->input->post('url'),
+									'activo'=>$this->input->post('activo')
+								);
+									$this->sise_model->actualiza_datos_seccion($this->input->post('id_seccion'),$data_edita_sec);
+									header('Location:'.base_url('index.php/sise/secciones').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/secciones').'');}
+						}
+					#fin editar seccion
+					#formulario agregar seccion al privilegio
+						public function agrega_seccion(){
+						$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+
+						if(!empty($this->uri->segment(3))){
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							//$data['secciones']'' = $this->Modelo_proyecto->secciones_privilegio($this->uri->segment(3));
+							$data['secciones_faltan'] = $this->sise_model->drop_secciones_faltantes($this->uri->segment(3));
+							$data['id_privilegio'] = $this->uri->segment(3);
+							$data['secciones'] = $this->sise_model->secciones_privilegio($this->uri->segment(3));
+							$data['datos_privilegio'] = $this->sise_model->datos_privilegio($this->uri->segment(3));
+							//die(var_dump($data['datos_privilegio']));
+
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('campo_seccion','Sección', 'required');
+
+							if($this->form_validation->run()==FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/agrega_seccion_privilegio',$data);
+								$this->load->view('templates/panel/footer');
+							}else{
+								$data = array(
+									'id_seccion' => $this->input->post('campo_seccion'),
+									'id_privilegio' => $this->input->post('id_privilegio'),
+									'menu' => '1'
+									);
+								//var_dump($data);
+								//die();
+								$this->sise_model->inserta_privilegio_seccion($data);
+								header('Location:'.base_url('index.php/sise/agrega_seccion/'.$this->input->post('id_privilegio').'').'');
+							}
+						}else{
+							header('Location:'.base_url('index.php/sise/privilegios_secciones').'');
+						}
+					 }
+					#fin formulario agregar seccion al privilegio
+
+			//joan alonso
+
+
 		//-----Funciones Especificas----------------	
 
 			//juan carlos
