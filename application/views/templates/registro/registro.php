@@ -1,3 +1,4 @@
+<?php "hola"; ?>
 <div class="col-md-12">
                   <div class="col-md-12 panel">
                     <div class="col-md-12 panel-heading">
