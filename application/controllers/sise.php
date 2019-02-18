@@ -350,10 +350,12 @@ class sise extends CI_Controller {
 								'id_privilegio'=>1,
 								'activo'=>1
 							);
+
 							$usuario=$this->sise_model->inserta_usuario($data_usuario);
 							$this->load->view('templates/registro/header');
 							$this->load->view('templates/registro/login');
 							$this->load->view('templates/registro/footer');
+							
 						  }
 				    #fin formulario de registro
 					#Formulario editar el privilegio

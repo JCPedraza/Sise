@@ -7,10 +7,13 @@
                     <div class="col-md-12 panel-body" style="padding-bottom:30px;">
                       <div class="col-md-12">
                       	<?php
-							$atributos = array('class'=>'form-cmxform');
-							echo form_open('sise/formulario_registro',$atributos);
-						?>                
-						 <div class="col-md-6">
+            							$atributos = array('class'=>'form-cmxform');
+            							echo form_open('sise/formulario_registro',$atributos);
+            						?>                
+  						            <div class="col-md-6">
+                            <hr>
+                                <h3 style="color: #918C8C">Información de Personal</h3>
+                            <hr>
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="text" class="form-text form-control android" id="nombre" value="<?php echo set_value('nombre');?>" require="" name="nombre">
                               <span class="bar"></span>
@@ -31,115 +34,84 @@
                               <label>Apellido Materno</label>
                               <?php echo form_error('a_m'); ?>
                             </div>
+                            
+                            <hr>
+                              <h3 style="color: #918C8C">Información Residencia</h3>
+                            <hr>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="email" class="form-text form-control android" value="<?php echo set_value('email');?>" id="" name="email" aria-required="true">
+                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('direc');?>" name="direc"  aria-required="true">
                               <span class="bar"></span>
-                              <label>Correo Electronico</label>
-                              <?php echo form_error('email'); ?>
+                              <label>Dirección</label>
+                              <?php echo form_error('direc'); ?>
                             </div>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="text" class="form-text form-control android" value="<?php echo set_value('ciudad');?>" id="" name="ciudad"  aria-required="true">
                               <span class="bar"></span>
                               <label>Ciudad</label>
                               <?php echo form_error('ciudad'); ?>
                             </div>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="text" class="form-text form-control android" value="<?php echo set_value('estado');?>" id="" name="estado" aria-required="true">
                               <span class="bar"></span>
                               <label>Estado</label>
                               <?php echo form_error('estado'); ?>
                             </div>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="text" class="form-text form-control android" value="<?php echo set_value('pais');?>" id="" name="pais" aria-required="true">
                               <span class="bar"></span>
-                              <label>Pais</label>
+                              <label>País</label>
                               <?php echo form_error('pais'); ?>
-                            </div>
-							
-
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-		                        <input type="date" class="form-text mask-placeholder" name="fecha" placeholder="__/__/____" required="">
-		                        <span class="bar"></span>
-		                        <label>Fecha</label>
-		                      </div>
-                        		 <div class="" style="margin-top:40px !important;">
-                            	<label>Genero</label>
-                              <select name="g" id="" class="form-control form-control android">
-                              	<option value="" selected="selected">Seleccionar</option>
-								<option value="M">Masculino</option>
-								<option value="F">Femenino</option>
-							</select>
-                              <span class="bar"></span>
-                              
-                            </div>
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('rfc');?>" name="rfc" aria-required="true">
-                              <span class="bar"></span>
-                              <label>RFC</label>
-                              <?php echo form_error('rfc'); ?>
                             </div>
 
                           </div>
+
                           <div class="col-md-6">
-                           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('curp');?>" name="curp"  aria-required="true">
-                              <span class="bar"></span>
-                              <label>Curp</label>
-                              <?php echo form_error('curp'); ?>
-                            </div>
-                            <div class="" style="margin-top:40px !important;">
-                            	<label>Estado Civil</label>
-                              <select name="e" id=""  class="form-control form-control android">
-								<option value="">Seleccionar</option>
-								<option value="S">Soltero</option>
-								<option value="C">Casado</option>
-								<option value="D">Divorsiado</option>
-								<option value="V">Viudo</option>
-								<option value="U">Union Libre</option>
-							</select>
-                              <span class="bar"></span>
-                              
-                            </div>
-							<div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('direc');?>" name="direc"  aria-required="true">
-                              <span class="bar"></span>
-                              <label>Direccion</label>
-                              <?php echo form_error('direc'); ?>
-                            </div>
+                            
+                            <hr>
+                                <h3 style="color: #918C8C">Información de Contacto</h3>
+                            <hr>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="number" class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel"  aria-required="true">
                               <span class="bar"></span>
-                              <label>Telefono</label>
+                              <label>Teléfono</label>
                               <?php echo form_error('tel'); ?>
                             </div>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('ins');?>" name="ins"  aria-required="true">
+                              <input type="email" class="form-text form-control android" value="<?php echo set_value('email');?>" id="" name="email" aria-required="true">
                               <span class="bar"></span>
-                              <label>Institucion</label>
-                              <?php echo form_error('ins'); ?>
+                              <label>Correo Electrónico</label>
+                              <?php echo form_error('email'); ?>
                             </div>
+
+                            <hr>
+                                <h3 style="color: #918C8C">Información de Cuenta</h3>
+                                <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico</p>
+                            <hr>
+  
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('car');?>" name="car" aria-required="true">
-                              <span class="bar"></span>
-                              <label>Cargo</label>
-                              <?php echo form_error('car'); ?>
-                            </div>
-                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="password" class="form-text form-control android" id="" value="<?php echo set_value('contra');?>" name="contra" aria-required="true">
                               <span class="bar"></span>
                               <label>Contraseña</label>
                               <?php echo form_error('contra'); ?>
                             </div>
+
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="password" class="form-text form-control android" id="" value="<?php echo set_value('contra_conf');?>" name="contra_conf"  aria-required="true">
                               <span class="bar"></span>
                               <label>Repite Contraseña</label>
                               <?php echo form_error('contra_conf'); ?>
                             </div>
-                          </div>                 
+                          </div>
+
                           <div class="col-md-12">
                               <button class="submit btn btn-danger" type="submit" name="formulario" value="Submit"></button>
-                        </div>
+                          </div>
                       </form>
                     </div>
                   </div>
