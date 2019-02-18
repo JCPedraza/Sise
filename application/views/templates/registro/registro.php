@@ -91,7 +91,7 @@
 
                             <hr>
                                 <h3 style="color: #918C8C">Información de Cuenta</h3>
-                                <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico</p>
+                                <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico </p>
                             <hr>
   
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
