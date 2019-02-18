@@ -234,6 +234,23 @@ class sise extends CI_Controller {
 					}
 				#fin de privilegios con las secciones
 				#muetra 
+				#Muestra las modalidades
+					public function modalidad(){
+
+					$this->load->library('form_validation');
+					$this->load->helper('form','url');
+						$this->sise_model->valida_sesion();
+						
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['modalidad']=$this->sise_model->devuelve_modalida();
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/modalidad',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin de las modalidades
 					
 			//joan alonso
 					#
@@ -578,6 +595,89 @@ class sise extends CI_Controller {
 						}
 					 }
 					#fin formulario agregar seccion al privilegio
+					#Nueva Modalidad
+						public function nueva_modalidad(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+
+							$data['clave_modalidad'] = $this->uri->segment(3);
+							$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
+
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_mod','Nombre de la Modalidad', 'required');
+							$this->form_validation->set_rules('des_mod','Descripción de la Modalidad', 'required');
+
+							if($this->form_validation->run()==FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nueva_modalidad',$data);
+								$this->load->view('templates/panel/footer',$data);
+							}else{
+								$data_modalidad = array(
+									'nombre_mod' => $this->input->post('nom_mod'),
+									'descripcion_mod' => $this->input->post('des_mod'),
+									);
+							//var_dump($data_modalidad);
+							//die();
+							$this->sise_model->inserta_modalidad($data_modalidad);
+							header('Location:'.base_url('index.php/sise/modalidad/'));
+							}
+						}
+					#Fin modalidad
+
+					#edita modalidad
+							public function edita_modalidad(){
+								$this->sise_model->valida_sesion();
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
+
+								
+
+								if(!empty($this->uri->segment(3))){
+
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+
+								$data['clave_modalidad'] = $this->uri->segment(3);
+								$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
+								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Alerta </strong>','</div>');
+
+								$this->form_validation->set_rules('nom_mod','Nombre de la modalidad','required');
+								$this->form_validation->set_rules('des_mod','Descripcion de la modalidad', 'required');
+
+
+								if ($this->form_validation->run() == FALSE){
+
+								$data['clave_modalidad'] = $this->uri->segment(3);
+								$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
+
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nueva_modalidad',$data);
+								$this->load->view('templates/panel/footer',$data);
+								
+								}else{
+									$data_edita_mod=array(
+										'nombre_mod'=>$this->input->post('nom_pri'),
+										'descripcion_mod'=>$this->input->post('des_pri')
+									);
+									var_dump($this->input->post('clave_modalidad'),'<br>',$data_ed_mod);
+									die();
+										//$this->sise_model->actualiza_datos_modalidad($this->input->post('clave_modalidad'),$data_edita_pri);
+										//header('Location:'.base_url('index.php/sise/nueva_modalidad').'');
+									}
+								}else{
+									//header('Location:'.base_url('index.php/sise/nueva_modalidad').'');}
+								}
+							}
+					#fin edita modalidad
 
 			//joan alonso
 
