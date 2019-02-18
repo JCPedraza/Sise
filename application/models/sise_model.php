@@ -391,4 +391,38 @@ class sise_model extends CI_Model{
 
 	
 	//-------------------fin secciones-------------------------
+
+	//-------------------Modalidades---------------------------
+		#Consultas
+			function devuelve_modalida()
+			{
+				$devuelve_modalidad=$this->db->get('modalidad');
+				return $devuelve_modalidad->result();
+			}
+			function datos_modalidad($data){
+				$this->db->select('*');
+				$this->db->from('modalidad');
+				$this->db->where('clave_mod',$data);
+
+				$regresa_datos_modalidad = $this->db->get();
+				return $regresa_datos_modalidad->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_modalidad($data){
+				$this->db->insert('modalidad',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_modalidad($clave_mod,$data){
+				$this->db->where('clave_mod', $clave_mod);
+				$this->db->update('modalidad',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//------------------fin modalidades-------------------
 }
