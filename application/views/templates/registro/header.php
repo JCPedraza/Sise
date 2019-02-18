@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<p>Hola</p>
   <meta charset="utf-8">
   <meta name="description" content="Miminium Admin Template v.1">
   <meta name="author" content="Isna Nur Azis">

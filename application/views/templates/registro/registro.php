@@ -77,7 +77,7 @@
                             <hr>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="number" class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel"  aria-required="true">
+                              <input type="number" minlength="10" maxlength="10" class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel" aria-required="true">
                               <span class="bar"></span>
                               <label>Teléfono</label>
                               <?php echo form_error('tel'); ?>

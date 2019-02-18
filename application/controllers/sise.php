@@ -308,53 +308,62 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
 							$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('Email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
+							$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
 							$this->form_validation->set_rules('ciudad','Ciudad', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
 							//$this->form_validation->set_rules('g', 'Género', 'required');
-							$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
+							#$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
+							#$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('e','Estado Civil', 'required');
-							$this->form_validation->set_rules('direc','Dirección', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
-							$this->form_validation->set_rules('ins','Institución', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('car','Cargo', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('direc','Dirección', 'required|min_length[2]|max_length[100]');
+							$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[10]');
+							#$this->form_validation->set_rules('ins','Institución', 'required|min_length[2]|max_length[25]');
+							#$this->form_validation->set_rules('car','Cargo', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('contra','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
 							$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
 							
-							$data_registro= array(
-								'nombre_aspirante'=> $this->input->post('nombre'),
-								'ap_pa_aspirante'=> $this->input->post('a_p'),
-								'ap_ma_aspirante'=> $this->input->post('a_m'),
-								'email_aspirante'=> $this->input->post('email'),
-								'ciudad_aspirante'=> $this->input->post('ciudad'),
-								'estado_aspirante'=>$this->input->post('estado'),
-								'pais_aspirante'=> $this->input->post('pais'),
-								'fec_nac_aspirante'=>$this->input->post('fecha'),
-								'genero_aspirante'=> $this->input->post('g'),
-								'RFC_aspirante'=> $this->input->post('rfc'),
-								'CURP_aspirante'=> $this->input->post('curp'),
-								'estado_civil_aspirante'=> $this->input->post('e'),
-								'residencia_aspirante'=> $this->input->post('direc'),
-								'telefono_aspirante' => $this->input->post('tel'),
-								'institucion_aspirante'=>$this->input->post('ins'),
-								'cargo_aspirante'=>$this->input->post('car')
-							);
-							$clave_aspirante=$this->sise_model->insertar_aspirante($data_registro);
-							$data_usuario= array(
-								'usuario'=>$this->input->post('email'),
-								'contrasena'=>md5($this->input->post('contra')),
-								'id_persona'=>$clave_aspirante,
-								'id_privilegio'=>1,
-								'activo'=>1
-							);
+							if ($this->form_validation->run() == FALSE) {
+							
+								$this->load->view('templates/registro/header');
+								$this->load->view('templates/registro/registro');
+								$this->load->view('templates/registro/footer');
 
-							$usuario=$this->sise_model->inserta_usuario($data_usuario);
-							$this->load->view('templates/registro/header');
-							$this->load->view('templates/registro/login');
-							$this->load->view('templates/registro/footer');
+							}else{
+
+								$data_registro= array(
+									'nombre_aspirante'=> $this->input->post('nombre'),
+									'ap_pa_aspirante'=> $this->input->post('a_p'),
+									'ap_ma_aspirante'=> $this->input->post('a_m'),
+									'email_aspirante'=> $this->input->post('email'),
+									'ciudad_aspirante'=> $this->input->post('ciudad'),
+									'estado_aspirante'=>$this->input->post('estado'),
+									'pais_aspirante'=> $this->input->post('pais'),
+									'fec_nac_aspirante'=>$this->input->post('fecha'),
+									'genero_aspirante'=> $this->input->post('g'),
+									'RFC_aspirante'=> $this->input->post('rfc'),
+									'CURP_aspirante'=> $this->input->post('curp'),
+									'estado_civil_aspirante'=> $this->input->post('e'),
+									'residencia_aspirante'=> $this->input->post('direc'),
+									'telefono_aspirante' => $this->input->post('tel'),
+									'institucion_aspirante'=>$this->input->post('ins'),
+									'cargo_aspirante'=>$this->input->post('car')
+								);
+
+								$clave_aspirante=$this->sise_model->insertar_aspirante($data_registro);
+								$data_usuario= array(
+									'usuario'=>$this->input->post('email'),
+									'contrasena'=>md5($this->input->post('contra')),
+									'id_persona'=>$clave_aspirante,
+									'id_privilegio'=>1,
+									'activo'=>1
+								);
+
+								$usuario=$this->sise_model->inserta_usuario($data_usuario);
+
+							}
+							
 							
 						  }
 				    #fin formulario de registro
