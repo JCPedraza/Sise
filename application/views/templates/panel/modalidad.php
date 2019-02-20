@@ -40,12 +40,13 @@
                               <td><?php echo $mod->descripcion_mod; ?></td>
                               <td>
                               <div class="col-md-6" style="margin-top:5px;">
-                                
-                                   <button class="btn ripple-infinite btn-round btn-warning" value="<?php echo $mod->clave_mod;?>"  data-toggle="modal" data-target="#edicion">
+                                 <a href="<?php echo base_url();?>index.php/sise/edita_modalidad/<?php echo $mod->clave_mod;?>">
+                                   <button class="btn ripple-infinite btn-round btn-warning">
                                     <div>
                                       <span>Editar</span>
                                     </div>
                                   </button>
+                                  </a>
                               </div>
                             </td>
                             </tr>
@@ -63,7 +64,7 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                          <h5 class="modal-title" id="exampleModalLongTitle">Edición de Modalidad</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -91,42 +92,7 @@
                          </form>
                       </div>
                     </div>
-                  </div>
-                  <!-- Modal de Edicion-->
-                  <div class="modal fade" id="edicion" tabindex="-1" role="dialog" aria-labelledby="edicion" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="edicion">Edición de la modalidad</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <?php
-                             $atributos = array('class'=>'form-horizontal');
-                             echo form_open('sise/edita_modalidad/'.$emod['clave_mod'],$atributos);
-                          ?>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Modalidad</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod" value="<?php if(set_value('nom_mod')) echo set_value('nom_mod'); else {if($emod) echo $emod['nombre_mod'];}?>"></div>
-                            </div>
-                            <div class="form-group"><label class="col-sm-2 control-label text-right">Descripción</label>
-                              <div class="col-sm-10"><input type="text" name="des_pri" class="form-control android" value="<?php if(set_value('des_pri')) echo set_value('des_pri'); else {if($emod) echo $emod['descripcion_mod'];}?>"></div>
-                            </div>
-                            <input type="hidden" name="clave_mod" value="<?php echo $emod['clave_mod']; ?>">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
-                                    <div>
-                                      <span>Guardar Cambios</span>
-                                    </div>
-                                  </button>
-                        </div>
-                         </form>
-                      </div>
-                    </div>
-                  </div>
-              </div>  
+                  </div>  
               </div>
             </div>
           <!-- end: content -->
