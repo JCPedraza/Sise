@@ -425,4 +425,38 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//------------------fin modalidades-------------------
+	//-----------------------programas-------------------------
+		
+		#Consultas
+
+			function devuelve_programa(){
+				$devuelve_programa=$this->db->get('programa');
+				return $devuelve_programa->result();
+			}
+			function datos_programa($data){
+				$this->db->select('*');
+				$this->db->from('programa');
+				$this->db->where('clave_programa',$data);
+
+				$regresa_datos_programa = $this->db->get();
+				return $regresa_datos_programa->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nuevo_programa($data){
+				$this->db->insert('programa',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_programa($clave_programa,$data){
+				$this->db->where('clave_programa', $clave_programa);
+				$this->db->update('programa',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin programas-------------------------
 }
