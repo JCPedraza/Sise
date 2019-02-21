@@ -81,74 +81,74 @@ class sise extends CI_Controller {
 
 				#formulario para la edición de los datos de aspirantes
 						public function edita_aspirante(){
-						$this->sise_model->valida_sesion();
-						$this->load->library('form_validation');
-						$this->load->helper(array('form', 'url'));
+								$this->sise_model->valida_sesion();
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
 
-						
+								
 
-						if(!empty($this->uri->segment(3))){
+								if(!empty($this->uri->segment(3))){
 
-						$data['sesion'] = $this->sise_model->datos_sesion();
-						$data['menu'] = $this->sise_model->datos_menu();
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
 
-						
-						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Alerta </strong>','</div>');
+								
+								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Alerta </strong>','</div>');
 
-						$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
-						$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
-						$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
-						$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
-						$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
+								$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
+								$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
+								$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
+								$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
+								$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
 
 
-						if ($this->form_validation->run() == FALSE){
+								if ($this->form_validation->run() == FALSE){
 
-						$data['clave_aspirante'] = $this->uri->segment(3);
-						$data['aspirante'] = $this->sise_model->datos_aspirante($data['clave_aspirante']);
-						#var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
-						#die();
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/formulario_editar_aspirante',$data);
-						$this->load->view('templates/panel/footer');
-						
-						}else{
-							$data_datos_edicion= array(
-							'nombre_aspirante'=> $this->input->post('nombre'),
-							'ap_pa_aspirante'=> $this->input->post('a_p'),
-							'ap_ma_aspirante'=> $this->input->post('a_m'),
-							'email_aspirante'=> $this->input->post('email'),
-							'ciudad_aspirante'=> $this->input->post('ciudad'),
-							'estado_aspirante'=>$this->input->post('estado'),
-							'pais_aspirante'=> $this->input->post('pais'),
-							'fec_nac_aspirante'=>$this->input->post('fecha'),
-							'genero_aspirante'=> substr($this->input->post('g'),0,1),
-							'RFC_aspirante'=> $this->input->post('rfc'),
-							'CURP_aspirante'=> $this->input->post('curp'),
-							'estado_civil_aspirante'=> substr($this->input->post('e'),0,1),
-							'residencia_aspirante'=> $this->input->post('direc'),
-							'telefono_aspirante' => $this->input->post('tel'),
-							'institucion_aspirante'=>$this->input->post('ins'),
-							'cargo_aspirante'=>$this->input->post('car')
-						);
-							//$ge=substr($this->input->post('g'),0,1);
-							//$r=substr($ge,0,1);
-							//echo $r;
-							//$es=substr($this->input->post('e'),0,1);
-							//var_dump($ge,'<br>',$es);
-							//die();
-								//var_dump($this->input->post('clave_aspirante'),'<br>',$data_datos_edicion);
-								//die();
-								$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
-								header('Location:'.base_url('index.php/sise/aspirantes').'');
+								$data['clave_aspirante'] = $this->uri->segment(3);
+								$data['aspirante'] = $this->sise_model->datos_aspirante($data['clave_aspirante']);
+								#var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
+								#die();
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/formulario_editar_aspirante',$data);
+								$this->load->view('templates/panel/footer');
+								
+								}else{
+									$data_datos_edicion= array(
+									'nombre_aspirante'=> $this->input->post('nombre'),
+									'ap_pa_aspirante'=> $this->input->post('a_p'),
+									'ap_ma_aspirante'=> $this->input->post('a_m'),
+									'email_aspirante'=> $this->input->post('email'),
+									'ciudad_aspirante'=> $this->input->post('ciudad'),
+									'estado_aspirante'=>$this->input->post('estado'),
+									'pais_aspirante'=> $this->input->post('pais'),
+									'fec_nac_aspirante'=>$this->input->post('fecha'),
+									'genero_aspirante'=> substr($this->input->post('g'),0,1),
+									'RFC_aspirante'=> $this->input->post('rfc'),
+									'CURP_aspirante'=> $this->input->post('curp'),
+									'estado_civil_aspirante'=> substr($this->input->post('e'),0,1),
+									'residencia_aspirante'=> $this->input->post('direc'),
+									'telefono_aspirante' => $this->input->post('tel'),
+									'institucion_aspirante'=>$this->input->post('ins'),
+									'cargo_aspirante'=>$this->input->post('car')
+								);
+									//$ge=substr($this->input->post('g'),0,1);
+									//$r=substr($ge,0,1);
+									//echo $r;
+									//$es=substr($this->input->post('e'),0,1);
+									//var_dump($ge,'<br>',$es);
+									//die();
+										//var_dump($this->input->post('clave_aspirante'),'<br>',$data_datos_edicion);
+										//die();
+										$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
+										header('Location:'.base_url('index.php/sise/aspirantes').'');
+								}
+								}else{
+									header('Location:'.base_url('index.php/sise/aspirantes').'');}
+
 						}
-						}else{
-							header('Location:'.base_url('index.php/sise/aspirantes').'');}
-
-					}
 				#fin formulario para la edición de los datos de aspirantes
 				#muetsra los privilegios que existen
 					public function nuevo_privilegio()
@@ -647,130 +647,130 @@ class sise extends CI_Controller {
 					#Fin modalidad
 
 					#edita modalidad
-				public function edita_modalidad(){
-				$this->sise_model->valida_sesion();
-				$this->load->library('form_validation');
-				$this->load->helper(array('form', 'url'));
+						public function edita_modalidad(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
 
-				
+							
 
-				if(!empty($this->uri->segment(3))){
+							if(!empty($this->uri->segment(3))){
 
-				$data['sesion'] = $this->sise_model->datos_sesion();
-				$data['menu'] = $this->sise_model->datos_menu();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
 
-				$data['clave_modalidad'] = $this->uri->segment(3);
-				$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
-				$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Alerta </strong>','</div>');
+							$data['clave_modalidad'] = $this->uri->segment(3);
+							$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
 
-				$this->form_validation->set_rules('nom_mod','Nombre de la modalidad','required');
-				$this->form_validation->set_rules('des_mod','Descripcion de la modalidad', 'required');
-
-
-				if ($this->form_validation->run() == FALSE){
-
-				$data['clave_modalidad'] = $this->uri->segment(3);
-				$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
-
-				$this->load->view('templates/panel/header',$data);
-				$this->load->view('templates/panel/menu',$data);
-				$this->load->view('templates/panel/formulario_editar_modalidad',$data);
-				$this->load->view('templates/panel/footer',$data);
-				
-				}else{
-					$data_edita_mod=array(
-						'nombre_mod'=>$this->input->post('nom_mod'),
-						'descripcion_mod'=>$this->input->post('des_mod')
-					);
-					//var_dump($this->input->post('clave_modalidad'),'<br>',$data_edita_mod);
-					//die();
-						$this->sise_model->actualiza_datos_modalidad($this->input->post('clave_modalidad'),$data_edita_mod);
-						header('Location:'.base_url('index.php/sise/modalidad').'');
-					}
-				}else{
-					header('Location:'.base_url('index.php/sise/modalidad').'');}
-					}
-		#fin edita modalidad
-		#Formulario de nuevo programa
-			public function registro_nuevo_programa(){
-				$this->load->library('form_validation');
-				$this->load->helper('form','url');
-				$this->sise_model->valida_sesion();
-				$data['sesion'] = $this->sise_model->datos_sesion();
-				$data['menu'] = $this->sise_model->datos_menu();
-				$data['programa']=$this->sise_model->devuelve_programa();
-
-				$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-				  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				  <strong>Alerta </strong>','</div>');
-				$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
-				$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
-
-				if ($this->form_validation->run() == FALSE){
-					$this->load->view('templates/panel/header',$data);
-					$this->load->view('templates/panel/menu',$data);
-					$this->load->view('templates/panel/nuevo_programa');
-					$this->load->view('templates/panel/footer');
-				}else{
-					$data_nuevo_pro=array(
-						'nombre_programa'=>$this->input->post('nom_pro'),
-						'descripcion_programa'=>$this->input->post('des_pro')
-					);
-					//var_dump($data_nuevo_pri);
-					//die();
-					$this->sise_model->registro_nuevo_programa($data_nuevo_pro);
-					header('Location:'.base_url('index.php/sise/programas').'');
-				}	
-			}
-		#fin formulario de nuevo programa
-		#Formulario editar el privilegio
-			public function edita_programa(){
-				$this->sise_model->valida_sesion();
-				$this->load->library('form_validation');
-				$this->load->helper(array('form', 'url'));
-
-				
-
-				if(!empty($this->uri->segment(3))){
-
-				$data['sesion'] = $this->sise_model->datos_sesion();
-				$data['menu'] = $this->sise_model->datos_menu();
-
-				$data['clave_programa'] = $this->uri->segment(3);
-				$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
-
-				$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Alerta </strong>','</div>');
-
-				$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
-				$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
+							$this->form_validation->set_rules('nom_mod','Nombre de la modalidad','required');
+							$this->form_validation->set_rules('des_mod','Descripcion de la modalidad', 'required');
 
 
-				if ($this->form_validation->run() == FALSE){
+							if ($this->form_validation->run() == FALSE){
 
-				$data['clave_programa'] = $this->uri->segment(3);
-				$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
+							$data['clave_modalidad'] = $this->uri->segment(3);
+							$data['emod'] = $this->sise_model->datos_modalidad($data['clave_modalidad']);
 
-				$this->load->view('templates/panel/header',$data);
-				$this->load->view('templates/panel/menu',$data);
-				$this->load->view('templates/panel/formulario_editar_programa',$data);
-				$this->load->view('templates/panel/footer');
-				
-				}else{
-					$data_edita_pro=array(
-						'nombre_programa'=>$this->input->post('nom_pro'),
-						'descripcion_programa'=>$this->input->post('des_pro')
-					);
-						$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
-						header('Location:'.base_url('index.php/sise/programas').'');
-					}
-				}else{
-					header('Location:'.base_url('index.php/sise/programas').'');}
-			}
-		#fin del formulario de registro
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_modalidad',$data);
+							$this->load->view('templates/panel/footer',$data);
+							
+							}else{
+								$data_edita_mod=array(
+									'nombre_mod'=>$this->input->post('nom_mod'),
+									'descripcion_mod'=>$this->input->post('des_mod')
+								);
+								//var_dump($this->input->post('clave_modalidad'),'<br>',$data_edita_mod);
+								//die();
+									$this->sise_model->actualiza_datos_modalidad($this->input->post('clave_modalidad'),$data_edita_mod);
+									header('Location:'.base_url('index.php/sise/modalidad').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/modalidad').'');}
+						}
+					#fin edita modalidad
+					#Formulario de nuevo programa
+						public function registro_nuevo_programa(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['programa']=$this->sise_model->devuelve_programa();
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
+							$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
+
+							if ($this->form_validation->run() == FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nuevo_programa');
+								$this->load->view('templates/panel/footer');
+							}else{
+								$data_nuevo_pro=array(
+									'nombre_programa'=>$this->input->post('nom_pro'),
+									'descripcion_programa'=>$this->input->post('des_pro')
+								);
+								//var_dump($data_nuevo_pri);
+								//die();
+								$this->sise_model->registro_nuevo_programa($data_nuevo_pro);
+								header('Location:'.base_url('index.php/sise/programas').'');
+							}	
+						}
+					#fin formulario de nuevo programa
+					#Formulario editar el privilegio
+						public function edita_programa(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['clave_programa'] = $this->uri->segment(3);
+							$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
+							$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['clave_programa'] = $this->uri->segment(3);
+							$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_programa',$data);
+							$this->load->view('templates/panel/footer');
+							
+							}else{
+								$data_edita_pro=array(
+									'nombre_programa'=>$this->input->post('nom_pro'),
+									'descripcion_programa'=>$this->input->post('des_pro')
+								);
+									$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
+									header('Location:'.base_url('index.php/sise/programas').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/programas').'');}
+						}
+					#fin del formulario de registro
 
 			//joan alonso
 
