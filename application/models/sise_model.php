@@ -459,4 +459,95 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//-------------------fin programas-------------------------
+	//-----------------------Oferta academica-------------------------
+		
+		#Consultas
+
+			function devuelve_oferta_academica(){
+				$devuelve_oferta_academica=$this->db->get('oferta_academica');
+				return $devuelve_oferta_academica->result();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nueva_oferta_academica($data){
+				$this->db->insert('oferta_academica',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin oferta academica-------------------------
+	//-----------------------experiencia acadeica-------------------------
+		
+		#Consultas
+
+			function devuelve_experiencia_academica(){
+				$this->db->select('n_a.*, e_a.*');
+				$this->db->from('nivel_academico n_a');
+				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');
+				$this->db->where('e_a.nivel_academico= n_a.clave_exp_aca');
+
+				$devuelve_experiencia_academica = $this->db->get();
+				return $devuelve_experiencia_academica->result();
+			}
+			function datos_experiencia($data){
+				$this->db->select('n_a.*, e_a.*');
+				$this->db->from('nivel_academico n_a');
+				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');;
+				$this->db->where('e_a.clave_exp_aca',$data);
+
+				$regresa_datos_esperiencia = $this->db->get();
+				return $regresa_datos_esperiencia->result();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nueva_experiencia_academica($data){
+				$this->db->insert('experiencia_academica',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin experiencia academica-------------------------
+	//-------------------Nivel Academico---------------------------
+		#Consultas
+			function devuelve_nivel_academico()
+			{
+				$devuelve_nivel_academico=$this->db->get('nivel_academico');
+				return $devuelve_nivel_academico->result();
+			}
+			function datos_nivel($data){
+				$this->db->select('*');
+				$this->db->from('nivel_academico');
+				$this->db->where('clave_exp_aca',$data);
+
+				$regresa_datos_nivel = $this->db->get();
+				return $regresa_datos_nivel->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_nivel_academico($data){
+				$this->db->insert('nivel_academico',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_nivel_academico($clave_ex,$data){
+				$this->db->where('clave_exp_aca', $clave_ex);
+				$this->db->update('nivel_academico',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//------------------fin modalidades-------------------
 }
