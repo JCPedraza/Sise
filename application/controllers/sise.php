@@ -244,7 +244,11 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						$data['modalidad']=$this->sise_model->devuelve_modalida();
+						$hola=$this->sise_model->devuelve_modalida();
+						$data['modalidad']=$hola;
+						$resul=$this->sise_model->devuelve_nivel_academico();
+						$data['nivel']=$resul;
+
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/modalidad',$data);
@@ -268,7 +272,40 @@ class sise extends CI_Controller {
 
 					}
 				#fin de los programas
-				
+				#Muestra los oferta_academica
+					public function oferta_academica()
+					{
+						$this->sise_model->valida_sesion();
+						
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['ofe_aca']=$this->sise_model->devuelve_oferta_academica();
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/oferta_academica',$data);
+						$this->load->view('templates/panel/footer');
+
+					}
+				#fin de oferta_academica
+				#Muestra los experiencia_academica
+					public function experiencia_academica()
+					{
+						$this->sise_model->valida_sesion();
+						
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['ex_aca']=$this->sise_model->devuelve_experiencia_academica();
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/experiencia_academica',$data);
+						$this->load->view('templates/panel/footer');
+
+					}
+				#fin de experiencia_academica
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -772,6 +809,155 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/programas').'');}
 						}
 					#fin del formulario de registro
+					#Formulario de nueva oferta academica
+						public function registro_nueva_oferta_academica(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
+
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_oferta','Nombre De la oferta Academica','required');
+							$this->form_validation->set_rules('des_oferta','Descripcion de la oferta Academica', 'required');
+
+							if ($this->form_validation->run() == FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nueva_oferta_academica');
+								$this->load->view('templates/panel/footer');
+							}else{
+								$data_nueva_oferta_educativa=array(
+									'nombre_of_aca'=>$this->input->post('nom_oferta'),
+									'descripcion_of_aca'=>$this->input->post('des_oferta')
+								);
+								//var_dump($data_nueva_oferta_educativa);
+								//die();
+								$this->sise_model->registro_nueva_oferta_academica($data_nueva_oferta_educativa);
+								header('Location:'.base_url('index.php/sise/oferta_academica').'');
+							}	
+						}
+					#fin formulario de nueva oferta academicas
+					#Formulario de nueva experiencia academica
+								public function registro_nueva_experiencia_academica(){
+									$this->load->library('form_validation');
+									$this->load->helper('form','url');
+									$this->sise_model->valida_sesion();
+									$data['sesion'] = $this->sise_model->datos_sesion();
+									$data['menu'] = $this->sise_model->datos_menu();
+									$data['ex_a']=$this->sise_model->devuelve_nivel_academico();
+									//var_dump($data['experiencia_academica']);
+									//die();
+									$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+									  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									  <strong>Alerta </strong>','</div>');
+									$this->form_validation->set_rules('nom_experiencia','Nombre De la experiencia Academica');
+									$this->form_validation->set_rules('pro_experiencia','Descripcion de la experiencia Academica', 'required');
+									$this->form_validation->set_rules('ins_experiencia','Institucion','required');
+
+
+									if ($this->form_validation->run() == FALSE){
+										$this->load->view('templates/panel/header',$data);
+										$this->load->view('templates/panel/menu',$data);
+										$this->load->view('templates/panel/nueva_experiencia_academica',$data);
+										$this->load->view('templates/panel/footer');
+									}else{
+										$data_nueva_experiencia_academica=array(
+											'nivel_academico'=>$this->input->post('nom_experiencia'),
+											'programa_exp_aca'=>$this->input->post('pro_experiencia'),
+											'institucion_exp_aca'=>$this->input->post('ins_experiencia'),
+											'clave_externa'=>0
+										);
+										//var_dump($this->input->post('nom_experiencia'));
+										//die();
+
+										//var_dump($data_nueva_experiencia_academica);
+										//die();
+										$this->sise_model->registro_nueva_experiencia_academica($data_nueva_experiencia_academica);
+										header('Location:'.base_url('index.php/sise/experiencia_academica').'');
+									}	
+								}
+					#fin formulario de nueva oferta academicas
+					#Nuevo nivel Academico
+							public function nuevo_nivel_academico(){
+								$this->load->library('form_validation');
+								$this->load->helper('form','url');
+								$this->sise_model->valida_sesion();
+
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
+								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Alerta </strong>','</div>');
+								$this->form_validation->set_rules('nom_niv','Nombre del nivel Academico', 'required');
+
+								if($this->form_validation->run()==FALSE){
+									$this->load->view('templates/panel/header',$data);
+									$this->load->view('templates/panel/menu',$data);
+									$this->load->view('templates/panel/nueva_modalidad',$data);
+									$this->load->view('templates/panel/footer',$data);
+								}else{
+									$data_nivel = array(
+										'nombre_exp_aca' => $this->input->post('nom_niv')
+										);
+								//var_dump($data_nivel);
+								//die();
+								$this->sise_model->inserta_nivel_academico($data_nivel);
+								header('Location:'.base_url('index.php/sise/modalidad/'));
+								}
+							}
+					#Fin nuevo nivel Academico
+					#edita nivel Academico
+							public function edita_nivel_academico(){
+									$this->sise_model->valida_sesion();
+									$this->load->library('form_validation');
+									$this->load->helper(array('form', 'url'));
+
+									
+
+									if(!empty($this->uri->segment(3))){
+
+									$data['sesion'] = $this->sise_model->datos_sesion();
+									$data['menu'] = $this->sise_model->datos_menu();
+
+									$data['clave_exp'] = $this->uri->segment(3);
+									$data['nivel'] = $this->sise_model->datos_nivel($data['clave_exp']);
+									//var_dump($data['nivel']);
+									//die();
+									$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									<strong>Alerta </strong>','</div>');
+
+									$this->form_validation->set_rules('nom_nivel','Nombre de la modalidad','required');
+
+
+									if ($this->form_validation->run() == FALSE){
+
+									$data['clave_exp_aca'] = $this->uri->segment(3);
+									$data['nivel'] = $this->sise_model->datos_nivel($data['clave_exp']);
+
+									$this->load->view('templates/panel/header',$data);
+									$this->load->view('templates/panel/menu',$data);
+									$this->load->view('templates/panel/formulario_editar_nivel_Academico',$data);
+									$this->load->view('templates/panel/footer');
+									
+									}else{
+										$data_edita_niv=array(
+											'nombre_exp_aca'=>$this->input->post('nom_nivel')
+										);
+										//var_dump($this->input->post('clave_ex'),'<br>',$data_edita_niv);
+										//die();
+										$this->sise_model->actualiza_datos_nivel_academico($this->input->post('clave_ex'),$data_edita_niv);
+										header('Location:'.base_url('index.php/sise/modalidad').'');
+										}
+									}else{
+											header('Location:'.base_url('index.php/sise/modalidad').'');}
+							}
+
+					#fin edita nivel Academico
 
 			//joan alonso
 
