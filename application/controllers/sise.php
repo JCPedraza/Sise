@@ -268,6 +268,7 @@ class sise extends CI_Controller {
 
 					}
 				#fin de los programas
+				
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
