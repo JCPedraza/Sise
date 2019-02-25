@@ -142,7 +142,7 @@ class sise extends CI_Controller {
 									//die();
 										//var_dump($this->input->post('clave_aspirante'),'<br>',$data_datos_edicion);
 										//die();
-										$this->sise_model->actualiza_datos_alumno($this->input->post('clave_aspirante'),$data_datos_edicion);
+										$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
 										header('Location:'.base_url('index.php/sise/aspirantes').'');
 								}
 								}else{
@@ -437,7 +437,7 @@ class sise extends CI_Controller {
 									'cargo_alumno'=>$this->input->post('car')
 								);
 
-								$clave_alumno=$this->sise_model->insertar_alumno($data_registro);
+								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
