@@ -117,22 +117,22 @@ class sise extends CI_Controller {
 								
 								}else{
 									$data_datos_edicion= array(
-									'nombre_aspirante'=> $this->input->post('nombre'),
-									'ap_pa_aspirante'=> $this->input->post('a_p'),
-									'ap_ma_aspirante'=> $this->input->post('a_m'),
-									'email_aspirante'=> $this->input->post('email'),
-									'ciudad_aspirante'=> $this->input->post('ciudad'),
-									'estado_aspirante'=>$this->input->post('estado'),
-									'pais_aspirante'=> $this->input->post('pais'),
-									'fec_nac_aspirante'=>$this->input->post('fecha'),
-									'genero_aspirante'=> substr($this->input->post('g'),0,1),
-									'RFC_aspirante'=> $this->input->post('rfc'),
-									'CURP_aspirante'=> $this->input->post('curp'),
-									'estado_civil_aspirante'=> substr($this->input->post('e'),0,1),
-									'residencia_aspirante'=> $this->input->post('direc'),
-									'telefono_aspirante' => $this->input->post('tel'),
-									'institucion_aspirante'=>$this->input->post('ins'),
-									'cargo_aspirante'=>$this->input->post('car')
+									'nombre_alumno'=> $this->input->post('nombre'),
+									'ap_pa_alumno'=> $this->input->post('a_p'),
+									'ap_ma_alumno'=> $this->input->post('a_m'),
+									'email_alumno'=> $this->input->post('email'),
+									'ciudad_alumno'=> $this->input->post('ciudad'),
+									'estado_alumno'=>$this->input->post('estado'),
+									'pais_alumno'=> $this->input->post('pais'),
+									'fec_nac_alumno'=>$this->input->post('fecha'),
+									'genero_alumno'=> substr($this->input->post('g'),0,1),
+									'RFC_alumno'=> $this->input->post('rfc'),
+									'CURP_alumno'=> $this->input->post('curp'),
+									'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
+									'residencia_alumno'=> $this->input->post('direc'),
+									'telefono_alumno' => $this->input->post('tel'),
+									'institucion_alumno'=>$this->input->post('ins'),
+									'cargo_alumno'=>$this->input->post('car')
 								);
 									//$ge=substr($this->input->post('g'),0,1);
 									//$r=substr($ge,0,1);
@@ -142,7 +142,7 @@ class sise extends CI_Controller {
 									//die();
 										//var_dump($this->input->post('clave_aspirante'),'<br>',$data_datos_edicion);
 										//die();
-										$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
+										$this->sise_model->actualiza_datos_alumno($this->input->post('clave_aspirante'),$data_datos_edicion);
 										header('Location:'.base_url('index.php/sise/aspirantes').'');
 								}
 								}else{
@@ -150,6 +150,7 @@ class sise extends CI_Controller {
 
 						}
 				#fin formulario para la edición de los datos de aspirantes
+
 				#muetsra los privilegios que existen
 					public function nuevo_privilegio()
 					{
@@ -182,6 +183,7 @@ class sise extends CI_Controller {
 
 					}
 				#fin de los privilegios
+
 				#muestra las secciones que existen
 					public function secciones()
 					{
@@ -233,7 +235,9 @@ class sise extends CI_Controller {
 
 					}
 				#fin de privilegios con las secciones
+				
 				#muetra 
+				
 				#Muestra las modalidades
 					public function modalidad(){
 
@@ -255,6 +259,7 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#fin de las modalidades
+
 				#Muestra los programas actuales
 					public function programas()
 					{
@@ -272,6 +277,7 @@ class sise extends CI_Controller {
 
 					}
 				#fin de los programas
+
 				#Muestra los oferta_academica
 					public function oferta_academica()
 					{
@@ -289,6 +295,7 @@ class sise extends CI_Controller {
 
 					}
 				#fin de oferta_academica
+
 				#Muestra los experiencia_academica
 					public function experiencia_academica()
 					{
@@ -306,6 +313,7 @@ class sise extends CI_Controller {
 
 					}
 				#fin de experiencia_academica
+
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -363,6 +371,13 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
+					#Muestran los grupos
+						public function conformacion_grupos(){
+							#$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();
+
+						}
+					#fin muestran los grupos
+
 		//-----Formularios------------
 			//juan carlos
 
@@ -404,29 +419,29 @@ class sise extends CI_Controller {
 							}else{
 
 								$data_registro= array(
-									'nombre_aspirante'=> $this->input->post('nombre'),
-									'ap_pa_aspirante'=> $this->input->post('a_p'),
-									'ap_ma_aspirante'=> $this->input->post('a_m'),
-									'email_aspirante'=> $this->input->post('email'),
-									'ciudad_aspirante'=> $this->input->post('ciudad'),
-									'estado_aspirante'=>$this->input->post('estado'),
-									'pais_aspirante'=> $this->input->post('pais'),
-									'fec_nac_aspirante'=>$this->input->post('fecha'),
-									'genero_aspirante'=> $this->input->post('g'),
-									'RFC_aspirante'=> $this->input->post('rfc'),
-									'CURP_aspirante'=> $this->input->post('curp'),
-									'estado_civil_aspirante'=> $this->input->post('e'),
-									'residencia_aspirante'=> $this->input->post('direc'),
-									'telefono_aspirante' => $this->input->post('tel'),
-									'institucion_aspirante'=>$this->input->post('ins'),
-									'cargo_aspirante'=>$this->input->post('car')
+									'nombre_alumno'=> $this->input->post('nombre'),
+									'ap_pa_alumno'=> $this->input->post('a_p'),
+									'ap_ma_alumno'=> $this->input->post('a_m'),
+									'email_alumno'=> $this->input->post('email'),
+									'ciudad_alumno'=> $this->input->post('ciudad'),
+									'estado_alumno'=>$this->input->post('estado'),
+									'pais_alumno'=> $this->input->post('pais'),
+									'fec_nac_alumno'=>$this->input->post('fecha'),
+									'genero_alumno'=> $this->input->post('g'),
+									'RFC_alumno'=> $this->input->post('rfc'),
+									'CURP_alumno'=> $this->input->post('curp'),
+									'estado_civil_alumno'=> $this->input->post('e'),
+									'residencia_alumno'=> $this->input->post('direc'),
+									'telefono_alumno' => $this->input->post('tel'),
+									'institucion_alumno'=>$this->input->post('ins'),
+									'cargo_alumno'=>$this->input->post('car')
 								);
 
-								$clave_aspirante=$this->sise_model->insertar_aspirante($data_registro);
+								$clave_alumno=$this->sise_model->insertar_alumno($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
-									'id_persona'=>$clave_aspirante,
+									'id_persona'=>$clave_alumno,
 									'id_privilegio'=>1,
 									'activo'=>1
 								);

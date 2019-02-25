@@ -34,10 +34,10 @@
                           foreach ($aspirante as $asp) {
                         ?>
                             <tr>
-                              <td><?php echo $asp->nombre_aspirante; ?></td>
-                              <td><?php echo $asp->ap_pa_aspirante; ?></td>
-                              <td><?php echo $asp->ap_ma_aspirante; ?></td>
-                              <td><?php $fecha_nac= $asp->fec_nac_aspirante;
+                              <td><?php echo $asp->nombre_alumno; ?></td>
+                              <td><?php echo $asp->ap_pa_alumno; ?></td>
+                              <td><?php echo $asp->ap_ma_alumno; ?></td>
+                              <td><?php $fecha_nac= $asp->fec_nac_alumno;
 
                                  $dia=date("j");
                                  $mes=date("n");
@@ -59,17 +59,17 @@
                                                 //die();
                                  }
                                  echo $calc_edad; ?></td>
-                              <td><?php echo $asp->email_aspirante; ?></td>
-                              <td><?php if ($asp->genero_aspirante=='M') {
+                              <td><?php echo $asp->email_alumno; ?></td>
+                              <td><?php if ($asp->genero_alumno=='M') {
                                 $genero='Hombre';
-                              }elseif ($asp->genero_aspirante=='F') {
+                              }elseif ($asp->genero_alumno=='F') {
                                 $genero='Mujer';
                               }
                                 echo $genero; ?></td>
-                              <td><?php echo $asp->telefono_aspirante;?></td>
+                              <td><?php echo $asp->telefono_alumno;?></td>
                               <td>
                               <div class="col-md-6" style="margin-top:5px;">
-                                 <a href="<?php echo base_url();?>index.php/sise/edita_aspirante/<?php echo $asp->clave_aspirante;?>">
+                                 <a href="<?php echo base_url();?>index.php/sise/edita_aspirante/<?php echo $asp->clave_alumno;?>">
                                    <button class="btn ripple-infinite btn-round btn-warning">
                                     <div>
                                       <span>Editar</span>

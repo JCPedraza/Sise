@@ -132,8 +132,6 @@ class sise_model extends CI_Model{
 				header('Location: index');
 			}
 		#Fin elimina la sesión (logout)
-
-
 	//-------------------fin sesiones-------------------------
 
 	
@@ -156,10 +154,9 @@ class sise_model extends CI_Model{
 		#Delete
 
 		#Fin delete
-
-	
 	//-------------------fin usuarios-------------------------
 	
+
 	//-----------------------archivos-------------------------
         
         #consultas   
@@ -221,13 +218,14 @@ class sise_model extends CI_Model{
         #Delete
 
         #fin delete
-
     //---------------------fin archivos-----------------------
 
 
 
     //-----------------------prueba---------------------------
    	//---------------------fin prueba-------------------------
+
+
    	//-----------------------privilegios-------------------------
 		
 		#Consultas
@@ -285,24 +283,24 @@ class sise_model extends CI_Model{
 				$this->db->delete('privilegio_seccion', $data);
 			}
 		#Fin delete
-
-	
 	//-------------------fin privilegios-------------------------
-	//-----------------------aspirantes-------------------------
+
+
+	//-----------------------alumnos-------------------------
 		
 		#Consultas
 			function datos_aspirante($data){
 			$this->db->select('*');
-			$this->db->from('aspirante');
-			$this->db->where('clave_aspirante',$data);
+			$this->db->from('alumno');
+			$this->db->where('clave_alumno',$data);
 
-			$regresa_datos_aspirante = $this->db->get();
-			return $regresa_datos_aspirante->row_array();
+			$regresa_datos_alumno = $this->db->get();
+			return $regresa_datos_alumno->row_array();
 			}
 
 			function devuelve_aspirantes(){
-			$aspirante = $this->db->get('aspirante');
-			return $aspirante->result();
+			$alumno = $this->db->get('alumno');
+			return $alumno->result();
 			}
 			function secciones_en_privilegio($id_privilegio){
 				$this->db->select('*');
@@ -334,26 +332,25 @@ class sise_model extends CI_Model{
 		#Fin consultas
 		
 		#Inserciones
-			function insertar_aspirante($data){
-			$this->db->insert('aspirante',$data);
+			function insertar_alumno($data){
+			$this->db->insert('alumno',$data);
 			return $this->db->insert_id();
 			}
 		#Fin inserciones
 		
 		#Update
-			function actualiza_datos_aspirante($clave_aspirante,$data){
-			$this->db->where('clave_aspirante', $clave_aspirante);
-			$this->db->update('aspirante',$data);
+			function actualiza_datos_alumno($clave_alumno,$data){
+			$this->db->where('clave_alumno', $clave_alumno);
+			$this->db->update('alumno',$data);
 			}
 		#Fin update
 
 		#Delete
 
 		#Fin delete
+	//-------------------fin alumnos-------------------------
 
 	
-	//-------------------fin aspirantes-------------------------
-	//-------------------fin privilegios-------------------------
 	//-----------------------secciones-------------------------
 		
 		#Consultas
@@ -388,9 +385,8 @@ class sise_model extends CI_Model{
 		#Delete
 
 		#Fin delete
-
-	
 	//-------------------fin secciones-------------------------
+
 
 	//-------------------Modalidades---------------------------
 		#Consultas
@@ -425,6 +421,8 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//------------------fin modalidades-------------------
+
+
 	//-----------------------programas-------------------------
 		
 		#Consultas
@@ -459,6 +457,8 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//-------------------fin programas-------------------------
+
+
 	//-----------------------Oferta academica-------------------------
 		
 		#Consultas
@@ -481,6 +481,8 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//-------------------fin oferta academica-------------------------
+
+
 	//-----------------------experiencia acadeica-------------------------
 		
 		#Consultas
@@ -517,6 +519,8 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//-------------------fin experiencia academica-------------------------
+	
+
 	//-------------------Nivel Academico---------------------------
 		#Consultas
 			function devuelve_nivel_academico()
@@ -550,4 +554,47 @@ class sise_model extends CI_Model{
 		#Delete
 		#Fin delete
 	//------------------fin modalidades-------------------
+
+
+	//-------------------grupos---------------------------
+
+			#Consultas
+				/*function devolver_grupos_existenetes(){
+					$this->db->select('*');
+					$this->db->from('');
+					$devolver_grupos_existenetes = $this->db->get();
+					return $devolver_grupos_existenetes->result();
+				}*/
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+
+
+	//----------------fin grupos--------------------------
+
+
+
+	#plantilla
+	//-----------------nombre---------------
+			#Consultas
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin nombre---------------
+	#plantilla
+
 }
