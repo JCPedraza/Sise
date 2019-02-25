@@ -150,6 +150,7 @@ class sise extends CI_Controller {
 
 						}
 				#fin formulario para la edición de los datos de aspirantes
+						
 				#muetsra los privilegios que existen
 					public function nuevo_privilegio()
 					{
