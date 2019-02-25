@@ -332,16 +332,16 @@ class sise_model extends CI_Model{
 		#Fin consultas
 		
 		#Inserciones
-			function insertar_alumno($data){
-			$this->db->insert('alumno',$data);
-			return $this->db->insert_id();
+			function insertar_aspirante($data){
+				$this->db->insert('alumno',$data);
+				return $this->db->insert_id();
 			}
 		#Fin inserciones
 		
 		#Update
-			function actualiza_datos_alumno($clave_alumno,$data){
-			$this->db->where('clave_alumno', $clave_alumno);
-			$this->db->update('alumno',$data);
+			function actualiza_datos_aspirante($clave_alumno,$data){
+				$this->db->where('clave_alumno', $clave_alumno);
+				$this->db->update('alumno',$data);
 			}
 		#Fin update
 
