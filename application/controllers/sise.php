@@ -455,12 +455,14 @@ class sise extends CI_Controller {
 								);
 
 								$usuario=$this->sise_model->inserta_usuario($data_usuario);
+								header('Location:'.base_url('index.php/sise').'');
 
 							}
 							
 							
 						  }
 				    #fin formulario de registro
+					
 					#Formulario editar el privilegio
 						public function edita_privilegio(){
 							$this->sise_model->valida_sesion();
@@ -508,6 +510,7 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/privilegios').'');}
 						}
 					#fin del formulario de registro
+					
 					#Formulario de regitro nuevo
 						public function registro_nuevo_privilegio(){
 							$this->load->library('form_validation');
@@ -541,6 +544,7 @@ class sise extends CI_Controller {
 							}	
 						}
 					#fin formulario de uevo privilegio
+					
 					#formulario registro nueva seccion
 						public function registra_nueva_seccion(){
 							$this->load->library('form_validation');
@@ -577,6 +581,7 @@ class sise extends CI_Controller {
 							}	
 						}
 					#fin de registro nueva seccion
+					
 					#formulario edita seccion
 						public function edita_seccion(){
 							$this->sise_model->valida_sesion();
@@ -627,6 +632,7 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/secciones').'');}
 						}
 					#fin editar seccion
+					
 					#formulario agregar seccion al privilegio
 						public function agrega_seccion(){
 						$this->load->library('form_validation');
@@ -672,6 +678,7 @@ class sise extends CI_Controller {
 						}
 					 }
 					#fin formulario agregar seccion al privilegio
+					
 					#Nueva Modalidad
 						public function nueva_modalidad(){
 							$this->load->library('form_validation');
@@ -754,6 +761,7 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/modalidad').'');}
 						}
 					#fin edita modalidad
+					
 					#Formulario de nuevo programa
 						public function registro_nuevo_programa(){
 							$this->load->library('form_validation');
@@ -786,6 +794,7 @@ class sise extends CI_Controller {
 							}	
 						}
 					#fin formulario de nuevo programa
+					
 					#Formulario editar el privilegio
 						public function edita_programa(){
 							$this->sise_model->valida_sesion();
@@ -832,6 +841,7 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/programas').'');}
 						}
 					#fin del formulario de registro
+					
 					#Formulario de nueva oferta academica
 						public function registro_nueva_oferta_academica(){
 							$this->load->library('form_validation');
@@ -864,6 +874,7 @@ class sise extends CI_Controller {
 							}	
 						}
 					#fin formulario de nueva oferta academicas
+					
 					#Formulario de nueva experiencia academica
 								public function registro_nueva_experiencia_academica(){
 									$this->load->library('form_validation');
@@ -904,6 +915,7 @@ class sise extends CI_Controller {
 									}	
 								}
 					#fin formulario de nueva oferta academicas
+					
 					#Nuevo nivel Academico
 							public function nuevo_nivel_academico(){
 								$this->load->library('form_validation');
@@ -933,6 +945,7 @@ class sise extends CI_Controller {
 								}
 							}
 					#Fin nuevo nivel Academico
+
 					#edita nivel Academico
 							public function edita_nivel_academico(){
 									$this->sise_model->valida_sesion();
@@ -1004,7 +1017,7 @@ class sise extends CI_Controller {
 
 							if($resultado['total'] == 1){
 								$data_sesion = array(
-									'nombre' => $resultado['nombres'],
+									'nombre' => $resultado['nombre_alumno'],
 									'privilegio' => $resultado['nombre_privilegio'],
 									'id_privilegio' => $resultado['id_privilegio'],
 									'id_persona' => $resultado['id_persona'],
