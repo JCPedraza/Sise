@@ -38,13 +38,22 @@ class sise_model extends CI_Model{
 					$this->db->where('u.activo','1');
 				}*/
 
-				$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+				$this->db->select('u.*, count(*) AS total, p.*, al.*');
+				$this->db->from('usuario u');
+				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+				$this->db->join('alumno as al','al.clave_alumno = u.id_persona');
+				$this->db->where('u.usuario',$data['usuario']);
+				$this->db->where('u.contrasena',$data['contrasena']);
+				$this->db->where('u.activo','1');
+				
+
+				/*$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 				$this->db->from('usuario u');
 				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
 				$this->db->join('persona as pe','pe.id_persona = u.id_persona');
 				$this->db->where('u.usuario',$data['usuario']);
 				$this->db->where('u.contrasena',$data['contrasena']);
-				$this->db->where('u.activo','1');
+				$this->db->where('u.activo','1');*/
 
 				
 
@@ -407,6 +416,7 @@ class sise_model extends CI_Model{
 			$this->db->insert('seccion',$data);
 			return $this->db->insert_id();
 			}
+		
 		#Inserciones
 
 		#Fin inserciones
@@ -633,14 +643,6 @@ class sise_model extends CI_Model{
 
 	//-----------------------prueba---------------------------
 
-				function b($privilegio){
-					$privilegio="archivo";
-					$this->db->select('*');
-					$this->db->from('$privilegio');
-					$resultado = $this->db->get();
-                	return $resultado->result();
-
-				}
 
    	//---------------------fin prueba-------------------------
 
