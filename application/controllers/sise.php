@@ -371,6 +371,14 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
+					#
+						public function ingreso_datos_alumno(){
+							$data['a']=$this->sise_model->b();
+							var_dump($data['a']);
+
+						}
+					#
+
 					#Muestran los grupos
 						public function conformacion_grupos(){
 							#$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();

@@ -14,8 +14,30 @@ class sise_model extends CI_Model{
 	}
 
 	//-----------------------sesiones-------------------------
+		
 		#Validar usuario y contraseña
 			function valida_usuario($data){
+				
+				/*$privilegio = $this->consulta_privilegio($data);
+
+				if ($privilegio['nombre_privilegio']==3||$privilegio['nombre_privilegio']==4) {
+					$this->db->select('u.*, count(*) AS total, p.*, al.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('alumno as al','al.clave_alumno = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}else{
+					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('persona as pe','pe.id_persona = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}*/
+
 				$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 				$this->db->from('usuario u');
 				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
@@ -24,10 +46,24 @@ class sise_model extends CI_Model{
 				$this->db->where('u.contrasena',$data['contrasena']);
 				$this->db->where('u.activo','1');
 
+				
+
 				$query = $this->db->get();
 				return $query->row_array();
 			}
 		#fin de validar usuario y contraseña
+
+		#obtener privilegio para consulta de cuenta
+			function consulta_privilegio($data){
+				$this->db->select('p.nombre_privilegio');
+				$this->db->from('usuario u');
+				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+				$this->db->where('u.usuario',$data['usuario']);
+				$this->db->where('u.contrasena',$data['contrasena']);
+				$query = $this->db->get();
+				return $query->row_array();
+			}
+		#fin obtener privilegio para consulta de cuenta
 
 		#Creamos la sesión con los datos obtenidos del usuario
 			function crear_sesion($data){
@@ -220,12 +256,6 @@ class sise_model extends CI_Model{
         #fin delete
     //---------------------fin archivos-----------------------
 
-
-
-    //-----------------------prueba---------------------------
-   	//---------------------fin prueba-------------------------
-
-
    	//-----------------------privilegios-------------------------
 		
 		#Consultas
@@ -286,7 +316,7 @@ class sise_model extends CI_Model{
 	//-------------------fin privilegios-------------------------
 
 
-	//-----------------------alumnos-------------------------
+	//-----------------------aspirantes-------------------------
 		
 		#Consultas
 			function datos_aspirante($data){
@@ -348,8 +378,14 @@ class sise_model extends CI_Model{
 		#Delete
 
 		#Fin delete
-	//-------------------fin alumnos-------------------------
+	//-------------------fin aspirantes-------------------------
 
+	//----------------------alumnos-----------------------------
+			function aceptado(){
+				$data = $this->datos_sesion();
+				
+			}
+	//--------------------fin alumnos---------------------------
 	
 	//-----------------------secciones-------------------------
 		
@@ -575,8 +611,6 @@ class sise_model extends CI_Model{
 			
 			#Delete
 			#Fin Delete
-
-
 	//----------------fin grupos--------------------------
 
 
@@ -596,5 +630,19 @@ class sise_model extends CI_Model{
 			#Fin Delete
 	//-----------------fin nombre---------------
 	#plantilla
+
+	//-----------------------prueba---------------------------
+
+				function b($privilegio){
+					$privilegio="archivo";
+					$this->db->select('*');
+					$this->db->from('$privilegio');
+					$resultado = $this->db->get();
+                	return $resultado->result();
+
+				}
+
+   	//---------------------fin prueba-------------------------
+
 
 }
