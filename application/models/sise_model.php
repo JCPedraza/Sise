@@ -412,23 +412,24 @@ class sise_model extends CI_Model{
 		
 		#Consultas
 			function devuelve_seccion(){
-			$devuelve_seccion=$this->db->get('seccion');
-			return $devuelve_seccion->result();
+				$devuelve_seccion=$this->db->get('seccion');
+				return $devuelve_seccion->result();
 			}
 			function datos_seccion($data){
-			$this->db->select('*');
-			$this->db->from('seccion');
-			$this->db->where('id_seccion',$data);
+				$this->db->select('*');
+				$this->db->from('seccion');
+				$this->db->where('id_seccion',$data);
 
-			$regresa_datos_seccion = $this->db->get();
-			return $regresa_datos_seccion->row_array();
+				$regresa_datos_seccion = $this->db->get();
+				return $regresa_datos_seccion->row_array();
 			}
-		#Fin consultas
 			function registra_nueva_seccion($data){
-			$this->db->insert('seccion',$data);
-			return $this->db->insert_id();
+				$this->db->insert('seccion',$data);
+				return $this->db->insert_id();
 			}
-		
+
+		#Fin consultas
+			
 		#Inserciones
 
 		#Fin inserciones
