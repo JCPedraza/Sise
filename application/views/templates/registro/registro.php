@@ -111,7 +111,7 @@
                           </div>
 
                           <div class="col-md-12">
-                              <button class="submit btn btn-danger" type="submit" name="formulario" value="Submit"></button>
+                              <button class="submit btn btn-danger" type="submit" name="formulario" value="Submit">Guardar</button>
                           </div>
                       </form>
                     </div>

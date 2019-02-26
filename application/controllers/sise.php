@@ -236,7 +236,7 @@ class sise extends CI_Controller {
 					}
 				#fin de privilegios con las secciones
 				
-				#muetra 
+				#muestra 
 				
 				#Muestra las modalidades
 					public function modalidad(){
@@ -442,7 +442,7 @@ class sise extends CI_Controller {
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
 									'id_persona'=>$clave_alumno,
-									'id_privilegio'=>1,
+									'id_privilegio'=>3,
 									'activo'=>1
 								);
 
