@@ -126,13 +126,13 @@ class sise extends CI_Controller {
 									'pais_alumno'=> $this->input->post('pais'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> substr($this->input->post('g'),0,1),
-									'RFC_alumno'=> $this->input->post('rfc'),
-									'CURP_alumno'=> $this->input->post('curp'),
-									'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
+									#'RFC_alumno'=> $this->input->post('rfc'),
+									#'CURP_alumno'=> $this->input->post('curp'),
+									#'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
 									'residencia_alumno'=> $this->input->post('direc'),
-									'telefono_alumno' => $this->input->post('tel'),
-									'institucion_alumno'=>$this->input->post('ins'),
-									'cargo_alumno'=>$this->input->post('car')
+									#'telefono_alumno' => $this->input->post('tel'),
+									#'institucion_alumno'=>$this->input->post('ins'),
+									#'cargo_alumno'=>$this->input->post('car')
 								);
 									//$ge=substr($this->input->post('g'),0,1);
 									//$r=substr($ge,0,1);
@@ -371,20 +371,18 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
-					#
+					#Ingresar Datos De Alumnos
 						public function ingreso_datos_alumno(){
-							$data['a']=$this->sise_model->b();
-							var_dump($data['a']);
+							$data['alumno']=$this->sise_model->datos_alumno();
+							
 
 						}
-					#
+					#Fin Ingresar Datos De Alumnos
 
-					#Muestran los grupos
-						public function conformacion_grupos(){
-							#$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();
 
-						}
-					#fin muestran los grupos
+					#Aceptar Aspirantes
+
+					#Fin Aceptar Aspirantes
 
 		//-----Formularios------------
 			//juan carlos
@@ -407,7 +405,7 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
-							//$this->form_validation->set_rules('g', 'Género', 'required');
+							$this->form_validation->set_rules('g', 'Género', 'required');
 							#$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
 							#$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('e','Estado Civil', 'required');
