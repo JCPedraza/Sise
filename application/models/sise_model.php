@@ -39,8 +39,13 @@ class sise_model extends CI_Model{
 				}*/
 
 				$privilegio = $this->consulta_privilegio($data);
+<<<<<<< HEAD
 				
 				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4) {
+=======
+
+				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
+>>>>>>> e05701ec49c28e38ca399d76a915268187625451
 					$this->db->select('u.*, count(*) AS total, p.*, al.*');
 					$this->db->from('usuario u');
 					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
@@ -401,12 +406,50 @@ class sise_model extends CI_Model{
 		#Fin delete
 	//-------------------fin aspirantes-------------------------
 
+<<<<<<< HEAD
 	//----------------------alumnos-----------------------------
 			function aceptado(){
 				$data = $this->datos_sesion();
 				
 			}
 	//--------------------fin alumnos---------------------------
+=======
+	//-----------------alumno---------------
+			#Consultas
+				
+				function aceptado(){
+					$data = $this->datos_sesion();
+				}
+
+				function datos_alumno($data){
+					$this->db->select('*');
+					$this->db->from('alumno');
+					$this->db->where('clave_alumno',$data);
+
+					$regresa_datos_alumno = $this->db->get();
+					return $regresa_datos_alumno->row_array();
+				}
+
+
+			#Fin Consultas
+
+			#Inserciones
+
+
+			#Fin Inserciones
+			
+			#Update
+
+
+			#Fin Update
+			
+			#Delete
+
+
+			#Fin Delete
+	//-----------------fin alumno---------------
+	
+>>>>>>> e05701ec49c28e38ca399d76a915268187625451
 	
 	//-----------------------secciones-------------------------
 		
@@ -428,6 +471,7 @@ class sise_model extends CI_Model{
 				return $this->db->insert_id();
 			}
 
+<<<<<<< HEAD
 
 		#Fin consultas
 			
@@ -436,6 +480,10 @@ class sise_model extends CI_Model{
 		#Fin consultas
 			
 
+=======
+		#Fin consultas
+			
+>>>>>>> e05701ec49c28e38ca399d76a915268187625451
 		#Inserciones
 
 		#Fin inserciones
@@ -551,6 +599,7 @@ class sise_model extends CI_Model{
 	//-----------------------experiencia acadeica-------------------------
 		
 		#Consultas
+<<<<<<< HEAD
 
 			function devuelve_experiencia_academica(){
 				$this->db->select('n_a.*, e_a.*');
@@ -558,6 +607,15 @@ class sise_model extends CI_Model{
 				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');
 				$this->db->where('e_a.nivel_academico= n_a.clave_exp_aca');
 
+=======
+
+			function devuelve_experiencia_academica(){
+				$this->db->select('n_a.*, e_a.*');
+				$this->db->from('nivel_academico n_a');
+				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');
+				$this->db->where('e_a.nivel_academico= n_a.clave_exp_aca');
+
+>>>>>>> e05701ec49c28e38ca399d76a915268187625451
 				$devuelve_experiencia_academica = $this->db->get();
 				return $devuelve_experiencia_academica->result();
 			}
@@ -644,6 +702,10 @@ class sise_model extends CI_Model{
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e05701ec49c28e38ca399d76a915268187625451
 	#plantilla
 	//-----------------nombre---------------
 			#Consultas

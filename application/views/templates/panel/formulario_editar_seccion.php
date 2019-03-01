@@ -29,12 +29,17 @@
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Descripción</label>
                               <div class="col-sm-10"><input type="text" name="des_sec" class="form-control android" value="<?php if(set_value('des_sec')) echo set_value('des_sec'); else {if($seccion) echo $seccion['descripcion'];}?>"></div>
                             </div>
-                             <div class="form-group"><label class="col-sm-2 control-label text-right">Url</label>
+                            <div class="form-group"><label class="col-sm-2 control-label text-right">Url</label>
                               <div class="col-sm-10"><input type="text" name="url" class="form-control android" value="<?php if(set_value('url')) echo set_value('url'); else {if($seccion) echo $seccion['url'];}?>"></div>
                             </div>
+                            <div class="form-group"><label class="col-sm-2 control-label text-right">Url</label>
+                              <div class="col-sm-10">
+                                <input type="checkbox" name="url" class="form-control android" value="<?php if(set_value('url')) echo set_value('url'); else {if($seccion) echo $seccion['url'];}?>">
+                              </div>
+                            </div>
+                            <input type="hidden" name="activo" value="<?php echo $seccion['activo']; ?>">
                             <input type="hidden" name="id_seccion" value="<?php echo $seccion['id_seccion']; ?>">
                             <input type="hidden" name="icono" value="<?php echo $seccion['icono']; ?>">
-                            <input type="hidden" name="activo" value="<?php echo $seccion['activo']; ?>">
       </br>
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
