@@ -39,8 +39,8 @@ class sise_model extends CI_Model{
 				}*/
 
 				$privilegio = $this->consulta_privilegio($data);
-				
-				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4) {
+
+				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
 					$this->db->select('u.*, count(*) AS total, p.*, al.*');
 					$this->db->from('usuario u');
 					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
@@ -401,12 +401,41 @@ class sise_model extends CI_Model{
 		#Fin delete
 	//-------------------fin aspirantes-------------------------
 
-	//----------------------alumnos-----------------------------
-			function aceptado(){
-				$data = $this->datos_sesion();
+	//-----------------alumno---------------
+			#Consultas
 				
-			}
-	//--------------------fin alumnos---------------------------
+				function aceptado(){
+					$data = $this->datos_sesion();
+				}
+
+				function datos_alumno($data){
+					$this->db->select('*');
+					$this->db->from('alumno');
+					$this->db->where('clave_alumno',$data);
+
+					$regresa_datos_alumno = $this->db->get();
+					return $regresa_datos_alumno->row_array();
+				}
+
+
+			#Fin Consultas
+
+			#Inserciones
+
+
+			#Fin Inserciones
+			
+			#Update
+
+
+			#Fin Update
+			
+			#Delete
+
+
+			#Fin Delete
+	//-----------------fin alumno---------------
+	
 	
 	//-----------------------secciones-------------------------
 		
@@ -635,6 +664,7 @@ class sise_model extends CI_Model{
 			#Delete
 			#Fin Delete
 	//----------------fin grupos--------------------------
+
 
 
 

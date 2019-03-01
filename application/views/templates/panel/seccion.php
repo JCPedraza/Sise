@@ -46,7 +46,7 @@
             <td><?php if ($sec->activo>0) {
               
               $r='fa-check';
-            }else{ $r='fa-times';}?><i aling="Centerr" class="fa <?php echo $r?>"></i></td>
+            }else{ $r='fa-times';}?><i aling="center" class="fa <?php echo $r?>"></i></td>
 		        <td>
                               <div class="col-md-6" style="margin-top:5px;">
                                  <a href="<?php echo base_url();?>index.php/sise/edita_seccion/<?php echo $sec->id_seccion;?>">
