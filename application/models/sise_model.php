@@ -14,20 +14,77 @@ class sise_model extends CI_Model{
 	}
 
 	//-----------------------sesiones-------------------------
+		
 		#Validar usuario y contraseña
 			function valida_usuario($data){
-				$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+				
+				/*$privilegio = $this->consulta_privilegio($data);
+
+				if ($privilegio['nombre_privilegio']==3||$privilegio['nombre_privilegio']==4) {
+					$this->db->select('u.*, count(*) AS total, p.*, al.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('alumno as al','al.clave_alumno = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}else{
+					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('persona as pe','pe.id_persona = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}*/
+
+				$privilegio = $this->consulta_privilegio($data);
+				
+				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4) {
+					$this->db->select('u.*, count(*) AS total, p.*, al.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('alumno as al','al.clave_alumno = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}else{
+					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('persona as pe','pe.id_persona = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
+				}
+				
+
+				/*$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 				$this->db->from('usuario u');
 				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
 				$this->db->join('persona as pe','pe.id_persona = u.id_persona');
 				$this->db->where('u.usuario',$data['usuario']);
 				$this->db->where('u.contrasena',$data['contrasena']);
-				$this->db->where('u.activo','1');
+				$this->db->where('u.activo','1');*/
+
+				
 
 				$query = $this->db->get();
 				return $query->row_array();
 			}
 		#fin de validar usuario y contraseña
+
+		#obtener privilegio para consulta de cuenta
+			function consulta_privilegio($data){
+				$this->db->select('p.id_privilegio');
+				$this->db->from('usuario u');
+				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+				$this->db->where('u.usuario',$data['usuario']);
+				$this->db->where('u.contrasena',$data['contrasena']);
+				$query = $this->db->get();
+				return $query->row_array();
+			}
+		#fin obtener privilegio para consulta de cuenta
 
 		#Creamos la sesión con los datos obtenidos del usuario
 			function crear_sesion($data){
@@ -132,8 +189,6 @@ class sise_model extends CI_Model{
 				header('Location: index');
 			}
 		#Fin elimina la sesión (logout)
-
-
 	//-------------------fin sesiones-------------------------
 
 	
@@ -156,10 +211,9 @@ class sise_model extends CI_Model{
 		#Delete
 
 		#Fin delete
-
-	
 	//-------------------fin usuarios-------------------------
 	
+
 	//-----------------------archivos-------------------------
         
         #consultas   
@@ -221,13 +275,8 @@ class sise_model extends CI_Model{
         #Delete
 
         #fin delete
-
     //---------------------fin archivos-----------------------
 
-
-
-    //-----------------------prueba---------------------------
-   	//---------------------fin prueba-------------------------
    	//-----------------------privilegios-------------------------
 		
 		#Consultas
@@ -285,24 +334,24 @@ class sise_model extends CI_Model{
 				$this->db->delete('privilegio_seccion', $data);
 			}
 		#Fin delete
-
-	
 	//-------------------fin privilegios-------------------------
+
+
 	//-----------------------aspirantes-------------------------
 		
 		#Consultas
 			function datos_aspirante($data){
 			$this->db->select('*');
-			$this->db->from('aspirante');
-			$this->db->where('clave_aspirante',$data);
+			$this->db->from('alumno');
+			$this->db->where('clave_alumno',$data);
 
-			$regresa_datos_aspirante = $this->db->get();
-			return $regresa_datos_aspirante->row_array();
+			$regresa_datos_alumno = $this->db->get();
+			return $regresa_datos_alumno->row_array();
 			}
 
 			function devuelve_aspirantes(){
-			$aspirante = $this->db->get('aspirante');
-			return $aspirante->result();
+			$alumno = $this->db->get('alumno');
+			return $alumno->result();
 			}
 			function secciones_en_privilegio($id_privilegio){
 				$this->db->select('*');
@@ -335,45 +384,58 @@ class sise_model extends CI_Model{
 		
 		#Inserciones
 			function insertar_aspirante($data){
-			$this->db->insert('aspirante',$data);
-			return $this->db->insert_id();
+				$this->db->insert('alumno',$data);
+				return $this->db->insert_id();
 			}
 		#Fin inserciones
 		
 		#Update
-			function actualiza_datos_aspirante($clave_aspirante,$data){
-			$this->db->where('clave_aspirante', $clave_aspirante);
-			$this->db->update('aspirante',$data);
+			function actualiza_datos_aspirante($clave_alumno,$data){
+				$this->db->where('clave_alumno', $clave_alumno);
+				$this->db->update('alumno',$data);
 			}
 		#Fin update
 
 		#Delete
 
 		#Fin delete
-
-	
 	//-------------------fin aspirantes-------------------------
-	//-------------------fin privilegios-------------------------
+
+	//----------------------alumnos-----------------------------
+			function aceptado(){
+				$data = $this->datos_sesion();
+				
+			}
+	//--------------------fin alumnos---------------------------
+	
 	//-----------------------secciones-------------------------
 		
 		#Consultas
 			function devuelve_seccion(){
-			$devuelve_seccion=$this->db->get('seccion');
-			return $devuelve_seccion->result();
+				$devuelve_seccion=$this->db->get('seccion');
+				return $devuelve_seccion->result();
 			}
 			function datos_seccion($data){
-			$this->db->select('*');
-			$this->db->from('seccion');
-			$this->db->where('id_seccion',$data);
+				$this->db->select('*');
+				$this->db->from('seccion');
+				$this->db->where('id_seccion',$data);
 
-			$regresa_datos_seccion = $this->db->get();
-			return $regresa_datos_seccion->row_array();
+				$regresa_datos_seccion = $this->db->get();
+				return $regresa_datos_seccion->row_array();
 			}
-		#Fin consultas
 			function registra_nueva_seccion($data){
-			$this->db->insert('seccion',$data);
-			return $this->db->insert_id();
+				$this->db->insert('seccion',$data);
+				return $this->db->insert_id();
 			}
+
+
+		#Fin consultas
+			
+
+
+		#Fin consultas
+			
+
 		#Inserciones
 
 		#Fin inserciones
@@ -388,7 +450,220 @@ class sise_model extends CI_Model{
 		#Delete
 
 		#Fin delete
-
-	
 	//-------------------fin secciones-------------------------
+
+
+	//-------------------Modalidades---------------------------
+		#Consultas
+			function devuelve_modalida()
+			{
+				$devuelve_modalidad=$this->db->get('modalidad');
+				return $devuelve_modalidad->result();
+			}
+			function datos_modalidad($data){
+				$this->db->select('*');
+				$this->db->from('modalidad');
+				$this->db->where('clave_mod',$data);
+
+				$regresa_datos_modalidad = $this->db->get();
+				return $regresa_datos_modalidad->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_modalidad($data){
+				$this->db->insert('modalidad',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_modalidad($clave_mod,$data){
+				$this->db->where('clave_mod', $clave_mod);
+				$this->db->update('modalidad',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//------------------fin modalidades-------------------
+
+
+	//-----------------------programas-------------------------
+		
+		#Consultas
+
+			function devuelve_programa(){
+				$devuelve_programa=$this->db->get('programa');
+				return $devuelve_programa->result();
+			}
+			function datos_programa($data){
+				$this->db->select('*');
+				$this->db->from('programa');
+				$this->db->where('clave_programa',$data);
+
+				$regresa_datos_programa = $this->db->get();
+				return $regresa_datos_programa->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nuevo_programa($data){
+				$this->db->insert('programa',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_programa($clave_programa,$data){
+				$this->db->where('clave_programa', $clave_programa);
+				$this->db->update('programa',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin programas-------------------------
+
+
+	//-----------------------Oferta academica-------------------------
+		
+		#Consultas
+
+			function devuelve_oferta_academica(){
+				$devuelve_oferta_academica=$this->db->get('oferta_academica');
+				return $devuelve_oferta_academica->result();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nueva_oferta_academica($data){
+				$this->db->insert('oferta_academica',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin oferta academica-------------------------
+
+
+	//-----------------------experiencia acadeica-------------------------
+		
+		#Consultas
+
+			function devuelve_experiencia_academica(){
+				$this->db->select('n_a.*, e_a.*');
+				$this->db->from('nivel_academico n_a');
+				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');
+				$this->db->where('e_a.nivel_academico= n_a.clave_exp_aca');
+
+				$devuelve_experiencia_academica = $this->db->get();
+				return $devuelve_experiencia_academica->result();
+			}
+			function datos_experiencia($data){
+				$this->db->select('n_a.*, e_a.*');
+				$this->db->from('nivel_academico n_a');
+				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');;
+				$this->db->where('e_a.clave_exp_aca',$data);
+
+				$regresa_datos_esperiencia = $this->db->get();
+				return $regresa_datos_esperiencia->result();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function registro_nueva_experiencia_academica($data){
+				$this->db->insert('experiencia_academica',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//-------------------fin experiencia academica-------------------------
+	
+
+	//-------------------Nivel Academico---------------------------
+		#Consultas
+			function devuelve_nivel_academico()
+			{
+				$devuelve_nivel_academico=$this->db->get('nivel_academico');
+				return $devuelve_nivel_academico->result();
+			}
+			function datos_nivel($data){
+				$this->db->select('*');
+				$this->db->from('nivel_academico');
+				$this->db->where('clave_exp_aca',$data);
+
+				$regresa_datos_nivel = $this->db->get();
+				return $regresa_datos_nivel->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_nivel_academico($data){
+				$this->db->insert('nivel_academico',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_nivel_academico($clave_ex,$data){
+				$this->db->where('clave_exp_aca', $clave_ex);
+				$this->db->update('nivel_academico',$data);
+			}
+		#Fin update
+
+		#Delete
+		#Fin delete
+	//------------------fin modalidades-------------------
+
+
+	//-------------------grupos---------------------------
+
+			#Consultas
+				/*function devolver_grupos_existenetes(){
+					$this->db->select('*');
+					$this->db->from('');
+					$devolver_grupos_existenetes = $this->db->get();
+					return $devolver_grupos_existenetes->result();
+				}*/
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//----------------fin grupos--------------------------
+
+
+
+	#plantilla
+	//-----------------nombre---------------
+			#Consultas
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin nombre---------------
+	#plantilla
+
+	//-----------------------prueba---------------------------
+
+
+   	//---------------------fin prueba-------------------------
+
+
 }

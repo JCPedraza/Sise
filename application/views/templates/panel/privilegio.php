@@ -25,7 +25,6 @@
                                 </button>
                             </a>
                       	</div>
-                      </div>
                       <div class="responsive-table">
 
                       <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
