@@ -126,7 +126,7 @@ class sise extends CI_Controller {
 									'pais_alumno'=> $this->input->post('pais'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> substr($this->input->post('g'),0,1),
-<<<<<<< HEAD
+
 									'RFC_alumno'=> $this->input->post('rfc'),
 									'CURP_alumno'=> $this->input->post('curp'),
 									'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
@@ -134,7 +134,7 @@ class sise extends CI_Controller {
 									'telefono_alumno' => $this->input->post('tel'),
 									'institucion_alumno'=>$this->input->post('ins'),
 									'cargo_alumno'=>$this->input->post('car')
-=======
+
 									#'RFC_alumno'=> $this->input->post('rfc'),
 									#'CURP_alumno'=> $this->input->post('curp'),
 									#'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
@@ -142,7 +142,7 @@ class sise extends CI_Controller {
 									#'telefono_alumno' => $this->input->post('tel'),
 									#'institucion_alumno'=>$this->input->post('ins'),
 									#'cargo_alumno'=>$this->input->post('car')
->>>>>>> e05701ec49c28e38ca399d76a915268187625451
+
 								);
 									//$ge=substr($this->input->post('g'),0,1);
 									//$r=substr($ge,0,1);
@@ -381,7 +381,7 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
-<<<<<<< HEAD
+
 					#
 						public function ingreso_datos_alumno(){
 							$data['a']=$this->sise_model->b();
@@ -396,7 +396,7 @@ class sise extends CI_Controller {
 
 						}
 					#fin muestran los grupos
-=======
+
 					#Ingresar Datos De Alumnos
 						public function ingreso_datos_alumno(){
 							$data['alumno']=$this->sise_model->datos_alumno();
@@ -409,7 +409,7 @@ class sise extends CI_Controller {
 					#Aceptar Aspirantes
 
 					#Fin Aceptar Aspirantes
->>>>>>> e05701ec49c28e38ca399d76a915268187625451
+
 
 		//-----Formularios------------
 			//juan carlos
@@ -432,11 +432,11 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
-<<<<<<< HEAD
+
 							//$this->form_validation->set_rules('g', 'Género', 'required');
-=======
+
 							$this->form_validation->set_rules('g', 'Género', 'required');
->>>>>>> e05701ec49c28e38ca399d76a915268187625451
+
 							#$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
 							#$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
 							//$this->form_validation->set_rules('e','Estado Civil', 'required');
@@ -452,15 +452,15 @@ class sise extends CI_Controller {
 								$this->load->view('templates/registro/header');
 								$this->load->view('templates/registro/registro');
 								$this->load->view('templates/registro/footer');
-<<<<<<< HEAD
+
 
 							}else{
 
-=======
+
 
 							}else{
 
->>>>>>> e05701ec49c28e38ca399d76a915268187625451
+
 								$data_registro= array(
 									'nombre_alumno'=> $this->input->post('nombre'),
 									'ap_pa_alumno'=> $this->input->post('a_p'),
