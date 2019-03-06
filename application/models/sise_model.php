@@ -688,12 +688,6 @@ class sise_model extends CI_Model{
 			#Fin Delete
 	//----------------fin grupos--------------------------
 
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> e05701ec49c28e38ca399d76a915268187625451
 	#plantilla
 	//-----------------nombre---------------
 			#Consultas
