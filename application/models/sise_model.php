@@ -39,8 +39,6 @@ class sise_model extends CI_Model{
 				}*/
 
 				$privilegio = $this->consulta_privilegio($data);
-				
-				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4) {
 
 				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
 					$this->db->select('u.*, count(*) AS total, p.*, al.*');
@@ -412,9 +410,9 @@ class sise_model extends CI_Model{
 	//-----------------alumno---------------
 			#Consultas
 				
-				function aceptado(){
-					$data = $this->datos_sesion();
-				}
+				/*function aceptado(){
+					//$data = $this->datos_sesion();
+				}*/
 
 				function datos_alumno($data){
 					$this->db->select('*');
@@ -493,8 +491,7 @@ class sise_model extends CI_Model{
 
 	//-------------------Modalidades---------------------------
 		#Consultas
-			function devuelve_modalida()
-			{
+			function devuelve_modalida(){
 				$devuelve_modalidad=$this->db->get('modalidad');
 				return $devuelve_modalidad->result();
 			}
@@ -591,13 +588,13 @@ class sise_model extends CI_Model{
 		#Consultas
 
 
-			function devuelve_experiencia_academica(){
+			/*function devuelve_experiencia_academica(){
 				$this->db->select('n_a.*, e_a.*');
 				$this->db->from('nivel_academico n_a');
 				$this->db->join('experiencia_academica as e_a','e_a.nivel_academico= n_a.clave_exp_aca','left');
 				$this->db->where('e_a.nivel_academico= n_a.clave_exp_aca');
 
-
+			}*/
 			function devuelve_experiencia_academica(){
 				$this->db->select('n_a.*, e_a.*');
 				$this->db->from('nivel_academico n_a');
@@ -708,6 +705,4 @@ class sise_model extends CI_Model{
 
 
    	//---------------------fin prueba-------------------------
-
-
 }
