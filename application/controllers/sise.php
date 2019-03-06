@@ -133,7 +133,7 @@ class sise extends CI_Controller {
 									'residencia_alumno'=> $this->input->post('direc'),
 									'telefono_alumno' => $this->input->post('tel'),
 									'institucion_alumno'=>$this->input->post('ins'),
-									'cargo_alumno'=>$this->input->post('car')
+									'cargo_alumno'=>$this->input->post('car'),
 
 									#'RFC_alumno'=> $this->input->post('rfc'),
 									#'CURP_alumno'=> $this->input->post('curp'),
@@ -397,9 +397,9 @@ class sise extends CI_Controller {
 						}
 					#fin muestran los grupos
 
-					#Ingresar Datos De Alumnos
-						public function ingreso_datos_alumno(){
-							$data['alumno']=$this->sise_model->datos_alumno();
+					#Ingresar Datos De Alumnos le agrege la s
+						public function ingreso_datos_alumnos(){
+							#$data['alumno']=$this->sise_model->datos_alumno();
 							
 
 						}
@@ -452,10 +452,6 @@ class sise extends CI_Controller {
 								$this->load->view('templates/registro/header');
 								$this->load->view('templates/registro/registro');
 								$this->load->view('templates/registro/footer');
-
-
-							}else{
-
 
 
 							}else{
