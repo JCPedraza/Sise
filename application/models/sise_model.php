@@ -39,8 +39,6 @@ class sise_model extends CI_Model{
 				}*/
 
 				$privilegio = $this->consulta_privilegio($data);
-				
-				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4) {
 
 				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
 					$this->db->select('u.*, count(*) AS total, p.*, al.*');
@@ -73,7 +71,6 @@ class sise_model extends CI_Model{
 
 				$query = $this->db->get();
 				return $query->row_array();
-				}
 			}
 		#fin de validar usuario y contraseña
 

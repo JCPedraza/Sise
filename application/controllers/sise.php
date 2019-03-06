@@ -1047,21 +1047,30 @@ class sise extends CI_Controller {
 							$resultado = $this->sise_model->valida_usuario($data);
 
 							if($resultado['total'] == 1){
-								$data_sesion = array(
-									'nombre' => $resultado['nombre_alumno'],
-									'privilegio' => $resultado['nombre_privilegio'],
-									'id_privilegio' => $resultado['id_privilegio'],
-									'id_persona' => $resultado['id_persona'],
-									'id_usuario' => $resultado['id_usuario'],
-									);
-
+								if ($resultado['id_privilegio']!=1) {								
+									$data_sesion = array(
+										'nombre' => $resultado['nombre_alumno'],
+										'privilegio' => $resultado['nombre_privilegio'],
+										'id_privilegio' => $resultado['id_privilegio'],
+										'id_persona' => $resultado['id_persona'],
+										'id_usuario' => $resultado['id_usuario'],
+										);
+								}else{
+									$data_sesion = array(
+										'nombre' => $resultado['nombres'],
+										'privilegio' => $resultado['nombre_privilegio'],
+										'id_privilegio' => $resultado['id_privilegio'],
+										'id_persona' => $resultado['id_persona'],
+										'id_usuario' => $resultado['id_usuario'],
+										);
+								}
 
 
 								if($this->sise_model->crear_sesion($data_sesion)){
 									//die(var_dump($this->sise_model->datos_sesion()));
 									header('Location:'.base_url('index.php/sise/panel').'');}
 								else
-									header('Location:'.base_url('index.php/vasura/').'');
+									header('Location:'.base_url('index.php/basura/').'');
 
 							}else{
 								header('Location:'.base_url('index.php/sise?error=1').'');
