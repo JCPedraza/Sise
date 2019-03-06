@@ -37,7 +37,11 @@
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Teléfono</label>
                               <div class="col-sm-10"><input type="text" name="tel" class="form-control android" value="<?php if(set_value('tel')) echo set_value('tel'); else {if($aspirante) echo $aspirante['telefono_alumno'];}?>"></div>
                             </div>
-                            <h1>Datos Que no Puedes Editar</h1>
+                            <?php
+                                echo $aspirante['estatus'];  
+                                  if ($aspirante['estatus']!=3) {
+                                    
+                                  }?>
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Ciudad</label>
                               <div class="col-sm-10"><input type="text" name="ciudad" class="form-control android" value="<?php if(set_value('ciudad')) echo set_value('ciudad'); else {if($aspirante)echo $aspirante['ciudad_alumno'];}?>"></div>
                             </div>
@@ -71,6 +75,7 @@
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Cargo</label>
                               <div class="col-sm-10"><input type="text" name="car" class="form-control android" value="<?php if(set_value('car')) echo set_value('car'); else {if($aspirante) echo $aspirante['cargo_alumno'];}?>"></div>
                             </div>
+                            */?>
                             <input type="hidden" name="clave_aspirante" value="<?php echo $aspirante['clave_alumno']; ?>">
       </br>
                           </div>

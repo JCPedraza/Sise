@@ -48,17 +48,15 @@
                                  $dia_nac=substr($fecha_nac, 8, 2);
                                  //
                                  if($mes_nac>$mes){
-                                 $calc_edad= $anno-$anno_nac-1;
-                                 }else{
-                                 if($mes==$mes_nac AND $dia_nac>$dia){
-                                 $calc_edad= $anno-$anno_nac-1;  
-                                 }else{
-                                 $calc_edad= $anno-$anno_nac;
-                                 }
-                                 //var_dump($calc_edad);
-                                                //die();
-                                 }
-                                 echo $calc_edad; ?></td>
+                                   $calc_edad= $anno-$anno_nac-1;
+                                   }else{
+                                   if($mes==$mes_nac AND $dia_nac>$dia){
+                                   $calc_edad= $anno-$anno_nac-1;  
+                                   }else{
+                                   $calc_edad= $anno-$anno_nac;
+                                   }
+                                   }
+                                   echo $calc_edad;?></td>
                               <td><?php echo $asp->email_alumno; ?></td>
                               <td><?php if ($asp->genero_alumno=='M') {
                                 $genero='Hombre';
