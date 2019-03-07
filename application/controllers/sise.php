@@ -324,6 +324,8 @@ class sise extends CI_Controller {
 					}
 				#fin de experiencia_academica
 
+				#
+
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -473,9 +475,10 @@ class sise extends CI_Controller {
 									'residencia_alumno'=> $this->input->post('direc'),
 									'telefono_alumno' => $this->input->post('tel'),
 									'institucion_alumno'=>$this->input->post('ins'),
-									'cargo_alumno'=>$this->input->post('car')
+									'cargo_alumno'=>$this->input->post('car'),
+									'estatus'=>1
 								);
-
+								
 								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
@@ -977,7 +980,7 @@ class sise extends CI_Controller {
 							}
 					#Fin nuevo nivel Academico
 
-					#edita nivel Academico
+					#Edita nivel Academico
 							public function edita_nivel_academico(){
 									$this->sise_model->valida_sesion();
 									$this->load->library('form_validation');
@@ -1025,6 +1028,56 @@ class sise extends CI_Controller {
 							}
 
 					#fin edita nivel Academico
+
+					#Formulario de personal
+							public function personal(){
+								$this->sise_model->valida_sesion();
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
+
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+
+								$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
+								$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
+								$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
+								$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
+								$this->form_validation->set_rules('contra','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
+								$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
+								if ($this->form_validation->run() == FALSE) {
+										$this->load->view('templates/panel/header',$data);
+										$this->load->view('templates/panel/menu',$data);
+										$this->load->view('templates/panel/formulario_personal');
+										$this->load->view('templates/panel/footer');
+									}else{
+										$data_personal= array(
+											'nombres_personal'=> $this->input->post('nombre'),
+											'ap_paterno_personal'=> $this->input->post('a_p'),
+											'ap_materno_personal'=> $this->input->post('a_m'),
+											'rfc_personal'=> $this->input->post('rfc'),
+											'fecha_ingreso_ciidet'=>$this->input->post('fecha'),
+											'genero_personal'=> $this->input->post('g'),
+											'especialidad_personal'=>$this->input->post('especialidad')
+										);
+										//var_dump($data_personal);
+										//die();
+										$clave_personal=$this->sise_model->insertar_personal($data_personal);
+										
+										$data_usuario= array(
+											'usuario'=>$this->input->post('email'),
+											'contrasena'=>md5($this->input->post('contra')),
+											'id_persona'=>$clave_personal,
+											'id_privilegio'=>2,
+											'activo'=>1
+										);
+										//var_dump($data_usuario);
+										//die();
+										$usuario=$this->sise_model->inserta_usuario($data_usuario);
+										header('Location:'.base_url('index.php/sise/panel').'');
+
+									}
+							}
+					#Fin del formulario del personal
 
 			//joan alonso
 

@@ -705,4 +705,24 @@ class sise_model extends CI_Model{
 
 
    	//---------------------fin prueba-------------------------
+
+    //-----------------------personal-------------------------
+		
+		#Consultas
+		#Fin consultas
+		
+		#Inserciones
+			function insertar_personal($data){
+				$this->db->insert('personal',$data);
+				return $this->db->insert_id();
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+
+		#Fin delete
+	//-------------------fin personal-------------------------
 }
