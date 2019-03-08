@@ -66,11 +66,13 @@ class sise extends CI_Controller {
 				#muestra los aspirantes registrados
 					public function aspirantes(){
 						$this->sise_model->valida_sesion();
-						
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						$data['aspirante'] = $this->sise_model->devuelve_aspirantes();
+						$data['aspirante']=$this->sise_model->devuelve_aspirantes();
+						$data['privilegio']=$this->sise_model->devuelve_privilegio();
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -1100,9 +1102,17 @@ class sise extends CI_Controller {
 							$resultado = $this->sise_model->valida_usuario($data);
 
 							if($resultado['total'] == 1){
-								if ($resultado['id_privilegio']!=1) {								
+								if ($resultado['id_privilegio']==3||$resultado['id_privilegio']==4||$resultado['id_privilegio']==5) {								
 									$data_sesion = array(
 										'nombre' => $resultado['nombre_alumno'],
+										'privilegio' => $resultado['nombre_privilegio'],
+										'id_privilegio' => $resultado['id_privilegio'],
+										'id_persona' => $resultado['id_persona'],
+										'id_usuario' => $resultado['id_usuario'],
+										);
+								}elseif($resultado['id_privilegio']==2){
+									$data_sesion = array(
+										'nombre' => $resultado['nombres_personal'],
 										'privilegio' => $resultado['nombre_privilegio'],
 										'id_privilegio' => $resultado['id_privilegio'],
 										'id_persona' => $resultado['id_persona'],
@@ -1117,7 +1127,8 @@ class sise extends CI_Controller {
 										'id_usuario' => $resultado['id_usuario'],
 										);
 								}
-
+								//var_dump($data_sesion);
+								//die();
 
 								if($this->sise_model->crear_sesion($data_sesion)){
 									//die(var_dump($this->sise_model->datos_sesion()));
