@@ -5,9 +5,7 @@
                     <div class="col-md-12">
                         <h3 class="animated fadeInLeft">Tabla de Aspirantes registrados</h3>
                         <p class="animated fadeInDown">
-                         Aspirantes <?php if ($sesion['id_privilegio']!=1) {
-                           echo "";
-                         } ?>
+                         Aspirantes 
                         </p>
                     </div>
                   </div>
@@ -82,11 +80,12 @@
                                   </button>
                                   </a>
                               </div>
-                            <?php }elseif ($sesion['id_privilegio']!=1){?><div class="col-md-6" style="margin-top:5px;">
-                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="left" title="Precionar para editar el estatus" data-toggle="modal" data-target="#exampleModalLong">
+                            <?php }elseif ($sesion['id_privilegio']!=1){?>
+                              <div class="col-md-6" style="margin-top:5px;">
+                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus" data-toggle="modal" data-target="#exampleModalLong">
                                    
                                  <div>
-                                  <span><?php foreach ($privilegio as $pri) { echo $pri->nombre_privilegio; ?></span><?php } ?>
+                                  <span><?php  echo $asp->nombre_privilegio; ?></span>
                                  </div>
                                 </button>
                         </div>
