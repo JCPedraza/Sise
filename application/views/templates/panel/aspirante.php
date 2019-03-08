@@ -82,7 +82,7 @@
                               </div>
                             <?php }elseif ($sesion['id_privilegio']!=1){?>
                               <div class="col-md-6" style="margin-top:5px;">
-                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus" data-toggle="modal" data-target="#exampleModalLong">
+                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
                                    
                                  <div>
                                   <span><?php  echo $asp->nombre_privilegio; ?></span>

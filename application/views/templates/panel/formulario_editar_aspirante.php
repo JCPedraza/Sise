@@ -38,7 +38,7 @@
                               <div class="col-sm-10"><input type="text" name="tel" class="form-control android" value="<?php if(set_value('tel')) echo set_value('tel'); else {if($aspirante) echo $aspirante['telefono_alumno'];}?>"></div>
                             </div>
                             <?php
-                                  if ($aspirante['estatus']==3) {?>
+                                  if ($aspirante['estatus']==3 || $aspirante['estatus']==4 || $aspirante['estatus']==5) {?>
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Ciudad</label>
                               <div class="col-sm-10"><input type="text" name="ciudad" class="form-control android" value="<?php if(set_value('ciudad')) echo set_value('ciudad'); else {if($aspirante)echo $aspirante['ciudad_alumno'];}?>"></div>
                             </div>
