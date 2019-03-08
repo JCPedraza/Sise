@@ -71,9 +71,9 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						$data['aspirante']=$this->sise_model->devuelve_aspirantes();
-						$data['privilegio']=$this->sise_model->devuelve_privilegio();
-
+						$data['aspirante']=$this->sise_model->devuelve_aspirantes_privilegio();
+						//var_dump($data['aspirante']);
+						//die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/aspirante',$data);
