@@ -103,30 +103,38 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Nueva Modalidad</h5>
+                          <h5 class="modal-title" id="exampleModalLongTitle">Cambiar el estatus</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" align="center">
                           <?php
                              $atributos = array('class'=>'form-horizontal');
-                             echo form_open('sise/nueva_modalidad/',$atributos);
+                             echo form_open('sise/noexiste/',$atributos);
+                             foreach ($privilegios as $pr) {
                           ?>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Nombre de la modalidad</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod"></div>
-                          </div>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Descripcion de la modalidad</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="des_mod"></div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
-                                    <div>
-                                      <span>Guardar Cambios</span>
-                                    </div>
-                                  </button>
+
+                              <?php 
+                                  if($pr->id_privilegio==3){
+                               ?>
+                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-success">
+                              <?php }elseif ($pr->id_privilegio==4) { ?>
+                                <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning">
+                                <?php }elseif ($pr->id_privilegio==5) {?>
+                                <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-info">
+                                <?php } ?>
+                                <div class="flip">
+                                  <div class="side">
+                                    <?php echo $pr->nombre_privilegio; ?> <span class="fa"></span>
+                                  </div>
+                                  <div class="side back">
+                                    ¿Esta Seguro?
+                                  </div>
+                                </div>
+                                <span class="icon"></span>
+                              </button>
+                        <?php } ?>
                         </div>
                          </form>
                       </div>
