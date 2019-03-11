@@ -82,8 +82,7 @@
                               </div>
                             <?php }elseif ($sesion['id_privilegio']!=1){?>
                               <div class="col-md-6" style="margin-top:5px;">
-                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
-                                   
+                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-info" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
                                  <div>
                                   <span><?php  echo $asp->nombre_privilegio; ?></span>
                                  </div>
@@ -111,29 +110,19 @@
                         <div class="modal-body" align="center">
                           <?php
                              $atributos = array('class'=>'form-horizontal');
-                             echo form_open('sise/noexiste/',$atributos);
+                             echo form_open('sise/cambio_estatus/',$atributos);
                              foreach ($privilegios as $pr) {
                           ?>
 
                               <?php 
                                   if($pr->id_privilegio==3){
                                ?>
-                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-success">
+                              <input type="submit"  name="id_pri"  value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-success">
                               <?php }elseif ($pr->id_privilegio==4) { ?>
-                                <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning">
+                                <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning">
                                 <?php }elseif ($pr->id_privilegio==5) {?>
-                                <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-info">
+                                  <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-info">
                                 <?php } ?>
-                                <div class="flip">
-                                  <div class="side">
-                                    <?php echo $pr->nombre_privilegio; ?> <span class="fa"></span>
-                                  </div>
-                                  <div class="side back">
-                                    ¿Esta Seguro?
-                                  </div>
-                                </div>
-                                <span class="icon"></span>
-                              </button>
                         <?php } ?>
                         </div>
                          </form>

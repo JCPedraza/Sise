@@ -1085,6 +1085,36 @@ class sise extends CI_Controller {
 							}
 					#Fin del formulario del personal
 
+					#Edita cambio del estatus 
+							public function cambio_estatus(){
+								$this->sise_model->valida_sesion();
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
+
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+
+								$es=$this->input->post('id_pri');
+								if ($es=='Alumno') {
+									$estatus=3;
+								}elseif($es=='Inscrito') {
+									$estatus=4;
+								}elseif($es=='Aspirante') {
+									$estatus=5;
+								}
+								//$data['clave_aspirante'] = $this->uri->segment(3);
+								//$lolo=$this->input->post('clave_aspirante');
+								//var_dump($es,'<br>',$estatus,'<br>',$data['clave_aspirante']);
+								//die();
+								$data_estatus=array(
+									'id_privilegio'=>$estatus
+								);
+								#var_dump($data_estatus);
+								#die();
+								$this->sise_model->actualiza_estatus($data_estatus);
+							}
+					#Fin del estatus 
+
 			//joan alonso
 
 
