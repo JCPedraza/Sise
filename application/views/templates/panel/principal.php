@@ -126,7 +126,7 @@
                         <div>
                           <div>
                             <h3>Aviso Importante Docente</h3>
-                            <p>Contenido del aviso</p>
+                            <p>HolaS</p>
                           </div>
                         </div>
                         </div>
