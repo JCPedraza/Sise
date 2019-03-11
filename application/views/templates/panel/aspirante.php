@@ -82,8 +82,7 @@
                               </div>
                             <?php }elseif ($sesion['id_privilegio']!=1){?>
                               <div class="col-md-6" style="margin-top:5px;">
-                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
-                                   
+                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-info" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
                                  <div>
                                   <span><?php  echo $asp->nombre_privilegio; ?></span>
                                  </div>
@@ -103,30 +102,28 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Nueva Modalidad</h5>
+                          <h5 class="modal-title" id="exampleModalLongTitle">Cambiar el estatus</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" align="center">
                           <?php
                              $atributos = array('class'=>'form-horizontal');
-                             echo form_open('sise/nueva_modalidad/',$atributos);
+                             echo form_open('sise/cambio_estatus/',$atributos);
+                             foreach ($privilegios as $pr) {
                           ?>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Nombre de la modalidad</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod"></div>
-                          </div>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Descripcion de la modalidad</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="des_mod"></div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
-                                    <div>
-                                      <span>Guardar Cambios</span>
-                                    </div>
-                                  </button>
+
+                              <?php 
+                                  if($pr->id_privilegio==3){
+                               ?>
+                              <input type="submit"  name="id_pri"  value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-success">
+                              <?php }elseif ($pr->id_privilegio==4) { ?>
+                                <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning">
+                                <?php }elseif ($pr->id_privilegio==5) {?>
+                                  <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-info">
+                                <?php } ?>
+                        <?php } ?>
                         </div>
                          </form>
                       </div>

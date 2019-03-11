@@ -71,8 +71,12 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						$data['aspirante']=$this->sise_model->devuelve_aspirantes_privilegio();
-						//var_dump($data['aspirante']);
+						$aspirante=$this->sise_model->devuelve_aspirantes_privilegio();
+						$data['aspirante']=$aspirante;
+						$resultado=$this->sise_model->devuelve_privilegio_aspirante();
+						$data['privilegios']=$resultado;
+
+						//var_dump($data['privilegios']);
 						//die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -1080,6 +1084,36 @@ class sise extends CI_Controller {
 									}
 							}
 					#Fin del formulario del personal
+
+					#Edita cambio del estatus 
+							public function cambio_estatus(){
+								$this->sise_model->valida_sesion();
+								$this->load->library('form_validation');
+								$this->load->helper(array('form', 'url'));
+
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+
+								$es=$this->input->post('id_pri');
+								if ($es=='Alumno') {
+									$estatus=3;
+								}elseif($es=='Inscrito') {
+									$estatus=4;
+								}elseif($es=='Aspirante') {
+									$estatus=5;
+								}
+								//$data['clave_aspirante'] = $this->uri->segment(3);
+								//$lolo=$this->input->post('clave_aspirante');
+								//var_dump($es,'<br>',$estatus,'<br>',$data['clave_aspirante']);
+								//die();
+								$data_estatus=array(
+									'id_privilegio'=>$estatus
+								);
+								#var_dump($data_estatus);
+								#die();
+								$this->sise_model->actualiza_estatus($data_estatus);
+							}
+					#Fin del estatus 
 
 			//joan alonso
 

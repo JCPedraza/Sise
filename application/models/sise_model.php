@@ -318,6 +318,14 @@ class sise_model extends CI_Model{
 				$query = $this->db->get();
 				return $query->result();
 			}
+			function devuelve_privilegio_aspirante(){
+				$this->db->select('*');
+				$this->db->from('privilegio');
+				$this->db->where('id_privilegio !=1');
+				$this->db->where('id_privilegio !=2');
+				$devuelve_privilegio_aspirante=$this->db->get();
+				return $devuelve_privilegio_aspirante->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
