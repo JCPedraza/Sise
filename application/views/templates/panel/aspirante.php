@@ -82,7 +82,8 @@
                               </div>
                             <?php }elseif ($sesion['id_privilegio']!=1){?>
                               <div class="col-md-6" style="margin-top:5px;">
-                                  <button type="button" data-toggle="modal" class="btn ripple-infinite btn-raised btn-info" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus"  data-target="#exampleModalLong">
+                                  <button type="button" data-toggle="modal" data-target="#exampleModalLong<?php echo $asp->id_usuario;?>" class="btn ripple-infinite 
+                                    <?php if($asp->id_privilegio==3){ echo "btn-raised btn-success";}elseif($asp->id_privilegio==4){ echo "btn-raised btn-warning";}else echo "btn-raised btn-info";?>" data-toggle="tooltip" data-placement="bottom" title="Precionar para editar el estatus">
                                  <div>
                                   <span><?php  echo $asp->nombre_privilegio; ?></span>
                                  </div>
@@ -98,7 +99,8 @@
                         </table>
                       </div>
                        <!-- Modal -->
-                  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                       <?php foreach ($aspirante as $asp) { ?>
+                  <div class="modal fade" id="exampleModalLong<?php echo $asp->id_usuario;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -108,28 +110,22 @@
                           </button>
                         </div>
                         <div class="modal-body" align="center">
-                          <?php
-                             $atributos = array('class'=>'form-horizontal');
-                             echo form_open('sise/cambio_estatus/',$atributos);
-                             foreach ($privilegios as $pr) {
-                          ?>
+                        <div class="modal-footer" align="left">
+                                    <?php if ($asp->id_privilegio!=5){
+                            echo "<a href=\"".base_url()."index.php/sise/cambio_estatus/$asp->id_usuario/5\" class=\"btn btn-info\">Aspirante</a>";
+                                    }if($asp->id_privilegio!=4){
+                            echo "<a href=\"".base_url()."index.php/sise/cambio_estatus/$asp->id_usuario/4\" class=\"btn btn-warning\">Inscrito</a>";
+                                      }if($asp->id_privilegio!=3){
+                            echo "<a href=\"".base_url()."index.php/sise/cambio_estatus/$asp->id_usuario/3\" class=\"btn btn-success\">Alumno</a>";
+                                              };?>
 
-                              <?php 
-                                  if($pr->id_privilegio==3){
-                               ?>
-                              <input type="submit"  name="id_pri"  value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-success">
-                              <?php }elseif ($pr->id_privilegio==4) { ?>
-                                <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning">
-                                <?php }elseif ($pr->id_privilegio==5) {?>
-                                  <input type="submit" name="id_pri" value="<?php echo $pr->nombre_privilegio;?>" style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-info">
-                                <?php } ?>
-                        <?php } ?>
+                                  </div>
                         </div>
-                         </form>
                       </div>
                     </div>
                   </div> 
                 <!-- Fin Modal --> 
+                <?php } ?>
                   </div>
                 </div>
               </div>  

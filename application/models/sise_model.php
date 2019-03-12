@@ -456,7 +456,10 @@ class sise_model extends CI_Model{
 
 
 			#Fin Inserciones
-			
+				function cambiar_estatus($data_estatus,$idusuario){
+				 	$this->db->where('id_usuario',$idusuario);
+				 	$this->db->update('usuario',$data_estatus);
+				 }
 			#Update
 
 
