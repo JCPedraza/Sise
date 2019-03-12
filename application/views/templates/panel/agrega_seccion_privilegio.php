@@ -14,7 +14,7 @@
               <div class="col-md-12 top-20 padding-0">
                 <div class="col-md-12">
                   <div class="panel">
-                    <div class="panel-heading"><h3>Agraga Secciones a Privileos <div align="right"> <a href="<?php base_url();?>/index.php/sise/privilegios_secciones/"><button  class="btn ripple-infinite btn-raised btn-primary" aling="center"><div>
+                    <div class="panel-heading"><h3>Agraga Secciones a Privileos <div align="right"> <a href="<?php base_url();?>/index.php/sise/privilegios_secciones"><button  class="btn ripple-infinite btn-raised btn-primary" aling="center"><div>
                                   <span>Regresar</span>
                                  </div>
                                 </button>
