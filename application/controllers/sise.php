@@ -1112,10 +1112,11 @@ class sise extends CI_Controller {
 							#var_dump($data);
 							#die();
 							$resultado = $this->sise_model->valida_usuario($data);
-
+							#var_dump($resultado);
+							#	die();
 							if($resultado['total'] == 1){
 
-								if ($resultado['id_privilegio']!=1||$resultado['id_privilegio']!=2) {								
+								if ($resultado['id_privilegio']==3||$resultado['id_privilegio']==4 || $resultado['id_privilegio']==5) {								
 
 									$data_sesion = array(
 										'nombre' => $resultado['nombre_alumno'],
@@ -1133,8 +1134,9 @@ class sise extends CI_Controller {
 										'id_usuario' => $resultado['id_usuario'],
 										);
 								}
-								//var_dump($data_sesion);
-								//die();
+								#var_dump($data_sesion);
+								#die();
+
 
 								if($this->sise_model->crear_sesion($data_sesion)){
 									//die(var_dump($this->sise_model->datos_sesion()));

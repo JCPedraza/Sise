@@ -39,7 +39,7 @@ class sise_model extends CI_Model{
 				}*/
 
 				$privilegio = $this->consulta_privilegio($data);
-
+				
 				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
 					$this->db->select('u.*, count(*) AS total, p.*, al.*');
 					$this->db->from('usuario u');
@@ -52,7 +52,7 @@ class sise_model extends CI_Model{
 					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 					$this->db->from('usuario u');
 					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-					$this->db->join('personal as pe','pe.id_persona = u.id_persona');
+					$this->db->join('personal as pe','pe.id_personal = u.id_persona');
 					$this->db->where('u.usuario',$data['usuario']);
 					$this->db->where('u.contrasena',$data['contrasena']);
 					$this->db->where('u.activo','1');
