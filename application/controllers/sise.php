@@ -382,34 +382,12 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
-
-					#
-						public function ingreso_datos_alumno(){
-							$data['a']=$this->sise_model->b();
-							var_dump($data['a']);
-
-						}
-					#
-
 					#Muestran los grupos
 						public function conformacion_grupos(){
 							#$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();
 
 						}
 					#fin muestran los grupos
-
-					#Ingresar Datos De Alumnos le agrege la s
-						public function ingreso_datos_alumnos(){
-							#$data['alumno']=$this->sise_model->datos_alumno();
-							
-
-						}
-					#Fin Ingresar Datos De Alumnos
-
-
-					#Aceptar Aspirantes
-
-					#Fin Aceptar Aspirantes
 
 
 		//-----Formularios------------
@@ -1029,6 +1007,21 @@ class sise extends CI_Controller {
 
 			//joan alonso
 
+			#Ingresar Datos De Alumnos le agrege la s
+				public function ingreso_datos_alumno(){
+					$data['sesion'] = $this->sise_model->datos_sesion();
+					$data['menu'] = $this->sise_model->datos_menu();
+
+					$clave_alumno=$data['sesion']["id_persona"];
+					$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
+
+					$this->load->view('templates/panel/header',$data);
+					$this->load->view('templates/panel/menu',$data);
+					#$this->load->view('templates/panel/aspirante',$data);
+					$this->load->view('templates/panel/footer');
+
+				}
+			#Fin Ingresar Datos De Alumnos
 
 		//-----Funciones Especificas----------------	
 
@@ -1048,12 +1041,12 @@ class sise extends CI_Controller {
 							$resultado = $this->sise_model->valida_usuario($data);
 
 							if($resultado['total'] == 1){
-								if ($resultado['id_privilegio']!=1) {								
+								if ($resultado['id_privilegio']!=1||$resultado['id_privilegio']!=2) {								
 									$data_sesion = array(
 										'nombre' => $resultado['nombre_alumno'],
 										'privilegio' => $resultado['nombre_privilegio'],
 										'id_privilegio' => $resultado['id_privilegio'],
-										'id_persona' => $resultado['id_persona'],
+										'id_persona' => $resultado['clave_alumno'],
 										'id_usuario' => $resultado['id_usuario'],
 										);
 								}else{
