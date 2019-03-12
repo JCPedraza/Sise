@@ -48,6 +48,14 @@ class sise_model extends CI_Model{
 					$this->db->where('u.usuario',$data['usuario']);
 					$this->db->where('u.contrasena',$data['contrasena']);
 					$this->db->where('u.activo','1');
+				}elseif($privilegio['id_privilegio']==2){
+					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('personal as pe','pe.id_personal = u.id_persona');
+					$this->db->where('u.usuario',$data['usuario']);
+					$this->db->where('u.contrasena',$data['contrasena']);
+					$this->db->where('u.activo','1');
 				}else{
 					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 					$this->db->from('usuario u');
@@ -310,6 +318,14 @@ class sise_model extends CI_Model{
 				$query = $this->db->get();
 				return $query->result();
 			}
+			function devuelve_privilegio_aspirante(){
+				$this->db->select('*');
+				$this->db->from('privilegio');
+				$this->db->where('id_privilegio !=1');
+				$this->db->where('id_privilegio !=2');
+				$devuelve_privilegio_aspirante=$this->db->get();
+				return $devuelve_privilegio_aspirante->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -380,6 +396,16 @@ class sise_model extends CI_Model{
 				$query = $this->db->get();
 				return $query->result();
 			}
+			function devuelve_aspirantes_privilegio(){
+				$this->db->select('u.*, a.*,p.*');
+				$this->db->from('usuario u');
+				$this->db->join('alumno as a',' a.clave_alumno = u.id_persona','left');
+				$this->db->join('privilegio as p',' p.id_privilegio=u.id_privilegio','left');
+				$this->db->where('u.id_privilegio!=1');
+				$this->db->where('u.id_privilegio!=2');
+				$query = $this->db->get();
+				return $query->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -430,7 +456,10 @@ class sise_model extends CI_Model{
 
 
 			#Fin Inserciones
-			
+				function cambiar_estatus($data_estatus,$idusuario){
+				 	$this->db->where('id_usuario',$idusuario);
+				 	$this->db->update('usuario',$data_estatus);
+				 }
 			#Update
 
 
@@ -705,4 +734,24 @@ class sise_model extends CI_Model{
 
 
    	//---------------------fin prueba-------------------------
+
+    //-----------------------personal-------------------------
+		
+		#Consultas
+		#Fin consultas
+		
+		#Inserciones
+			function insertar_personal($data){
+				$this->db->insert('personal',$data);
+				return $this->db->insert_id();
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+
+		#Fin delete
+	//-------------------fin personal-------------------------
 }

@@ -35,7 +35,20 @@
                               <label>Apellido Materno</label>
                               <?php echo form_error('a_m'); ?>
                             </div>
-                            
+                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="date" class="form-text mask-placeholder" name="fecha" placeholder="__/__/____" required="">
+                            <span class="bar"></span>
+                            <label>Fecha</label>
+                          </div>
+                             <div class="" style="margin-top:40px !important;">
+                              <label>Genero</label>
+                              <select name="g" id="" class="form-control form-control android">
+                                    <option value="" selected="selected">Seleccionar</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                            </select>
+                          </div>
+                        </div>
                             <hr>
                               <h3 style="color: #918C8C">Información Residencia</h3>
                             <hr>
@@ -94,7 +107,12 @@
                                 <h3 style="color: #918C8C">Información de Cuenta</h3>
                                 <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico </p>
                             <hr>
-  
+                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                              <input type="email" class="form-text form-control android" value="<?php echo set_value('email');?>" id="" name="email" aria-required="true">
+                              <span class="bar"></span>
+                              <label>Correo Electrónico</label>
+                              <?php echo form_error('email'); ?>
+                            </div>
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="password" class="form-text form-control android" id="" value="<?php echo set_value('contra');?>" name="contra" aria-required="true">
                               <span class="bar"></span>

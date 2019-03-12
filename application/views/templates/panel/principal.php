@@ -86,11 +86,22 @@
             <div class="col-md-6 col-sm-12 col-xs-12">
               <div class="panel">
                 <div class="panel-heading">
-                  <center><h3>Aviso 1</h3></center>
+                  <?php if ($sesion['id_privilegio']==1){?>
+                  <center><h3>Administrador</h3></center>
+                <?php }elseif ($sesion['id_privilegio']==2) { ?>
+                  <center><h3>Docentes</h3></center>
+                <?php }elseif ($sesion['id_privilegio']==3) {?>
+                  <center><h3>Alumnos</h3></center>
+                <?php }elseif ($sesion['id_privilegio']==4) {?>
+                  <center><h3>Inscritos</h3></center>
+                <?php }elseif ($sesion['id_privilegio']==5) { ?>
+                  <center><h3>Aspirantes</h3></center>
+                <?php } ?>
                 </div>
                 <div class="panel-body"><div>
+                    <?php if ($sesion['id_privilegio']==1){?> 
                     <div>
-                      <ol >
+                      <ol>
                         <li>En caso de un listado</li>
                         <li>En caso de un listado</li>
                         <li>En caso de un listado</li>
@@ -98,12 +109,77 @@
                       <div >
                         <div>
                           <div>
-                            <h3>Aviso Importante</h3>
+                            <h3>Aviso Importante Admin</h3>
                             <p>Contenido del aviso</p>
                           </div>
                         </div>
-                        
-                      </div>                    </div>
+                        </div>
+                      </div>
+                      <?php }elseif ($sesion['id_privilegio']==2) { ?> 
+                      <div>
+                      <ol>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                      </ol>
+                      <div >
+                        <div>
+                          <div>
+                            <h3>Aviso Importante Docente</h3>
+                            <p>HolaS</p>
+                          </div>
+                        </div>
+                        </div>
+                      </div>  
+                      <?php }elseif ($sesion['id_privilegio']==3) {?> 
+                      <div>
+                      <ol>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                      </ol>
+                      <div >
+                        <div>
+                          <div>
+                            <h3>Aviso Importante Alumno</h3>
+                            <p>Contenido del aviso</p>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    <?php }elseif ($sesion['id_privilegio']==4) {?>
+                    <div>
+                      <ol>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                      </ol>
+                      <div >
+                        <div>
+                          <div>
+                            <h3>Aviso Importante Inscrito</h3>
+                            <p>Contenido del aviso</p>
+                          </div>
+                        </div>
+                        </div>
+                      </div>  
+                       <?php }elseif ($sesion['id_privilegio']==5) { ?> 
+                       <div>
+                      <ol>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                        <li>En caso de un listado</li>
+                      </ol>
+                      <div >
+                        <div>
+                          <div>
+                            <h3>Aviso Importante Aspirante</h3>
+                            <p>Contenido del aviso</p>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                      <?php } ?>           
                   </div>
                 </div>
               </div>
