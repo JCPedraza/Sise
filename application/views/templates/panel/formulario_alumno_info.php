@@ -65,21 +65,21 @@
                               <?php echo $nombre; ?>
                               <?php echo $fecha_nac; ?>
                               <?php echo $genero; ?>
-
-                              <div class="form-group">
-                                <label class="col-sm-2 control-label text-right">Estado Civil: </label>
-                                <div class="col-sm-10">
-                                  <div class="col-sm-12 padding-0">
-                                    <select name="ec" class="form-control">
-                                      <option value="d">Divorciad@</option>
-                                      <option value="c">Casad@</option>
-                                      <option value="s">Solter@</option>
-                                      <option value="v">Viud@</option>
-                                    </select>
+                            
+                              <div class="row">
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label text-right">Estado Civil: </label>
+                                  <div class="col-sm-8">
+                                      <select name="ec" class="form-control">
+                                        <option value="d">Divorciad@</option>
+                                        <option value="c">Casad@</option>
+                                        <option value="s">Solter@</option>
+                                        <option value="v">Viud@</option>
+                                      </select>
                                   </div>
                                 </div>
-                              </div>
-
+                              </div>  
+                              
                               <div class="form-group"><label class="col-sm-2 control-label text-right">RFC:  </label>
                                   <div class="col-sm-8"><input type="text" class="form-control android" minlength="12" maxlength="13" name="rfc"></div>
                               </div>
@@ -87,6 +87,9 @@
                               <div class="form-group"><label class="col-sm-2 control-label text-right">CURP:  </label>
                                   <div class="col-sm-8"><input type="text" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
                               </div>
+                              <br>
+                              <h2>información de contacto</h2>
+                              <?php echo $tel; ?>
 
                               <br>
                               <br>
