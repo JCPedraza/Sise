@@ -1090,7 +1090,7 @@ class sise extends CI_Controller {
 
 					$this->load->view('templates/panel/header',$data);
 					$this->load->view('templates/panel/menu',$data);
-					#$this->load->view('templates/panel/aspirante',$data);
+					$this->load->view('templates/panel/formulario_alumno_info',$data);
 					$this->load->view('templates/panel/footer');
 
 				}
