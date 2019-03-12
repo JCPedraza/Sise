@@ -469,7 +469,7 @@ class sise extends CI_Controller {
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
 									'id_persona'=>$clave_alumno,
-									'id_privilegio'=>3,
+									'id_privilegio'=>5,
 									'activo'=>1
 								);
 

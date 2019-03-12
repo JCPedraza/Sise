@@ -17,27 +17,6 @@ class sise_model extends CI_Model{
 		
 		#Validar usuario y contraseña
 			function valida_usuario($data){
-				
-				/*$privilegio = $this->consulta_privilegio($data);
-
-				if ($privilegio['nombre_privilegio']==3||$privilegio['nombre_privilegio']==4) {
-					$this->db->select('u.*, count(*) AS total, p.*, al.*');
-					$this->db->from('usuario u');
-					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-					$this->db->join('alumno as al','al.clave_alumno = u.id_persona');
-					$this->db->where('u.usuario',$data['usuario']);
-					$this->db->where('u.contrasena',$data['contrasena']);
-					$this->db->where('u.activo','1');
-				}else{
-					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
-					$this->db->from('usuario u');
-					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-					$this->db->join('persona as pe','pe.id_persona = u.id_persona');
-					$this->db->where('u.usuario',$data['usuario']);
-					$this->db->where('u.contrasena',$data['contrasena']);
-					$this->db->where('u.activo','1');
-				}*/
-
 				$privilegio = $this->consulta_privilegio($data);
 				
 				if ($privilegio['id_privilegio']==3||$privilegio['id_privilegio']==4||$privilegio['id_privilegio']==5) {
@@ -57,18 +36,6 @@ class sise_model extends CI_Model{
 					$this->db->where('u.contrasena',$data['contrasena']);
 					$this->db->where('u.activo','1');
 				}
-				
-
-				/*$this->db->select('u.*, count(*) AS total, p.*, pe.*');
-				$this->db->from('usuario u');
-				$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-				$this->db->join('persona as pe','pe.id_persona = u.id_persona');
-				$this->db->where('u.usuario',$data['usuario']);
-				$this->db->where('u.contrasena',$data['contrasena']);
-				$this->db->where('u.activo','1');*/
-
-				
-
 				$query = $this->db->get();
 				return $query->row_array();
 			}
