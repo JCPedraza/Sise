@@ -48,19 +48,11 @@ class sise_model extends CI_Model{
 					$this->db->where('u.usuario',$data['usuario']);
 					$this->db->where('u.contrasena',$data['contrasena']);
 					$this->db->where('u.activo','1');
-				}elseif($privilegio['id_privilegio']==2){
-					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
-					$this->db->from('usuario u');
-					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-					$this->db->join('personal as pe','pe.id_personal = u.id_persona');
-					$this->db->where('u.usuario',$data['usuario']);
-					$this->db->where('u.contrasena',$data['contrasena']);
-					$this->db->where('u.activo','1');
 				}else{
 					$this->db->select('u.*, count(*) AS total, p.*, pe.*');
 					$this->db->from('usuario u');
 					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
-					$this->db->join('persona as pe','pe.id_persona = u.id_persona');
+					$this->db->join('personal as pe','pe.id_persona = u.id_persona');
 					$this->db->where('u.usuario',$data['usuario']);
 					$this->db->where('u.contrasena',$data['contrasena']);
 					$this->db->where('u.activo','1');
