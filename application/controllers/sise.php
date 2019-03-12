@@ -1124,17 +1124,9 @@ class sise extends CI_Controller {
 										'id_persona' => $resultado['clave_alumno'],
 										'id_usuario' => $resultado['id_usuario'],
 										);
-								}elseif($resultado['id_privilegio']==2){
-									$data_sesion = array(
-										'nombre' => $resultado['nombres_personal'],
-										'privilegio' => $resultado['nombre_privilegio'],
-										'id_privilegio' => $resultado['id_privilegio'],
-										'id_persona' => $resultado['id_persona'],
-										'id_usuario' => $resultado['id_usuario'],
-										);
 								}else{
 									$data_sesion = array(
-										'nombre' => $resultado['nombres'],
+										'nombre' => $resultado['nombres_personal'],
 										'privilegio' => $resultado['nombre_privilegio'],
 										'id_privilegio' => $resultado['id_privilegio'],
 										'id_persona' => $resultado['id_persona'],
