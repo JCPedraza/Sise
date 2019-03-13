@@ -5,7 +5,6 @@
            $atributos = array('class' => 'form-signin');
            echo form_open('sise',$atributos)
             ?>
-
               <div class="panel periodic-login">
               <span class="atomic-number"></span>
               <div class="panel-body text-center">

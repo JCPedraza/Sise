@@ -16,21 +16,21 @@
                                 <h3 style="color: #918C8C">Información de Personal</h3>
                             <hr>
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="nombre" value="<?php echo set_value('nombre');?>" require="" name="nombre">
+                              <input type="text" class="form-text form-control android" min="3" max="15" id="nombre" value="<?php echo set_value('nombre');?>" require="" name="nombre">
                               <span class="bar"></span>
                               <label>Nombre</label>
                               <?php echo form_error('nombre');?>
                             </div>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" value="<?php echo set_value('a_p');?>" id="validate_lastname" name="a_p" aria-required="true">
+                              <input type="text" class="form-text form-control android" min="3" max="15" value="<?php echo set_value('a_p');?>" id="validate_lastname" name="a_p" aria-required="true">
                               <span class="bar"></span>
                               <label>Apellido Paterno</label>
                               <?php echo form_error('a_p'); ?>
                             </div>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" value="<?php echo set_value('a_m');?>" id="" aria-required="true" name="a_m">
+                              <input type="text" class="form-text form-control android" value="<?php echo set_value('a_m');?>" id="" aria-required="true" name="a_m" min="3" max="15">
                               <span class="bar"></span>
                               <label>Apellido Materno</label>
                               <?php echo form_error('a_m'); ?>
@@ -49,39 +49,6 @@
                             </select>
                           </div>
                         </div>
-                            <hr>
-                              <h3 style="color: #918C8C">Información Residencia</h3>
-                            <hr>
-
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" id="" value="<?php echo set_value('direc');?>" name="direc"  aria-required="true">
-                              <span class="bar"></span>
-                              <label>Dirección</label>
-                              <?php echo form_error('direc'); ?>
-                            </div>
-
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" value="<?php echo set_value('ciudad');?>" id="" name="ciudad"  aria-required="true">
-                              <span class="bar"></span>
-                              <label>Ciudad</label>
-                              <?php echo form_error('ciudad'); ?>
-                            </div>
-
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" value="<?php echo set_value('estado');?>" id="" name="estado" aria-required="true">
-                              <span class="bar"></span>
-                              <label>Estado</label>
-                              <?php echo form_error('estado'); ?>
-                            </div>
-
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" value="<?php echo set_value('pais');?>" id="" name="pais" aria-required="true">
-                              <span class="bar"></span>
-                              <label>País</label>
-                              <?php echo form_error('pais'); ?>
-                            </div>
-
-                          </div>
 
                           <div class="col-md-6">
                             
@@ -90,7 +57,7 @@
                             <hr>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="number" minlength="10" maxlength="10" class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel" aria-required="true">
+                              <input type="number"  class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel" minlength="4" maxlength="8" size="10" aria-required="true" >
                               <span class="bar"></span>
                               <label>Teléfono</label>
                               <?php echo form_error('tel'); ?>
@@ -107,12 +74,6 @@
                                 <h3 style="color: #918C8C">Información de Cuenta</h3>
                                 <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico </p>
                             <hr>
-                            <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="email" class="form-text form-control android" value="<?php echo set_value('email');?>" id="" name="email" aria-required="true">
-                              <span class="bar"></span>
-                              <label>Correo Electrónico</label>
-                              <?php echo form_error('email'); ?>
-                            </div>
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
                               <input type="password" class="form-text form-control android" id="" value="<?php echo set_value('contra');?>" name="contra" aria-required="true">
                               <span class="bar"></span>

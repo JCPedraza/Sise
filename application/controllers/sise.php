@@ -85,8 +85,8 @@ class sise extends CI_Controller {
 						$resultado=$this->sise_model->devuelve_privilegio_aspirante();
 						$data['privilegios']=$resultado;
 
-						//var_dump($data['privilegios'],'<br>',$data['aspirante']);
-						//die();
+						#var_dump($data['aspirante']);
+						#die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/aspirante',$data);
@@ -423,22 +423,10 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
-							$this->form_validation->set_rules('ciudad','Ciudad', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('estado','Estado', 'required|min_length[2]|max_length[25]');
-							$this->form_validation->set_rules('pais','Pais', 'required|min_length[2]|max_length[25]');
-							//$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
-
-							//$this->form_validation->set_rules('g', 'Género', 'required');
+							$this->form_validation->set_rules('fecha', 'Fecha de nacimiento','required');
 
 							$this->form_validation->set_rules('g', 'Género', 'required');
-
-							#$this->form_validation->set_rules('rfc','RFC', 'required|min_length[2]|max_length[25]');
-							#$this->form_validation->set_rules('curp','Curp', 'required|min_length[2]|max_length[25]');
-							//$this->form_validation->set_rules('e','Estado Civil', 'required');
-							$this->form_validation->set_rules('direc','Dirección', 'required|min_length[2]|max_length[100]');
-							$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[10]');
-							#$this->form_validation->set_rules('ins','Institución', 'required|min_length[2]|max_length[25]');
-							#$this->form_validation->set_rules('car','Cargo', 'required|min_length[2]|max_length[25]');
+							$this->form_validation->set_rules('tel','Telefono', 'required|min_length[10]|max_length[10]');
 							$this->form_validation->set_rules('contra','Contraseña', 'required|min_length[4]|max_length[25]|callback_check_password');
 							$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
 							
@@ -456,28 +444,18 @@ class sise extends CI_Controller {
 									'nombre_alumno'=> $this->input->post('nombre'),
 									'ap_pa_alumno'=> $this->input->post('a_p'),
 									'ap_ma_alumno'=> $this->input->post('a_m'),
-									'email_alumno'=> $this->input->post('email'),
-									'ciudad_alumno'=> $this->input->post('ciudad'),
-									'estado_alumno'=>$this->input->post('estado'),
-									'pais_alumno'=> $this->input->post('pais'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> $this->input->post('g'),
-									'RFC_alumno'=> $this->input->post('rfc'),
-									'CURP_alumno'=> $this->input->post('curp'),
-									'estado_civil_alumno'=> $this->input->post('e'),
-									'residencia_alumno'=> $this->input->post('direc'),
 									'telefono_alumno' => $this->input->post('tel'),
-									'institucion_alumno'=>$this->input->post('ins'),
-									'cargo_alumno'=>$this->input->post('car'),
-									'estatus'=>1
 								);
-								
+								//var_dump($data_registro);
+								//die();
 								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
 									'id_persona'=>$clave_alumno,
-									'id_privilegio'=>3,
+									'id_privilegio'=>5,
 									'activo'=>1
 								);
 
