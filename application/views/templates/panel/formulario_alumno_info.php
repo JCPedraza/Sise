@@ -1,9 +1,11 @@
 <?php 
+
 $nombre="";
 $genero="";
 $fecha_nac="";
 $tel="";
 $email="";
+$tooltip="data-toggle=\"tooltip\" data-placement=\"top\" title=\"Recuerda que tu correo es tu forma de acceder a la plataforma, si lo cambias usa el nuevo correo para ingresar\"";
 
  ?>
 <div class="container-fluid mimin-wrapper">
@@ -64,9 +66,9 @@ $email="";
                                   <div class="col-sm-8"><input type="number" class="form-control android" maxlength="10" name="telefono"></div>
                                   </div>';
 
-                                $email='<div class="form-group"><label class="col-sm-2 control-label text-right">Telefono de contacto:  </label>
+                                $email='<div class="form-group"><div '.$tooltip.'><label class="col-sm-2 control-label text-right">Correo electrónico:  </label>
                                   <div class="col-sm-8"><input type="email" class="form-control android" name="email"></div>
-                                  </div>';
+                                  </div></div>';
 
 
                                 } 
@@ -100,12 +102,43 @@ $email="";
                                   <div class="col-sm-8"><input type="text" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
                               </div>
                               <br>
+                              
+                              <h2>información de Vivienda</h2>
+                                
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">Residencia:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="residencia"></div>
+                              </div>
+
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">Ciudad:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="ciudad"></div>
+                              </div>
+
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">Estado:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="estado"></div>
+                              </div>
+
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">País:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="pais"></div>
+                              </div>
 
                               <?php if ($url=="editar"): ?>
-                                
-                              <?php endif ?>
-                              <h2>información de contacto</h2>
+                              
+                              <br>
+                              <h3>información de contacto</h3>
                               <?php echo $tel; ?>
+                              <?php echo $email; ?>
+
+                              <?php endif ?>
+
+                              <br>
+                              <h3>información de cargo desempañado</h3>
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">Institución:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="instituto"></div>
+                              </div>
+                              <div class="form-group"><label class="col-sm-2 control-label text-right">Cargo desempeñado en la Institución:  </label>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="cargo"></div>
+                              </div>
+
 
                               <br>
                               <br>
