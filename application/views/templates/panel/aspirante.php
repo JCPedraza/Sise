@@ -61,7 +61,7 @@
                                    }
                                    }
                                    echo $calc_edad;?></td>
-                              <td><?php echo $asp->email_alumno; ?></td>
+                              <td><?php echo $asp->usuario; ?></td>
                               <td><?php if ($asp->genero_alumno=='M') {
                                 $genero='Hombre';
                               }elseif ($asp->genero_alumno=='F') {

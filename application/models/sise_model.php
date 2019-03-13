@@ -282,6 +282,7 @@ class sise_model extends CI_Model{
 				$this->db->from('privilegio');
 				$this->db->where('id_privilegio !=1');
 				$this->db->where('id_privilegio !=2');
+				$this->db->where('id_privilegio !=5');
 				$devuelve_privilegio_aspirante=$this->db->get();
 				return $devuelve_privilegio_aspirante->result();
 			}
