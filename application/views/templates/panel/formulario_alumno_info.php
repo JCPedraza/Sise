@@ -1,3 +1,11 @@
+<?php 
+$nombre="";
+$genero="";
+$fecha_nac="";
+$tel="";
+$email="";
+
+ ?>
 <div class="container-fluid mimin-wrapper">
 
 
@@ -23,7 +31,7 @@
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
                             <form action="#" method="get">
-                              <?php if ('editar'=='editar') {
+                              <?php if ($url=='editar') {
                                 
                                 $nombre='<div class="form-group"><label class="col-sm-2 control-label text-right">Nombre(s): </label>
                                   <div class="col-sm-8"><input type="text" class="form-control android" name="nombre"></div>
@@ -54,9 +62,13 @@
 
                                 $tel='<div class="form-group"><label class="col-sm-2 control-label text-right">Telefono de contacto:  </label>
                                   <div class="col-sm-8"><input type="number" class="form-control android" maxlength="10" name="telefono"></div>
-                              </div>';
+                                  </div>';
 
-                                  
+                                $email='<div class="form-group"><label class="col-sm-2 control-label text-right">Telefono de contacto:  </label>
+                                  <div class="col-sm-8"><input type="email" class="form-control android" name="email"></div>
+                                  </div>';
+
+
                                 } 
                               ?>
 
@@ -88,6 +100,10 @@
                                   <div class="col-sm-8"><input type="text" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
                               </div>
                               <br>
+
+                              <?php if ($url=="editar"): ?>
+                                
+                              <?php endif ?>
                               <h2>información de contacto</h2>
                               <?php echo $tel; ?>
 
