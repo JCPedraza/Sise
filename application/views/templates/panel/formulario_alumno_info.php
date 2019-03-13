@@ -1,11 +1,21 @@
 <?php 
 
+$activado_m="";
+$activado_f="";
+
+#anidados
 $nombre="";
 $genero="";
 $fecha_nac="";
 $tel="";
 $email="";
 $tooltip="data-toggle=\"tooltip\" data-placement=\"top\" title=\"Recuerda que tu correo es tu forma de acceder a la plataforma, si lo cambias usa el nuevo correo para ingresar\"";
+
+if ($alumno["genero_alumno"]=='M') {
+  $activado_m="checked=\"\"";
+}else{
+  $activado_f="checked=\"\"";
+}
 
  ?>
 <div class="container-fluid mimin-wrapper">
@@ -36,24 +46,24 @@ $tooltip="data-toggle=\"tooltip\" data-placement=\"top\" title=\"Recuerda que tu
                               <?php if ($url=='editar') {
                                 
                                 $nombre='<div class="form-group"><label class="col-sm-2 control-label text-right">Nombre(s): </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" name="nombre"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="nombre" placeholder="'.$alumno['nombre_alumno'].'"></div>
                                 </div>
                                 
                                 <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Paterno: </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" name="ap_p"></div>
+                                  <div class="col-sm-8"><input type="text" placeholder="'.$alumno['ap_pa_alumno'].'" class="form-control android" name="ap_p"></div>
                                 </div>
 
                                 <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Materno: </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" name="ap_m"></div>
+                                  <div class="col-sm-8"><input type="text" placeholder="'.$alumno['ap_ma_alumno'].'" class="form-control android" name="ap_m"></div>
                                 </div>';
 
                                 $genero='<div class="form-group"><label class="col-sm-2 control-label text-right">Genero</label>
                                   <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0">
-                                      <input type="radio" name="Masculino"> Masculino
+                                      <input type="radio" name="Masculino" '.$activado_m.'> Masculino
                                     </div>
                                     <div class="col-sm-12 padding-0">
-                                      <input type="radio" name="Femenino"> Femenino
+                                      <input type="radio" name="Femenino" '.$activado_f.'> Femenino
                                     </div>
                                   </div>
                                 </div>';
