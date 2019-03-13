@@ -26,10 +26,7 @@
                     <?php echo form_error('contrasena'); ?>
                  
                   </div>
-                  <label class="pull-left">
-                  <input type="checkbox" class="icheck pull-left" name="checkbox1"/> Remember me
-                  </label>
-                  <input type="submit" class="btn col-md-12" value="SignIn"/>
+                  <input type="submit" class="btn col-md-12" value="Ingresar"/>
               </div>
                 <div class="text-center" style="padding:5px;">
                     <a href="forgotpass.html">Forgot Password </a>
