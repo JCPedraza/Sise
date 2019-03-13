@@ -14,27 +14,35 @@ class sise extends CI_Controller {
 
 				#formulario de login(publico)
 					public function index(){
-						$this->load->library('form_validation');
-						$this->load->helper(array('form', 'url'));
 
-						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						  <strong>Alerta </strong>','</div>');
-						$this->form_validation->set_rules('usuario','Correo electrónico', 'required|min_length[3]|max_length[50]|valid_email');
-						$this->form_validation->set_rules('contrasena', 'Contraseña','required|min_length[4]|max_length[25]');
+						if (!$this->session->userdata('logged_in')) {
 
-						if($this->form_validation->run()==FALSE){
-							if($this->input->get('error'))
-								$data['error'] = $this->input->get('error');
-							else
-								$data['error'] = false;
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
 
-							$this->load->view('templates/registro/header');
-							$this->load->view('templates/registro/login');
-							$this->load->view('templates/registro/footer');
-						}else{
-							$this->ingresar();
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('usuario','Correo electrónico', 'required|min_length[3]|max_length[50]|valid_email');
+							$this->form_validation->set_rules('contrasena', 'Contraseña','required|min_length[4]|max_length[25]');
+
+							if($this->form_validation->run()==FALSE){
+								if($this->input->get('error'))
+									$data['error'] = $this->input->get('error');
+								else
+									$data['error'] = false;
+
+								$this->load->view('templates/registro/header');
+								$this->load->view('templates/registro/login');
+								$this->load->view('templates/registro/footer');
+							}else{
+								$this->ingresar();
+							}
 						}
+						else{
+							header('Location:'.base_url('index.php/sise/panel').'');
+						}
+						
 					}
 				#fin formulario de login(publico)
 
@@ -1060,6 +1068,7 @@ class sise extends CI_Controller {
 
 			#Ingresar Datos De Alumnos le agrege la s
 				public function ingreso_datos_alumno(){
+					$data['url'] = $this->uri->segment(3);
 					$data['sesion'] = $this->sise_model->datos_sesion();
 					$data['menu'] = $this->sise_model->datos_menu();
 
