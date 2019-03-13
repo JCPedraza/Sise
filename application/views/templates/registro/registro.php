@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="text" class="form-text form-control android" min="3" max="15" value="<?php echo set_value('a_m');?>" id="" aria-required="true" name="a_m">
+                              <input type="text" class="form-text form-control android" value="<?php echo set_value('a_m');?>" id="" aria-required="true" name="a_m" min="3" max="15">
                               <span class="bar"></span>
                               <label>Apellido Materno</label>
                               <?php echo form_error('a_m'); ?>
@@ -57,7 +57,7 @@
                             <hr>
 
                             <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                              <input type="number" min="10" max="10" class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel" aria-required="true">
+                              <input type="number"  class="form-text form-control android" id="" value="<?php echo set_value('tel');?>" name="tel" minlength="4" maxlength="8" size="10" aria-required="true" >
                               <span class="bar"></span>
                               <label>Teléfono</label>
                               <?php echo form_error('tel'); ?>

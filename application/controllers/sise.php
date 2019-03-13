@@ -436,15 +436,13 @@ class sise extends CI_Controller {
 									'nombre_alumno'=> $this->input->post('nombre'),
 									'ap_pa_alumno'=> $this->input->post('a_p'),
 									'ap_ma_alumno'=> $this->input->post('a_m'),
-									'email_alumno'=> $this->input->post('email'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> $this->input->post('g'),
 									'telefono_alumno' => $this->input->post('tel'),
-									'estatus'=>1
 								);
-								var_dump($data_registro);
-								die();
-								/*$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
+								//var_dump($data_registro);
+								//die();
+								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
 									'contrasena'=>md5($this->input->post('contra')),
@@ -454,7 +452,7 @@ class sise extends CI_Controller {
 								);
 
 								$usuario=$this->sise_model->inserta_usuario($data_usuario);
-								header('Location:'.base_url('index.php/sise').'');*/
+								header('Location:'.base_url('index.php/sise').'');
 
 							}
 							
