@@ -5,7 +5,7 @@
            $atributos = array('class' => 'form-signin');
            echo form_open('sise',$atributos)
             ?>
-
+             <p>Lolo</p>
               <div class="panel periodic-login">
               <span class="atomic-number"></span>
               <div class="panel-body text-center">
@@ -27,7 +27,10 @@
                     <?php echo form_error('contrasena'); ?>
                  
                   </div>
-                  <input type="submit" class="btn col-md-12" value="Ingresar"/>
+                  <label class="pull-left">
+                  <input type="checkbox" class="icheck pull-left" name="checkbox1"/> Remember me
+                  </label>
+                  <input type="submit" class="btn col-md-12" value="SignIn"/>
               </div>
                 <div class="text-center" style="padding:5px;">
                     <a href="forgotpass.html">Forgot Password </a>
