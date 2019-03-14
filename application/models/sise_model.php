@@ -317,9 +317,10 @@ class sise_model extends CI_Model{
 		
 		#Consultas
 			function datos_aspirante($data){
-			$this->db->select('*');
-			$this->db->from('alumno');
-			$this->db->where('clave_alumno',$data);
+			$this->db->select('al.*,us.*');
+			$this->db->from('alumno as al');
+			$this->db->join('usuario us ' ,' al.clave_alumno = us.id_persona','inner');
+			$this->db->where('al.clave_alumno',$data);
 
 			$regresa_datos_alumno = $this->db->get();
 			return $regresa_datos_alumno->row_array();
@@ -376,9 +377,15 @@ class sise_model extends CI_Model{
 		#Fin inserciones
 		
 		#Update
-			function actualiza_datos_aspirante($clave_alumno,$data){
-				$this->db->where('clave_alumno', $clave_alumno);
+			function actualiza_datos_aspirante($clave_aspirante,$data){
+				$this->db->where('clave_alumno', $clave_aspirante);
 				$this->db->update('alumno',$data);
+			}
+
+			function actualiza_datos_aspirante_correo($aspirante,$privilegio,$data){
+				$this->db->where('id_persona', $aspirante);
+				$this->db->where('id_privilegio', $privilegio);
+				$this->db->update('usuario',$data);
 			}
 		#Fin update
 
