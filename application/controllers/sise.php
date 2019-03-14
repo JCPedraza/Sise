@@ -24,7 +24,6 @@ class sise extends CI_Controller {
 							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							  <strong>Alerta </strong>','</div>');
 							$this->form_validation->set_rules('usuario','Correo electrónico', 'required|min_length[3]|max_length[50]|valid_email');
-							$this->form_validation->set_rules('contrasena', 'Contraseña','required|min_length[4]|max_length[25]');
 
 							if($this->form_validation->run()==FALSE){
 								if($this->input->get('error'))
