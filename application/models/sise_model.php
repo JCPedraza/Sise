@@ -401,9 +401,14 @@ class sise_model extends CI_Model{
 				}*/
 
 				function datos_alumno($data){
-					$this->db->select('*');
-					$this->db->from('alumno');
-					$this->db->where('clave_alumno',$data);
+					$datos_alumno = $this->datos_sesion();
+					
+
+					$this->db->select('al.*,us.usuario');
+					$this->db->from('alumno as al');
+					$this->db->join('usuario us ' ,' al.clave_alumno = us.id_persona','inner');
+					$this->db->where('al.clave_alumno',$data);
+					$this->db->where('us.id_privilegio',$datos_alumno['id_privilegio']);
 
 					$regresa_datos_alumno = $this->db->get();
 					return $regresa_datos_alumno->row_array();
