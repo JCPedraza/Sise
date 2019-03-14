@@ -114,8 +114,8 @@ class sise extends CI_Controller {
 								$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
 								$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 								$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
-								$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[2]|max_length[100]|valid_email|is_unique[usuario.usuario]');
-								$this->form_validation->set_rules('tel','Telefono', 'required|min_length[6]|max_length[15]');
+								#$this->form_validation->set_rules('email','Correo Electrónico','required|min_length[9]|max_length[100]|valid_email');
+								$this->form_validation->set_rules('tel','Telefono', 'required|min_length[10]|max_length[10]');
 
 
 								if ($this->form_validation->run() == FALSE){
@@ -129,27 +129,26 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/footer');
 								
 								}else{
+									
 									$data_datos_edicion= array(
 									'nombre_alumno'=> $this->input->post('nombre'),
 									'ap_pa_alumno'=> $this->input->post('a_p'),
 									'ap_ma_alumno'=> $this->input->post('a_m'),
-									'email_alumno'=> $this->input->post('email'),
-									'ciudad_alumno'=> $this->input->post('ciudad'),
-									'estado_alumno'=>$this->input->post('estado'),
-									'pais_alumno'=> $this->input->post('pais'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
-									'genero_alumno'=> substr($this->input->post('g'),0,1),
-									'RFC_alumno'=> $this->input->post('rfc'),
-									'CURP_alumno'=> $this->input->post('curp'),
-									'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
-									'residencia_alumno'=> $this->input->post('direc'),
+									'genero_alumno'=> $this->input->post('genero'),
 									'telefono_alumno' => $this->input->post('tel'),
-									'institucion_alumno'=>$this->input->post('ins'),
-									'cargo_alumno'=>$this->input->post('car'),
-									'residencia_alumno'=> $this->input->post('direc'),
 
 								);
-										$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
+									
+									$data_correo = array('usuario'=> $this->input->post('email'));
+									
+									$clave_aspirante=$this->input->post('clave_aspirante');
+									
+									
+
+										$this->sise_model->actualiza_datos_aspirante($clave_aspirante,$data_datos_edicion);
+										$this->sise_model->actualiza_datos_aspirante_correo($clave_aspirante,'5',$data_correo);
+
 										header('Location:'.base_url('index.php/sise/aspirantes').'');
 								}
 								}else{
@@ -1219,7 +1218,7 @@ class sise extends CI_Controller {
 
 			    #ingresar_datos_alumnos
 			      	public function ingresar_datos_alumnos(){
-			      		
+			      		$this->input->post('nombre');
 			      	}
 			    #fin ingresar_datos_alumnos
 
