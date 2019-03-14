@@ -122,8 +122,7 @@ class sise extends CI_Controller {
 
 								$data['clave_aspirante'] = $this->uri->segment(3);
 								$data['aspirante'] = $this->sise_model->datos_aspirante($data['clave_aspirante']);
-								#var_dump($data['clave_aspirante'],'<br>',$data['aspirante']);
-								#die();
+								
 								$this->load->view('templates/panel/header',$data);
 								$this->load->view('templates/panel/menu',$data);
 								$this->load->view('templates/panel/formulario_editar_aspirante',$data);
@@ -140,7 +139,6 @@ class sise extends CI_Controller {
 									'pais_alumno'=> $this->input->post('pais'),
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> substr($this->input->post('g'),0,1),
-
 									'RFC_alumno'=> $this->input->post('rfc'),
 									'CURP_alumno'=> $this->input->post('curp'),
 									'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
@@ -148,24 +146,9 @@ class sise extends CI_Controller {
 									'telefono_alumno' => $this->input->post('tel'),
 									'institucion_alumno'=>$this->input->post('ins'),
 									'cargo_alumno'=>$this->input->post('car'),
-
-									#'RFC_alumno'=> $this->input->post('rfc'),
-									#'CURP_alumno'=> $this->input->post('curp'),
-									#'estado_civil_alumno'=> substr($this->input->post('e'),0,1),
 									'residencia_alumno'=> $this->input->post('direc'),
-									#'telefono_alumno' => $this->input->post('tel'),
-									#'institucion_alumno'=>$this->input->post('ins'),
-									#'cargo_alumno'=>$this->input->post('car')
 
 								);
-									//$ge=substr($this->input->post('g'),0,1);
-									//$r=substr($ge,0,1);
-									//echo $r;
-									//$es=substr($this->input->post('e'),0,1);
-									//var_dump($ge,'<br>',$es);
-									//die();
-										//var_dump($this->input->post('clave_aspirante'),'<br>',$data_datos_edicion);
-										//die();
 										$this->sise_model->actualiza_datos_aspirante($this->input->post('clave_aspirante'),$data_datos_edicion);
 										header('Location:'.base_url('index.php/sise/aspirantes').'');
 								}
@@ -1159,6 +1142,7 @@ class sise extends CI_Controller {
 					    }
 					}
 				#fin checar contraseña
+
 				#Eliminar Seccion
 					public function eliminar_seccion(){
 						$data = array(
@@ -1232,6 +1216,12 @@ class sise extends CI_Controller {
 
 			        }
 				#fin función subir de archivos
+
+			    #ingresar_datos_alumnos
+			      	public function ingresar_datos_alumnos(){
+			      		
+			      	}
+			    #fin ingresar_datos_alumnos
 
 			    #función editar la información tipo archivos
 			        public function editar_tipo_doc(){
