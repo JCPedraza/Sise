@@ -53,7 +53,7 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/anel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/principal');
 							$this->load->view('templates/panel/footer');
