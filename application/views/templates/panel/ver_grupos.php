@@ -1,4 +1,10 @@
-	<!-- start: Content -->
+	<?php 
+
+#var_dump($grupos);
+#die();
+
+   ?>
+  <!-- start: Content -->
             <div id="content">
                <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
@@ -44,12 +50,12 @@
                             <tbody>
                       		      <tr>
                                   <?php foreach ($grupos as $grupo){ ?>
-                        		        <td><?php $grupo->nombre_grupos;?></td>
-                        		        <td><?php $grupo->docente_grupo_grupos;?></td>
-                                    <td><?php $grupo->docente_grupo_grupos;?></td>
+                        		        <td><?php echo $grupo->nombre_grupo;?></td>
+                        		        <td><?php echo $grupo->nombre_generacion;?></td>
+                                    <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
                         		        <td>
                                       <div class="col-md-6" style="margin-top:5px;">
-                                         <a href="<?php echo base_url();?>index.php/sise/">
+                                         <a href="<?php echo base_url();?>index.php/sise/ver_grupo">
                                            <button class="btn ripple-infinite btn-round btn-warning">
                                             <div>
                                               <span>Ver</span>

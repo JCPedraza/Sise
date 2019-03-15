@@ -669,9 +669,10 @@ class sise_model extends CI_Model{
 
 			#Consultas
 				function devolver_grupos_existenetes(){
-					$this->db->select('g.*,ge.*');
+					$this->db->select('g.*,ge.*,p.*');
 					$this->db->from('grupo g');
-					$this->db->join('generacion as ge','ge.id_generacion=g.generacion');
+					$this->db->join('generacion as ge','ge.id_generacion=g.generacion','inner');
+					$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo','inner');
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
