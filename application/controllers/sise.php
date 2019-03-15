@@ -379,8 +379,8 @@ class sise extends CI_Controller {
 						}
 					#el que sube los archivos
 
-					#Muestran grupos conformados
-						public function muestra_grupos(){
+					#Muestran lista de grupos conformados
+						public function grupos(){
 							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
@@ -391,7 +391,25 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 
 						}
-					#Fin muestran grupos conformados
+					#Fin muestran lista de grupos conformados
+
+					#Muestra la conformacion del grupo
+						public function ver_grupo(){
+							
+							$clave_grupo = $this->uri->segment(3);
+
+							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($clave_grupo);
+							var_dump($data);
+							die();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							#$this->load->view('templates/panel/ver_grupos',$data);
+							$this->load->view('templates/panel/footer');
+						}
+					#Muestra la conformacion del grupo
 
 		//-----Formularios------------
 			//juan carlos
