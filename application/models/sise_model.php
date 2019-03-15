@@ -480,7 +480,7 @@ class sise_model extends CI_Model{
 		#Update
 			function actualiza_datos_seccion($id_seccion,$data){
 			$this->db->where('id_seccion', $id_seccion);
-			$this->db->update('seccion',$data);
+			$this->db->update('seccion' ,$data);
 			}
 		#Fin update
 
@@ -668,12 +668,13 @@ class sise_model extends CI_Model{
 	//-------------------grupos---------------------------
 
 			#Consultas
-				/*function devolver_grupos_existenetes(){
-					$this->db->select('*');
-					$this->db->from('');
+				function devolver_grupos_existenetes(){
+					$this->db->select('g.*,ge.*');
+					$this->db->from('grupo g');
+					$this->db->join('generacion as ge','ge.id_generacion=g.generacion');
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
-				}*/
+				}
 			#Fin Consultas
 
 			#Inserciones
