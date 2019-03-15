@@ -55,7 +55,7 @@
                                     <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
                         		        <td>
                                       <div class="col-md-6" style="margin-top:5px;">
-                                         <a href="<?php echo base_url();?>index.php/sise/ver_grupo">
+                                         <a href="<?php echo base_url();?>index.php/sise/ver_grupo/<?php echo $grupo->clave_grupo ; ?>">
                                            <button class="btn ripple-infinite btn-round btn-warning">
                                             <div>
                                               <span>Ver</span>
