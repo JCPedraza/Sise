@@ -5663,7 +5663,7 @@ ul li a:focus {
 }
 
 #mimin-mobile .ink {
-  background: #3f72ff;
+  background: #FF6656;
 }
 
 #mimin-mobile .ink.animate {
@@ -5727,7 +5727,7 @@ ul li a:focus {
    -o-opacity: 1;
    opacity: 1;
    filter: alpha(opacity=100);
-   background: blue;
+   background: #FF6656;
  }
  to {
    -webkit-opacity: 0;

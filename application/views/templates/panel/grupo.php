@@ -38,7 +38,6 @@
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
-                                <th> </th>
                               </tr>
                             </thead>
                             <tbody>
