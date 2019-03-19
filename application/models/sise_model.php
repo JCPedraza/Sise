@@ -671,19 +671,27 @@ class sise_model extends CI_Model{
 				function devolver_grupos_existenetes(){
 					$this->db->select('g.*,ge.*,p.*');
 					$this->db->from('grupo g');
-					$this->db->join('generacion as ge','ge.id_generacion=g.generacion','inner');
+					$this->db->join('generacion as ge','ge.id_generacion=g.genracion','inner');
 					$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo','inner');
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
 
 				function devolver_grupos_informacion($data){
-					$this->db->select('g.*,ge.*,p.*,gp.*');
+					$this->db->select('g.*,ge.*,p.id_personal,p.nombres_personal,p.ap_paterno_personal,p.ap_materno_personal');
 					$this->db->from('grupo g');
 					$this->db->join('generacion as ge','ge.id_generacion=g.generacion','inner');
-					$this->db->join('conformacion_alumno_grupo as gp','gp.grupo=g.clave_grupo','inne');
 					$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo','inner');
 					$this->db->where('clave_grupo',$data);
+					$devolver_grupos_existenetes = $this->db->get();
+					return $devolver_grupos_existenetes->result();
+				}
+
+				function devolver_grupos_informacion_alumnos($data){
+					$this->db->select('gp.*,al.nombre_alumno,al.ap_pa_alumno,al.ap_ma_alumno,al.clave_alumno');
+					$this->db->from('conformacion_alumno_grupo gp');
+					$this->db->join('alumno as al','al.clave_alumno=gp.alumno','inner');
+					$this->db->where('grupo',$data);
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
