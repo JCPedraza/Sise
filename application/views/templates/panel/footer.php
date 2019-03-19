@@ -8,8 +8,8 @@
     <script src="<?php echo base_url();?>assets/js/plugins/moment.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/plugins/fullcalendar.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/plugins/jquery.nicescroll.js"></script>
-    <script src="asset/js/plugins/jquery.datatables.min.js"></script>
-    <script src="asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/plugins/jquery.datatables.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/plugins/datatables.bootstrap.min.js"></script>
 
 
     <!-- custom -->
