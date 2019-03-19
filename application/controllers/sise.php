@@ -400,6 +400,9 @@ class sise extends CI_Controller {
 							$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
 							$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
 							
+							#var_dump($data['alumnos_grupo']);
+							#die();
+							
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 							
