@@ -740,8 +740,12 @@ class sise_model extends CI_Model{
 
 	//-----------------asignaturas---------------
 			#Consultas
-			funtion devolver_asignatura($data){
+			function devolver_asignatura($data){
+
 				$id=$this->id_oferta_academica($data);
+				#$this->db->select();
+				#$this->db->from();
+				#$this->db->where();
 
 			}
 			#Fin Consultas
