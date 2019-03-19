@@ -1,7 +1,7 @@
 	<?php 
 
-#var_dump($grupos);
-#die();
+  #var_dump($key->alumno);
+  #die();
 
    ?>
   <!-- start: Content -->
@@ -38,12 +38,17 @@
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
+                                <th> </th>
                               </tr>
                             </thead>
                             <tbody>
+                              <?php foreach ($alumnos_grupo as $alumnos){?>
                       		      <tr>
-                                  
+                                  <th><?php echo $alumnos->nombre_alumno;?></th>
+                                  <th><?php echo $alumnos->ap_pa_alumno;?></th>
+                                  <th><?php echo $alumnos->ap_ma_alumno;?></th>
       		                      </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                       </div>
