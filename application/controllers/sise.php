@@ -381,7 +381,25 @@ class sise extends CI_Controller {
 
 					#Muestran lista de grupos conformados
 						public function grupos(){
-							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes();
+
+							$oferta = $this->uri->segment(3);
+							
+
+							if ($oferta==null) {
+								$oferta="";
+							}
+							
+
+							if ($oferta=="") {
+								$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
+							}else{
+								$data['asignatura'] = $this->sise_model->devolver_asignatura($oferta);
+								foreach ($data['asignatura'] as $asignatura) {
+									$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($asignatura);
+								}
+							}
+
+
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 							
