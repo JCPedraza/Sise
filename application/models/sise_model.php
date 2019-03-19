@@ -568,6 +568,15 @@ class sise_model extends CI_Model{
 				$devuelve_oferta_academica=$this->db->get('oferta_academica');
 				return $devuelve_oferta_academica->result();
 			}
+
+			function id_oferta_academica($data){
+				$this->db->select('clave_of_aca');
+				$this->db->from('oferta_academica');
+				$this->db->where('nombre_of_aca',$data);
+				$id=$this->db->get();
+				return $id->result();
+			}
+
 		#Fin consultas
 		
 		#Inserciones
@@ -668,11 +677,13 @@ class sise_model extends CI_Model{
 	//-------------------grupos---------------------------
 
 			#Consultas
-				function devolver_grupos_existenetes(){
+				function devolver_grupos_existenetes($data){
 					$this->db->select('g.*,ge.*,p.*');
 					$this->db->from('grupo g');
-					$this->db->join('generacion as ge','ge.id_generacion=g.genracion','inner');
+					$this->db->join('generacion as ge','ge.id_generacion=g.generacion','inner');
 					$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo','inner');
+					#$this->db->join('asignatura as as','as.clave_asi=g.asignatura','inner');
+					$this->db->where('clave_grupo',$data);
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
@@ -707,6 +718,44 @@ class sise_model extends CI_Model{
 			#Fin Delete
 	//----------------fin grupos--------------------------
 
+	//-----------------------personal-------------------------
+		
+		#Consultas
+		#Fin consultas
+		
+		#Inserciones
+			function insertar_personal($data){
+				$this->db->insert('personal',$data);
+				return $this->db->insert_id();
+			}
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+
+		#Fin delete
+	//-------------------fin personal-------------------------
+
+	//-----------------asignaturas---------------
+			#Consultas
+			funtion devolver_asignatura($data){
+				$id=$this->id_oferta_academica($data);
+
+			}
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin asignaturas---------------
+
 	#plantilla
 	//-----------------nombre---------------
 			#Consultas
@@ -728,23 +777,4 @@ class sise_model extends CI_Model{
 
    	//---------------------fin prueba-------------------------
 
-    //-----------------------personal-------------------------
-		
-		#Consultas
-		#Fin consultas
-		
-		#Inserciones
-			function insertar_personal($data){
-				$this->db->insert('personal',$data);
-				return $this->db->insert_id();
-			}
-		#Fin inserciones
-		
-		#Update
-		#Fin update
-
-		#Delete
-
-		#Fin delete
-	//-------------------fin personal-------------------------
 }

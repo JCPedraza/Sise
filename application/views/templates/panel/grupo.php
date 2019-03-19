@@ -33,6 +33,8 @@
 
                       <div class="responsive-table">
                         <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                            
+                            
                             <thead>
                               <tr>
                                 <th>Nombre</th>
@@ -49,6 +51,8 @@
       		                      </tr>
                                 <?php } ?>
                             </tbody>
+                            
+
                         </table>
                       </div>
 
