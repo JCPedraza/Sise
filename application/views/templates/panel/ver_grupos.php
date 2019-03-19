@@ -1,9 +1,3 @@
-	<?php 
-
-#var_dump($grupos);
-#die();
-
-   ?>
   <!-- start: Content -->
             <div id="content">
                <div class="panel box-shadow-none content-header">

@@ -397,16 +397,15 @@ class sise extends CI_Controller {
 						public function ver_grupo(){
 							
 							$clave_grupo = $this->uri->segment(3);
-
-							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($clave_grupo);
-							var_dump($data);
-							die();
+							$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
+							$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
+							
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 							
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							#$this->load->view('templates/panel/ver_grupos',$data);
+							$this->load->view('templates/panel/grupo',$data);
 							$this->load->view('templates/panel/footer');
 						}
 					#Muestra la conformacion del grupo
