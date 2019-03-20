@@ -320,7 +320,43 @@ class sise extends CI_Controller {
 					}
 				#fin de experiencia_academica
 
-				#
+				#Muestra la evluación
+					public function evaluacion_docente(){
+						$this->sise_model->valida_sesion();
+									
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						//$data['']
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/encuesta');
+						$this->load->view('templates/panel/footer');
+					}
+				#Fin de la evaluación
+
+				#Muestra la encuesta con las preguntas
+					public function eva(){
+						$this->sise_model->valida_sesion();
+									
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$resultado=$this->sise_model->evaluacion();
+						$data['evaluacio']=$resultado;
+						#var_dump($resultado['id_cuestionario']);
+						#die();
+						$id_encuesta=$resultado['id_encuesta'];
+						$id_cuestionario=$resultado['id_cuestionario'];
+						$r=$this->sise_model->consultaencuesta($id_encuesta);
+						$data['cuestionario']=$r;
+						#var_dump($r);
+						#die();
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/en',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin de las encuestas con las preguntas
 
 			//joan alonso
 					#
@@ -1093,6 +1129,8 @@ class sise extends CI_Controller {
 								header('Location:'.base_url('index.php/sise/aspirantes').'');
 							}
 					#Fin del estatus 
+
+					#
 
 			//joan alonso
 
