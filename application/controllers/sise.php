@@ -1152,19 +1152,76 @@ class sise extends CI_Controller {
 
 					#Nueva evaluación 
 							public function nueva_encuesta(){
-								$r=$this->input->post('g');
-								var_dump($r);
-								die();
+								if (empty($this->input->post('l'))){$r=0;}else{$r=1;}
 								$data_encuesta= array(
 											'nom_encuesta'=>$this->input->post('nom_enc'),
-											'id_privilegio'=>$this->input->post('g'),
-											'activo'=>$this->input->post('l'),
+											'id_privilegio'=>$this->input->post('hola'),
+											'activo'=>$r										
 										);
-								var_dump($data_encuesta);
-								die();
+								#var_dump($data_encuesta);
+								#die();
+								$this->sise_model->inserta_encuesta($data_encuesta);
+								header('Location:'.base_url('index.php/sise/evaluaciones').'');
 							}
 					#fin de la evaluación
 
+					#edita modalidad
+						public function edita_evaluacion(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['clave'] = $this->uri->segment(3);
+							$data['evaluacion'] = $this->sise_model->datos_evaluacion($data['clave']);;
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_eva','Nombre de la evaluacion','required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['clave'] = $this->uri->segment(3);
+							$resul = $this->sise_model->datos_evaluacion($data['clave']);
+							$data['evaluacion']=$resul;
+							$resultado=(int)$resul['id_privilegio'];
+							#var_dump($resultado);
+							#die();
+							$r=$this->sise_model->pri($resultado);
+							$data['priv']=$r;
+							$d=$this->sise_model->privilegios($resultado);
+							$data['nom']=$d;
+							#var_dump($data['nom']);
+							#die();
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_evaluacion',$data);
+							$this->load->view('templates/panel/footer',$data);
+							
+							}else{
+								if (empty($this->input->post('ll'))){$r=0;}else{$r=1;}
+								$data_edita_eva=array(
+									'nom_encuesta'=>$this->input->post('nom_enc'),
+									'id_privilegio'=>$this->input->post('hola'),
+									'activo'=>$r
+								);
+								var_dump($this->input->post('id'),'<br>',$data_edita_eva);
+								die();
+									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_eva);
+									header('Location:'.base_url('index.php/sise/evaluacion').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/evaluacion').'');}
+						}
+					#fin edita modalidad
 			//joan alonso
 
 			#Ingresar Datos De Alumnos le agrege la s
