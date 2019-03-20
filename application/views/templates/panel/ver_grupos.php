@@ -50,7 +50,7 @@
                                       <td><?php echo $oferta->descripcion_of_aca;?></td>
                                       <td>
                                         <div class="col-md-6" style="margin-top:5px;">
-                                           <a href="<?php echo base_url();?>index.php/sise/grupos/<?php echo $oferta->nombre_of_aca ; ?>">
+                                           <a href="<?php echo base_url();?>index.php/sise/grupos/<?php echo str_replace(" ", "_", $oferta->nombre_of_aca) ; ?>">
                                              <button class="btn ripple-infinite btn-round btn-warning">
                                               <div>
                                                 <span>Ver</span>
