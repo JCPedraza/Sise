@@ -438,8 +438,7 @@ class sise extends CI_Controller {
 					#Muestran lista de grupos conformados
 						public function grupos(){
 
-							$oferta = ''.urldecode($this->uri->segment(3));
-
+							$oferta = ''.urldecode(str_replace("_", " ", $this->uri->segment(3)));
 							
 							
 

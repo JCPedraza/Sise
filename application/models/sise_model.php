@@ -743,9 +743,10 @@ class sise_model extends CI_Model{
 			function devolver_asignatura($data){
 
 				$id=$this->id_oferta_academica($data);
-				#$this->db->select();
-				#$this->db->from();
-				#$this->db->where();
+				
+				$this->db->select();
+				$this->db->from();
+				$this->db->where();
 
 			}
 			#Fin Consultas
