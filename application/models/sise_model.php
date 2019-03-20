@@ -781,4 +781,43 @@ class sise_model extends CI_Model{
 
    	//---------------------fin prueba-------------------------
 
+	//-----------------------evaluacion-------------------------
+		
+		#Consultas
+			function evaluacion(){
+					$this->db->select('ep.*,pe.*,e.*,c.*');
+					$this->db->from('personal pe');
+					$this->db->join('enc_per as ep','pe.id_personal=ep.id_personal');
+					$this->db->join('encuesta as e','e.id_encuesta=ep.id_encuesta');
+					$this->db->join(' cuestionario as c','c.id_encuesta=e.id_encuesta');
+					$this->db->where('e.Activo','1');
+					$this->db->where('e.id_privilegio','3');
+
+					$evaluacion = $this->db->get();
+					return $evaluacion->row_array();
+			}
+			function consultaencuesta($id_encuesta){
+					$this->db->select('c.*,o.*');
+					$this->db->from('encuesta as e');
+					$this->db->join('cuestionario as c','c.id_encuesta=e.id_encuesta');
+					$this->db->join('opciones as o','o.id_cuestionario=c.id_cuestionario');
+					$this->db->where('c.id_encuesta',$id_encuesta);
+
+					$ce = $this->db->get();
+					return $ce->result();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			
+		#Fin inserciones
+		
+		#Update
+		#Fin update
+
+		#Delete
+
+		#Fin delete
+	//-------------------fin evaluacion-------------------------
+
 }
