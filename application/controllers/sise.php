@@ -358,6 +358,26 @@ class sise extends CI_Controller {
 					}
 				#fin de las encuestas con las preguntas
 
+				#Vista Del Administrador de las encuestas que existen
+					public function evaluaciones(){
+						$this->sise_model->valida_sesion();
+						$this->sise_model->Estar_aqui();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['evaluacion']=$this->sise_model->devuelve_evaluaciones();
+						$resultado=$this->sise_model->devuelve_privilegio();
+						$data['privi']=$resultado;
+						#var_dump($data['privi']);
+						#die();
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/evaluacion',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin de las encuestas que existen
+
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -1130,7 +1150,17 @@ class sise extends CI_Controller {
 							}
 					#Fin del estatus 
 
-					#
+					#Nueva evaluación 
+							public function nueva_encuesta(){
+								$data_encuesta= array(
+											'nom_encuesta'=>$this->input->post('nom_enc'),
+											'id_privilegio'=>$this->input->post('g'),
+											'activo'=>$this->input->post('l'),
+										);
+								var_dump($data_encuesta);
+								die();
+							}
+					#fin de la evaluación
 
 			//joan alonso
 
