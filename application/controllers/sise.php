@@ -1192,14 +1192,10 @@ class sise extends CI_Controller {
 							$resul = $this->sise_model->datos_evaluacion($data['clave']);
 							$data['evaluacion']=$resul;
 							$resultado=(int)$resul['id_privilegio'];
-							#var_dump($resultado);
-							#die();
 							$r=$this->sise_model->pri($resultado);
 							$data['priv']=$r;
 							$d=$this->sise_model->privilegios($resultado);
 							$data['nom']=$d;
-							#var_dump($data['nom']);
-							#die();
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/formulario_editar_evaluacion',$data);
@@ -1208,17 +1204,17 @@ class sise extends CI_Controller {
 							}else{
 								if (empty($this->input->post('ll'))){$r=0;}else{$r=1;}
 								$data_edita_eva=array(
-									'nom_encuesta'=>$this->input->post('nom_enc'),
+									'nom_encuesta'=>$this->input->post('nom_eva'),
 									'id_privilegio'=>$this->input->post('hola'),
 									'activo'=>$r
 								);
-								var_dump($this->input->post('id'),'<br>',$data_edita_eva);
-								die();
+								//var_dump($this->input->post('id'),'<br>',$data_edita_eva);
+								//die();
 									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_eva);
-									header('Location:'.base_url('index.php/sise/evaluacion').'');
+									header('Location:'.base_url('index.php/sise/evaluaciones').'');
 								}
 							}else{
-								header('Location:'.base_url('index.php/sise/evaluacion').'');}
+								header('Location:'.base_url('index.php/sise/evaluaciones').'');}
 						}
 					#fin edita modalidad
 			//joan alonso

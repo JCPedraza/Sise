@@ -298,7 +298,7 @@ class sise_model extends CI_Model{
 				$this->db->from('privilegio');
 				$this->db->where('id_privilegio',$data);
 				$devuelve_pri=$this->db->get();
-				return $devuelve_pri->result();
+				return $devuelve_pri->row_array();
 			}
 		#Fin consultas
 		
@@ -846,8 +846,8 @@ class sise_model extends CI_Model{
 		
 		#Update
 			function actualiza_datos_evaluacion($id,$data){
-				$this->db->where('clave_mod', $id);
-				$this->db->update('modalidad',$data);
+				$this->db->where('id_encuesta', $id);
+				$this->db->update('encuesta',$data);
 			}
 		#Fin update
 

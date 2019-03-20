@@ -28,14 +28,14 @@
                             <div class="" style="margin-top:40px !important;">
                               <label>Selecciona a quien va a contestar la encuesta</label>
                               <select name="hola" id="" class="form-control form-control android">
-                                    <option selected="selected"><?php echo $evaluacion['id_privilegio']; ?></option>
+                                    <option value="<?php echo $priv['id_privilegio'];?>" selected="selected"><?php echo $priv['nombre_privilegio']; ?></option>
                                     <?php foreach ($nom as $no) {?>                                   
                                     <option value="<?php echo $no->id_privilegio; ?>"><?php echo $no->nombre_privilegio; ?></option>
                                     <?php } ?>
                             </select>
                             <div style="padding:20px;padding-bottom:0px;">
                           <div class="form-group form-animate-checkbox">
-                            <input type="checkbox" class="checkbox" name="ll" value="<?php if(set_value('ll')) echo set_value('ll');?>" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" <?php if ($evaluacion['Activo']==1) {
+                            <input type="checkbox" class="checkbox" name="ll" value="<?php if(set_value('ll')) echo set_value('ll');else {if($evaluacion) echo $evaluacion['Activo'];}?>" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" <?php if ($evaluacion['Activo']==1) {
                               echo 'checked';
                             }?>>
                             <label> Activa</label>
