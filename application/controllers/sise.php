@@ -1152,6 +1152,9 @@ class sise extends CI_Controller {
 
 					#Nueva evaluación 
 							public function nueva_encuesta(){
+								$r=$this->input->post('g');
+								var_dump($r);
+								die();
 								$data_encuesta= array(
 											'nom_encuesta'=>$this->input->post('nom_enc'),
 											'id_privilegio'=>$this->input->post('g'),
