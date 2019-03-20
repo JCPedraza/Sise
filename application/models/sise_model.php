@@ -286,6 +286,20 @@ class sise_model extends CI_Model{
 				$devuelve_privilegio_aspirante=$this->db->get();
 				return $devuelve_privilegio_aspirante->result();
 			}
+			function privilegios($data){
+				$this->db->select('*');
+				$this->db->from('privilegio');
+				$this->db->where('id_privilegio !=',$data);
+				$devuelve_privilegio=$this->db->get();
+				return $devuelve_privilegio->result();
+			}
+			function pri($data){
+				$this->db->select('*');
+				$this->db->from('privilegio');
+				$this->db->where('id_privilegio',$data);
+				$devuelve_pri=$this->db->get();
+				return $devuelve_pri->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -785,7 +799,7 @@ class sise_model extends CI_Model{
 	//-----------------------evaluacion-------------------------
 		
 		#Consultas
-			function devuelve_evaluaciones($value=''){
+			function devuelve_evaluaciones(){
 				$this->db->select('*');
                 $this->db->from('encuesta');
                 $devuelve_evaluaciones = $this->db->get();
@@ -814,13 +828,27 @@ class sise_model extends CI_Model{
 					$ce = $this->db->get();
 					return $ce->result();
 			}
+			function datos_evaluacion($data){
+				$this->db->select('*');
+				$this->db->from('encuesta');
+				$this->db->where('id_encuesta',$data);
+
+				$regresa_datos_modalidad = $this->db->get();
+				return $regresa_datos_modalidad->row_array();
+			}
 		#Fin consultas
 		
 		#Inserciones
-			
+			function inserta_encuesta($data){
+				$this->db->insert('encuesta',$data);
+			}
 		#Fin inserciones
 		
 		#Update
+			function actualiza_datos_evaluacion($id,$data){
+				$this->db->where('clave_mod', $id);
+				$this->db->update('modalidad',$data);
+			}
 		#Fin update
 
 		#Delete

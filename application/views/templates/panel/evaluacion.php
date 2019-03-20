@@ -27,6 +27,7 @@
 											<thead>
 												<tr>
 													<th>Nombre de la Evaluación</th>
+													<th>Editar</th>
 													<th>Agegar Peguntas a la evaluación</th>
 												</tr>
 											</thead>
@@ -36,6 +37,17 @@
 												?>
 														<tr>
 															<td><?php echo $evalu->nom_encuesta; ?></td>
+															<td>
+															<div class="col-md-6" style="margin-top:5px;">
+																 <a href="<?php echo base_url();?>index.php/sise/edita_evaluacion/<?php echo $evalu->id_encuesta;?>">
+																	 <button class="btn ripple-infinite btn-round btn-warning">
+																		<div>
+																			<span>Editar</span>
+																		</div>
+																	</button>
+																	</a>
+															</div>
+														</td>
 															<td>
 															<div class="col-md-6" style="margin-top:5px;">
 																 <a href="<?php #echo base_url();?>index.php/sise/edita_modalidad/<?php #echo $mod->clave_mod;?>">
