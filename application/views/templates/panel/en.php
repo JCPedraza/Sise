@@ -16,7 +16,7 @@
                 <div class="col-md-12">
                   <div class="panel">
                     <div class="panel-heading"><h3>
-          <p>Evaluacion del Docente<?php echo $evaluacio['nombres_personal']; ?></p></h3></div>
+          <p>Evaluacion del Docente <?php echo $evaluacio['nombres_personal']; ?></p></h3></div>
                     <div class="panel-body">
                       <div class="responsive-table">
 
