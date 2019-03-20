@@ -758,9 +758,9 @@ class sise_model extends CI_Model{
 
 				$id=$this->id_oferta_academica($data);
 				
-				$this->db->select();
-				$this->db->from();
-				$this->db->where();
+				$this->db->select('');
+				$this->db->from('');
+				$this->db->where('');
 
 			}
 			#Fin Consultas
