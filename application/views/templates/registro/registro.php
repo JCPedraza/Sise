@@ -48,6 +48,16 @@
                                     <option value="F">Femenino</option>
                             </select>
                           </div>
+                          <div class="" style="margin-top:40px !important;">
+                              <label>Carrera</label>
+                              <select name="carrera" id="" class="form-control form-control android">
+                                    <option selected="selected">Selecciona la carrera</option>
+                                    <?php foreach ($carrera as $car) {?>                                   
+                                    <option value="<?php echo $car->clave_of_aca; ?>"><?php echo $car->nombre_of_aca; ?></option>
+                                    <?php } ?>
+                            </select>
+                          </div>
+                          <br>
                         </div>
 
                           <div class="col-md-6">
