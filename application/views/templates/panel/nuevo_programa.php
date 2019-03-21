@@ -22,12 +22,28 @@
                           ?>
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
+                            
                             <div class="form-group"><label class="col-sm-2 control-label text-right" >Nombre del Programa</label>
                               <div class="col-sm-10"><input type="text" minlength="15" maxlength="100" class="form-control android" name="nom_pro"></div>
                             </div>
+                            <?php echo form_error('nom_pro'); ?>
+                            
                             <div class="form-group"><label class="col-sm-2 control-label text-right" >Descripción</label>
                               <div class="col-sm-10"><input type="text" minlength="12" maxlength="150" class="form-control android" name="des_pro"></div>
                             </div>
+                            <?php echo form_error('des_pro'); ?>
+
+                            <div class="form-group"><label class="col-sm-2 control-label text-right">Oferta Académica</label>
+                              <div class="col-sm-10">
+                                <select name="ofe_aca" id="">
+                                    <option value="">Selecciona Una</option>
+                                  <?php foreach ($oferta_academica as $of): ?>
+                                    <option value="<?php echo $of->clave_of_aca; ?>"><?php echo $of->nombre_of_aca ?></option>
+                                  <?php endforeach ?>
+                                </select>
+                              </div>
+                            </div>
+                            <?php echo form_error('ofe_aca'); ?>
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
                                    <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">

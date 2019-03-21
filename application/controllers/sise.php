@@ -266,7 +266,7 @@ class sise extends CI_Controller {
 					}
 				#fin de las modalidades
 
-				#Muestra los programas actuales
+				#Muestra los programas actuales (editado)
 					public function programas()
 					{
 						$this->sise_model->valida_sesion();
@@ -275,6 +275,7 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['programa']=$this->sise_model->devuelve_programa();
+
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -872,20 +873,27 @@ class sise extends CI_Controller {
 						}
 					#fin edita modalidad
 					
-					#Formulario de nuevo programa
+					#Formulario de nuevo programa (editado)
 						public function registro_nuevo_programa(){
 							$this->load->library('form_validation');
 							$this->load->helper('form','url');
 							$this->sise_model->valida_sesion();
+							
+
+							 
+							
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
+							
 							$data['programa']=$this->sise_model->devuelve_programa();
+							$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
 							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							  <strong>Alerta </strong>','</div>');
 							$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
-							$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
+							$this->form_validation->set_rules('des_pro','Descripción del Programa', 'required');
+							$this->form_validation->set_rules('ofe_aca','Oferta académica', 'required|callback_check_select');
 
 							if ($this->form_validation->run() == FALSE){
 								$this->load->view('templates/panel/header',$data);
@@ -895,7 +903,8 @@ class sise extends CI_Controller {
 							}else{
 								$data_nuevo_pro=array(
 									'nombre_programa'=>$this->input->post('nom_pro'),
-									'descripcion_programa'=>$this->input->post('des_pro')
+									'descripcion_programa'=>$this->input->post('des_pro'),
+									'oferta_academica'=>$this->input->post('ofe_aca')
 								);
 								//var_dump($data_nuevo_pri);
 								//die();
@@ -905,13 +914,11 @@ class sise extends CI_Controller {
 						}
 					#fin formulario de nuevo programa
 					
-					#Formulario editar el privilegio
+					#Formulario editar el privilegio (editado)
 						public function edita_programa(){
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
-							$this->load->helper(array('form', 'url'));
-
-							
+							$this->load->helper(array('form', 'url'));							
 
 							if(!empty($this->uri->segment(3))){
 
@@ -920,6 +927,9 @@ class sise extends CI_Controller {
 
 							$data['clave_programa'] = $this->uri->segment(3);
 							$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
+							$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
+
+
 
 							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -942,7 +952,8 @@ class sise extends CI_Controller {
 							}else{
 								$data_edita_pro=array(
 									'nombre_programa'=>$this->input->post('nom_pro'),
-									'descripcion_programa'=>$this->input->post('des_pro')
+									'descripcion_programa'=>$this->input->post('des_pro'),
+									'oferta_academica'=>$this->input->post('ofe_aca'),
 								);
 									$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
 									header('Location:'.base_url('index.php/sise/programas').'');
@@ -1355,6 +1366,19 @@ class sise extends CI_Controller {
 					    }
 					}
 				#fin checar contraseña
+
+				#checar select
+					function check_select($select){
+						if ($select="") {
+							echo "string";
+							die();
+							$this->form_validation->set_message('check_select', 'No se selecciono ninguno,Debe seleccionar una opción.');
+							return FALSE;
+						}else{
+							return TRUE;
+						}
+					}
+				#fin checar select
 
 				#Eliminar Seccion
 					public function eliminar_seccion(){
