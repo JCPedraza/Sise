@@ -3,9 +3,9 @@
 							 <div class="panel box-shadow-none content-header">
 									<div class="panel-body">
 										<div class="col-md-12">
-												<h3 class="animated fadeInLeft">Tabla de Evaluaciones</h3>
+												<h3 class="animated fadeInLeft"><?php echo $evaluacion_preguntas['nom_encuesta']; ?></h3>
 												<p class="animated fadeInDown">
-												 Evaluación
+												 Agregar Preguntas a la evaluacion 
 												</p>
 										</div>
 									</div>
@@ -13,70 +13,42 @@
 							<div class="col-md-12 top-20 padding-0">
 								<div class="col-md-12">
 									<div class="panel">
-										<div class="panel-heading"><h3>Datos De Las Evaluaciones</h3></div>
+										<div class="panel-heading"><h3>Numero de preguntas con las que cuenta <?php echo $num_preguntas['num']; ?></h3></div>
 										<div class="panel-body">
-											<div class="col-md-6" style="margin-top:5px;">
-																	<button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong">
-																 <div>
-																	<span>Agregar Nueva Evaluación</span>
-																 </div>
-																</button>
-												</div>
 											<div class="responsive-table">
-											<table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
-											<thead>
-												<tr>
-													<th>Nombre de la Evaluación</th>
-													<th>Activa</th>
-													<th>Editar</th>
-													<th>Agegar Peguntas a la evaluación</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php
-													foreach ($evaluacion as $evalu) {
-												?>
-														<tr>
-															<td><?php echo $evalu->nom_encuesta; ?></td>
-															<td><?php 
-                                  if ($evalu->Activo==1) {
-                                    ?>
-                                    <span class="badge badge-success">Si</span>
-                                    <?php
-                                  }else{
-                                    ?>
-                                    <span class="badge badge-danger">No</span>
-                                    <?php
-                                  }
-                                ?></td>
-															<td>
-															<div class="col-md-6" style="margin-top:5px;">
-																 <a href="<?php echo base_url();?>index.php/sise/edita_evaluacion/<?php echo $evalu->id_encuesta;?>">
-																	 <button class="btn ripple-infinite btn-round btn-warning">
-																		<div>
-																			<span>Editar</span>
-																		</div>
-																	</button>
-																	</a>
-															</div>
-														</td>
-															<td>
-															<div class="col-md-6" style="margin-top:5px;">
-																 <a href="<?php echo base_url();?>index.php/sise/agregar_pregunta/<?php echo $evalu->id_encuesta;?>">
-																	 <button class="btn ripple-infinite btn-round btn-warning">
-																		<div>
-																			<span>Agregar</span>
-																		</div>
-																	</button>
-																	</a>
-															</div>
-														</td>
-														</tr>
-													 <?php
-													}
-												?>
-											</tbody>
-												</table>
+											<table id="datatables-example" width="100%" cellspacing="0">
+											<?php
+        // esto es simplemente un formulario, pero aqui hacemos una condicion, identificamos si se ha definido un numero de opciones, si es si hacemos un bucle, si es no mostramos el select para definir un numero de opciones, como es obvio por defecto se mostrara el bucle:
+	if(isset($_POST['opc'])){
+		$num = $_POST['opciones']; // guardamos el valor del numero de opciones
+		for($i=1;$i<=$num;$i++){ // hacemos el bucle mostrando los campos respectivos.
+	?>
+	<div class="cf">
+		<label>Opcion <?php echo $i; ?>: </label>
+		<input name="opc<?php echo $i; ?>" type="text" size="43">
+	</div>
+	<?php } // aqui termina el bucle ?>
+	<div class="cf">
+    	<input name="enviar" type="submit" value="Enviar">
+        <input name="opciones" type="hidden" value="<?php echo $num; // le pasamos el valor de num al proceso del formulario mediante un campo oculto. ?>">
+        <input name="cont" type="hidden" value="<?php echo cont; ?>">
+    </div>
+	<?php }else{ // sino se ha definido nro de opciones: ?>
+	<div class="fl">
+    	<label>Nº de opciones:</label>
+    	<select name="opciones">
+    		<?php for($i=2;$i<=20;$i++){ // esto es un loop simple, solo para ahorrarnos trabajo, este select tendra de 2 a 20 opciones, si deseas cambiarlo lo puedes hacer aqui. ?>
+    		<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+    		<?php } ?>
+		</select>
+	</div>
+
+    <div class="cf">
+      	<input name="opc" type="submit" value="Continuar">
+    </div>
+
+      <?php } // Sino se han definido opciones, que en vez de salir el boton de Enviar, salga uno que sea Continuar. ?>
+											</table>
 											</div>
 
 									</div>

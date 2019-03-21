@@ -833,8 +833,25 @@ class sise_model extends CI_Model{
 				$this->db->from('encuesta');
 				$this->db->where('id_encuesta',$data);
 
-				$regresa_datos_modalidad = $this->db->get();
-				return $regresa_datos_modalidad->row_array();
+				$regresa_datos_evaluacion = $this->db->get();
+				return $regresa_datos_evaluacion->row_array();
+			}
+			function datos_evaluacion_p($data){
+				$this->db->select('*');
+				$this->db->from('encuesta');
+				$this->db->where('id_encuesta',$data);
+
+				$regresa_datos_evaluacion_p = $this->db->get();
+				return $regresa_datos_evaluacion_p->row_array();
+			}
+			function pregunta_cuantas($data){
+				$this->db->select('COUNT(c.id_encuesta) AS num');
+				$this->db->from('cuestionario as c');
+				$this->db->join('encuesta as e','e.id_encuesta=c.id_encuesta');
+				$this->db->where('c.id_encuesta',$data);
+
+				$regresa_datos_preguntas = $this->db->get();
+				return $regresa_datos_preguntas->row_array();
 			}
 		#Fin consultas
 		

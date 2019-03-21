@@ -1164,7 +1164,7 @@ class sise extends CI_Controller {
 							}
 					#fin de la evaluación
 
-					#edita modalidad
+					#edita evaluacion
 						public function edita_evaluacion(){
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
@@ -1208,15 +1208,32 @@ class sise extends CI_Controller {
 									'id_privilegio'=>$this->input->post('hola'),
 									'activo'=>$r
 								);
-								//var_dump($this->input->post('id'),'<br>',$data_edita_eva);
-								//die();
+								#var_dump($this->input->post('id'),'<br>',$data_edita_eva);
+								#die();
 									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_eva);
 									header('Location:'.base_url('index.php/sise/evaluaciones').'');
 								}
 							}else{
 								header('Location:'.base_url('index.php/sise/evaluaciones').'');}
 						}
-					#fin edita modalidad
+					#fin edita evaluacion
+
+					#Agregar Preguntas
+						public function agregar_pregunta(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$data['clave'] = $this->uri->segment(3);
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
+							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/preguntas',$data);
+							$this->load->view('templates/panel/footer');
+					}
+					#fin de agregar preguntas
 			//joan alonso
 
 			#Ingresar Datos De Alumnos le agrege la s
