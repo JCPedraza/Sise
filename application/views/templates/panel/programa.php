@@ -1,4 +1,4 @@
-	<!-- start: Content -->
+  <!-- start: Content -->
             <div id="content">
                <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
@@ -32,32 +32,31 @@
                         <tr>
                           <th>Nombre del programas</th>
                           <th>Descripción</th>
+                          <th>Oferta Académica</th>
                           <th>Modificar</th>
                         </tr>
                       </thead>
                       <tbody>
-                         <?php
-        foreach ($programa as $pro) {
-        ?>
-		      <tr>
-		        <td><?php echo $pro->nombre_programa; ?></td>
-		        <td><?php echo $pro->descripcion_programa; ?></td>
-		        <td>
-                              <div class="col-md-6" style="margin-top:5px;">
-                                 <a href="<?php echo base_url();?>index.php/sise/edita_programa/<?php echo $pro->clave_programa;?>">
-                                   <button class="btn ripple-infinite btn-round btn-warning">
-                                    <div>
-                                      <span>Editar</span>
-                                    </div>
-                                  </button>
-                                  </a>
-                              </div>
-                            </td>
-		      </tr>
-		     
-                              
-                            </tr>
-                           <?php
+                        <?php
+                          foreach ($programa as $pro) {
+                        ?>
+                		      <tr>
+                		        <td><?php echo $pro->nombre_programa; ?></td>
+                		        <td><?php echo $pro->descripcion_programa; ?></td>
+                            <td><?php echo $pro->nombre_of_aca; ?></td>
+                		        <td>
+                                <div class="col-md-6" style="margin-top:5px;">
+                                   <a href="<?php echo base_url();?>index.php/sise/edita_programa/<?php echo $pro->clave_programa;?>">
+                                     <button class="btn ripple-infinite btn-round btn-warning">
+                                      <div>
+                                        <span>Editar</span>
+                                      </div>
+                                    </button>
+                                    </a>
+                                </div>
+                              </td>
+                		      </tr>
+                        <?php
                           }
                         ?>
                       </tbody>
