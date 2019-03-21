@@ -34,11 +34,11 @@
                                     <?php } ?>
                             </select>
                             <div style="padding:20px;padding-bottom:0px;">
-                          <div class="form-group form-animate-checkbox">
-                            <input type="checkbox" class="checkbox" name="ll" value="<?php if(set_value('ll')) echo set_value('ll');else {if($evaluacion) echo $evaluacion['Activo'];}?>" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" <?php if ($evaluacion['Activo']==1) {
+                          <div class="form-group form-animate-checkbox"><label> Activa</label>
+                            <input type="checkbox" class="checkbox" name="ll"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" <?php if ($evaluacion['Activo']==1) {
                               echo 'checked';
-                            }?>>
-                            <label> Activa</label>
+                            }else{ echo '';}?>>
+                            
                           </div>
                           </div>
                             
