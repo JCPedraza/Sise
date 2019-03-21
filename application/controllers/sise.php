@@ -64,9 +64,9 @@ class sise extends CI_Controller {
 					public function registro_aspirante(){
 						$this->load->library('form_validation');
 						$this->load->helper(array('form', 'url'));
-
+						$data['carrera']=$this->sise_model->devuelve_oferta_academica();
 						$this->load->view('templates/registro/header');
-						$this->load->view('templates/registro/registro');
+						$this->load->view('templates/registro/registro',$data);
 						$this->load->view('templates/registro/footer');
 					}
 				#fin registro de aspirantes (públicos)
@@ -378,6 +378,22 @@ class sise extends CI_Controller {
 					}
 				#fin de las encuestas que existen
 
+				#niveles academicos
+					public function nivel_academico(){
+						$this->sise_model->valida_sesion();
+						$this->sise_model->Estar_aqui();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['niv_academico']=$this->sise_model->devuelve_nivel_academico();
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/nivel_academico',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin de los niveles academicos
+
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -503,7 +519,7 @@ class sise extends CI_Controller {
 							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							  <strong>Alerta </strong>','</div>');
-
+							
 							$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
 							$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 							$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
@@ -516,9 +532,9 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
 							
 							if ($this->form_validation->run() == FALSE) {
-							
+								$data['carrera']=$this->sise_model->devuelve_oferta_academica();
 								$this->load->view('templates/registro/header');
-								$this->load->view('templates/registro/registro');
+								$this->load->view('templates/registro/registro',$data);
 								$this->load->view('templates/registro/footer');
 
 
@@ -532,9 +548,10 @@ class sise extends CI_Controller {
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> $this->input->post('g'),
 									'telefono_alumno' => $this->input->post('tel'),
+									'clave_of_aca'=>$this->input->post('carrera')
 								);
-								//var_dump($data_registro);
-								//die();
+								#var_dump($data_registro);
+								#die();
 								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
@@ -656,16 +673,17 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/nueva_seccion');
 								$this->load->view('templates/panel/footer');
 							}else{
-								$a="";
+								$a="asterisk";
+								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
 								$data_nueva_sec=array(
 									'nombre_seccion'=>$this->input->post('nom_sec'),
 									'icono'=>$a,
 									'descripcion'=>$this->input->post('des_sec'),
 									'url'=>$this->input->post('url'),
-									'activo'=>0
+									'activo'=>$activo
 								);
-								//var_dump($data_nueva_sec);
-								//die();
+								#var_dump($data_nueva_sec);
+								#die();
 								$seccion=$this->sise_model->registra_nueva_seccion($data_nueva_sec);
 								header('Location:'.base_url('index.php/sise/secciones').'');
 							}	
@@ -708,18 +726,20 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 							
 							}else{
+								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
 								$data_edita_sec=array(
 									'nombre_seccion'=>$this->input->post('nom_sec'),
 									'icono'=>$this->input->post('icono'),
 									'descripcion'=>$this->input->post('des_sec'),
 									'url'=>$this->input->post('url'),
-									'activo'=>$this->input->post('activo')
+									'activo'=>$activo
 								);
 									$this->sise_model->actualiza_datos_seccion($this->input->post('id_seccion'),$data_edita_sec);
 									header('Location:'.base_url('index.php/sise/secciones').'');
 								}
 							}else{
-								header('Location:'.base_url('index.php/sise/secciones').'');}
+								header('Location:'.base_url('index.php/sise/secciones').'');
+							}
 						}
 					#fin editar seccion
 					
@@ -1007,7 +1027,7 @@ class sise extends CI_Controller {
 					#fin formulario de nueva oferta academicas
 					
 					#Nuevo nivel Academico
-							public function nuevo_nivel_academico(){
+						public function nuevo_nivel_academico(){
 								$this->load->library('form_validation');
 								$this->load->helper('form','url');
 								$this->sise_model->valida_sesion();
@@ -1017,23 +1037,23 @@ class sise extends CI_Controller {
 								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 								<strong>Alerta </strong>','</div>');
-								$this->form_validation->set_rules('nom_niv','Nombre del nivel Academico', 'required');
+								$this->form_validation->set_rules('nom_nivel','Nombre de la Modalidad', 'required');
 
 								if($this->form_validation->run()==FALSE){
 									$this->load->view('templates/panel/header',$data);
 									$this->load->view('templates/panel/menu',$data);
-									$this->load->view('templates/panel/nueva_modalidad',$data);
+									$this->load->view('templates/panel/nivel_academico',$data);
 									$this->load->view('templates/panel/footer',$data);
 								}else{
+									if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
 									$data_nivel = array(
-										'nombre_exp_aca' => $this->input->post('nom_niv')
+										'nombre_exp_aca	' => $this->input->post('nom_nivel'),
+										'activo' => $activo
 										);
-								//var_dump($data_nivel);
-								//die();
-								$this->sise_model->inserta_nivel_academico($data_nivel);
-								header('Location:'.base_url('index.php/sise/modalidad/'));
+									$this->sise_model->inserta_nivel_academico($data_nivel);
+									header('Location:'.base_url('index.php/sise/nivel_academico/'));
 								}
-							}
+						}
 					#Fin nuevo nivel Academico
 
 					#Edita nivel Academico
@@ -1071,16 +1091,19 @@ class sise extends CI_Controller {
 									$this->load->view('templates/panel/footer');
 									
 									}else{
+										if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
 										$data_edita_niv=array(
-											'nombre_exp_aca'=>$this->input->post('nom_nivel')
+											'nombre_exp_aca'=>$this->input->post('nom_nivel'),
+											'activo' => $activo
 										);
-										//var_dump($this->input->post('clave_ex'),'<br>',$data_edita_niv);
-										//die();
+										#var_dump($this->input->post('clave_ex'),'<br>',$data_edita_niv);
+										#die();
 										$this->sise_model->actualiza_datos_nivel_academico($this->input->post('clave_ex'),$data_edita_niv);
-										header('Location:'.base_url('index.php/sise/modalidad').'');
+										header('Location:'.base_url('index.php/sise/nivel_academico').'');
 										}
 									}else{
-											header('Location:'.base_url('index.php/sise/modalidad').'');}
+											header('Location:'.base_url('index.php/sise/nivel_academico').'');
+									}
 							}
 
 					#fin edita nivel Academico
@@ -1232,8 +1255,10 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
 							$this->load->view('templates/panel/footer');
-					}
+						}
 					#fin de agregar preguntas
+
+					
 			//joan alonso
 
 			#Ingresar Datos De Alumnos le agrege la s

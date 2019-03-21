@@ -31,6 +31,12 @@
                             <div class="form-group"><label class="col-sm-2 control-label text-right" >Url</label>
                               <div class="col-sm-10"><input type="text" class="form-control android" name="url"></div>
                             </div>
+                            <div style="padding:20px;padding-bottom:0px;">
+                          <div class="form-group form-animate-checkbox"><label>Aparece en en menu</label>
+                            <input type="checkbox" class="checkbox" name="e" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+                            
+                          </div>
+                          </div>
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
                                    <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
