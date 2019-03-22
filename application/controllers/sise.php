@@ -528,6 +528,17 @@ class sise extends CI_Controller {
 					#Fin ver de Alta Semestres, Cuatrimestres, ect
 
 					#Ver Asignaturas
+						public function asignaturas(){
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['asignatura'] = $this->sise_model->devolver_asignatura();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_asignatura',$data);
+							$this->load->view('templates/panel/footer');
+						}
 					#Fin ver Asignaturas
 
 		//-----Formularios------------
@@ -1434,6 +1445,38 @@ class sise extends CI_Controller {
 
 				}
 			#Periodo registro de nuevo periodo
+
+			#registrar nueva asignatura
+				public function nueva_asignatura(){
+					$this->load->library('form_validation');
+
+					$data['sesion'] = $this->sise_model->datos_sesion();
+					$data['menu'] = $this->sise_model->datos_menu();
+
+					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+
+					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
+					$this->form_validation->set_rules('dur','Duración Periodo','required');
+
+
+					if ($this->form_validation->run() == FALSE) {
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/nueva_asignatura');
+							$this->load->view('templates/panel/footer');
+						}else{
+							$data_periodo = array(
+								'nombre_periodo' => $this->input->post('nom_pe') ,
+								'duracion_periodo' => $this->input->post('dur')
+							);
+							
+							$this->sise_model->insertar_periodo($data_periodo);
+							header('Location:'.base_url('index.php/sise/periodo').'');
+						}
+				}
+			#fin registrar nueva asignatura
 
 		//-----Funciones Especificas----------------	
 
