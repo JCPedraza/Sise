@@ -378,6 +378,7 @@ class sise_model extends CI_Model{
 				$this->db->join('privilegio as p',' p.id_privilegio=u.id_privilegio','left');
 				$this->db->where('u.id_privilegio!=1');
 				$this->db->where('u.id_privilegio!=2');
+				$this->db->where('u.id_privilegio!=6');
 				$query = $this->db->get();
 				return $query->result();
 			}
@@ -845,6 +846,15 @@ class sise_model extends CI_Model{
 					$this->db->from('encuesta as e');
 					$this->db->join('cuestionario as c','c.id_encuesta=e.id_encuesta');
 					$this->db->join('opciones as o','o.id_cuestionario=c.id_cuestionario');
+					$this->db->where('c.id_encuesta',$id_encuesta);
+
+					$ce = $this->db->get();
+					return $ce->result();
+			}
+			function consulta_encuesta_cuestionario($id_encuesta){
+					$this->db->select('c.pregunta');
+					$this->db->from('encuesta as e');
+					$this->db->join('cuestionario as c','c.id_encuesta=e.id_encuesta');
 					$this->db->where('c.id_encuesta',$id_encuesta);
 
 					$ce = $this->db->get();
