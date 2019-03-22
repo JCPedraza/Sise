@@ -64,7 +64,7 @@ class sise extends CI_Controller {
 					public function registro_aspirante(){
 						$this->load->library('form_validation');
 						$this->load->helper(array('form', 'url'));
-						$data['carrera']=$this->sise_model->devuelve_oferta_academica();
+						$data['carrera']=$this->sise_model->devuelve_oferta_academica_avilitadas();
 						$this->load->view('templates/registro/header');
 						$this->load->view('templates/registro/registro',$data);
 						$this->load->view('templates/registro/footer');
@@ -289,7 +289,8 @@ class sise extends CI_Controller {
 					public function oferta_academica()
 					{
 						$this->sise_model->valida_sesion();
-						
+						$this->load->library('form_validation');
+						$this->load->helper('form','url');
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
@@ -394,6 +395,8 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#fin de los niveles academicos
+
+
 
 			//joan alonso
 					#
@@ -533,7 +536,7 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('contra_conf','Confirmar contraseña', 'required|min_length[4]|max_length[25]|matches[contra]');
 							
 							if ($this->form_validation->run() == FALSE) {
-								$data['carrera']=$this->sise_model->devuelve_oferta_academica();
+								$data['carrera']=$this->sise_model->devuelve_oferta_academica_avilitadas();
 								$this->load->view('templates/registro/header');
 								$this->load->view('templates/registro/registro',$data);
 								$this->load->view('templates/registro/footer');
@@ -913,7 +916,7 @@ class sise extends CI_Controller {
 							}	
 						}
 					#fin formulario de nuevo programa
-					
+
 					#Formulario editar el privilegio (editado)
 						public function edita_programa(){
 							$this->sise_model->valida_sesion();
@@ -961,7 +964,7 @@ class sise extends CI_Controller {
 							}else{
 								header('Location:'.base_url('index.php/sise/programas').'');}
 						}
-					#fin del formulario de registro
+					#fin del formulario de programa
 					
 					#Formulario de nueva oferta academica
 						public function registro_nueva_oferta_academica(){
@@ -975,8 +978,8 @@ class sise extends CI_Controller {
 							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							  <strong>Alerta </strong>','</div>');
-							$this->form_validation->set_rules('nom_oferta','Nombre De la oferta Academica','required');
-							$this->form_validation->set_rules('des_oferta','Descripcion de la oferta Academica', 'required');
+							$this->form_validation->set_rules('nom_ofe_aca','Nombre De la oferta Academica','required');
+							$this->form_validation->set_rules('des_ofe_aca','Descripcion de la oferta Academica', 'required');
 
 							if ($this->form_validation->run() == FALSE){
 								$this->load->view('templates/panel/header',$data);
@@ -984,12 +987,14 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/nueva_oferta_academica');
 								$this->load->view('templates/panel/footer');
 							}else{
+								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
 								$data_nueva_oferta_educativa=array(
-									'nombre_of_aca'=>$this->input->post('nom_oferta'),
-									'descripcion_of_aca'=>$this->input->post('des_oferta')
+									'nombre_of_aca'=>$this->input->post('nom_ofe_aca'),
+									'descripcion_of_aca'=>$this->input->post('des_ofe_aca'),
+									'activo'=>$activo
 								);
-								//var_dump($data_nueva_oferta_educativa);
-								//die();
+								#var_dump($data_nueva_oferta_educativa);
+								#die();
 								$this->sise_model->registro_nueva_oferta_academica($data_nueva_oferta_educativa);
 								header('Location:'.base_url('index.php/sise/oferta_academica').'');
 							}	
@@ -1269,6 +1274,57 @@ class sise extends CI_Controller {
 						}
 					#fin de agregar preguntas
 
+					#formulario editar oferta academica
+						public function edita_oferta_academica(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['clave_ofe_aca'] = $this->uri->segment(3);
+							$data['ofe_aca'] = $this->sise_model->datos_oferta_academica($data['clave_ofe_aca']);;
+							#var_dump($data['ofe_aca']);
+							#die();
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_ofe_aca','Nombre de la evaluacion','required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['clave_ofe_aca'] = $this->uri->segment(3);
+							$data['ofe_aca'] = $this->sise_model->datos_oferta_academica($data['clave_ofe_aca']);
+							
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_oferta_academica',$data);
+							$this->load->view('templates/panel/footer',$data);
+							
+							}else{
+								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
+								$data_edita_oferta_educativa=array(
+									'nombre_of_aca'=>$this->input->post('nom_ofe_aca'),
+									'descripcion_of_aca'=>$this->input->post('des_ofe_aca'),
+									'activo'=>$activo
+								);
+								#var_dump($this->input->post('id'),'<br>',$data_edita_oferta_educativa);
+								#die();
+									$this->sise_model->actualiza_datos_oferta_academica($this->input->post('id'),$data_edita_oferta_educativa);
+									header('Location:'.base_url('index.php/sise/oferta_academica').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/oferta_academica').'');
+							}
+						}
+					#Fin editar oferta academica
 					
 			//joan alonso
 
