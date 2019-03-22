@@ -797,6 +797,44 @@ class sise_model extends CI_Model{
 			#Fin Delete
 	//-----------------fin asignaturas---------------
 
+	
+	//-----------------periodo---------------
+			#Consultas
+				function devolver_periodo(){
+					$this->db->select('*');
+					$this->db->from('periodo');
+					
+					$devolver_periodo = $this->db->get();
+					return $devolver_periodo->result();
+				}
+
+				function datos_periodo($data){
+					$this->db->select('*');
+					$this->db->from('periodo');
+					$this->db->where('id_periodo',$data);
+					$devolver_periodo = $this->db->get();
+					return $devolver_periodo->row_array();
+				}
+			#Fin Consultas
+
+			#Inserciones
+				function insertar_periodo($data){
+					$this->db->insert('periodo',$data);
+				}
+			#Fin Inserciones
+			
+			#Update
+				function editar_periodo($periodo,$data){
+					$this->db->where('id_periodo',$periodo);
+					$this->db->update('periodo',$data);
+				}
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin periodo---------------
+
+
 	#plantilla
 	//-----------------nombre---------------
 			#Consultas
