@@ -5,7 +5,7 @@
                     <div class="col-md-12">
                         <h3 class="animated fadeInLeft">Evaluación</h3>
                         <p class="animated fadeInDown">
-                         Docente
+                         carrera: <?php  ?>
                         </p>
                     </div>
                   </div>

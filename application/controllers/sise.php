@@ -1286,6 +1286,7 @@ class sise extends CI_Controller {
 							$data['menu'] = $this->sise_model->datos_menu();
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
+							$data['cuestionario']=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
