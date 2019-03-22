@@ -582,7 +582,13 @@ class sise_model extends CI_Model{
 				$devuelve_oferta_academica=$this->db->get('oferta_academica');
 				return $devuelve_oferta_academica->result();
 			}
-
+			function devuelve_oferta_academica_avilitadas(){
+				$this->db->select('*');
+				$this->db->from('oferta_academica');
+				$this->db->where('activo',1);
+				$devuelve_oferta_academica_avilitadas=$this->db->get();
+				return $devuelve_oferta_academica_avilitadas->result();
+			}
 			function id_oferta_academica($data){
 				$this->db->select('clave_of_aca');
 				$this->db->from('oferta_academica');
@@ -590,7 +596,14 @@ class sise_model extends CI_Model{
 				$id=$this->db->get();
 				return $id->result();
 			}
+			function datos_oferta_academica($data){
+				$this->db->select('*');
+				$this->db->from('oferta_academica');
+				$this->db->where('clave_of_aca',$data);
 
+				$regresa_datos_evaluacion = $this->db->get();
+				return $regresa_datos_evaluacion->row_array();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -598,8 +611,12 @@ class sise_model extends CI_Model{
 				$this->db->insert('oferta_academica',$data);
 			}
 		#Fin inserciones
-		
+			function actualiza_datos_oferta_academica($id,$data){
+				$this->db->where('clave_of_aca', $id);
+				$this->db->update('oferta_academica',$data);
+			}
 		#Update
+
 		#Fin update
 
 		#Delete
@@ -637,6 +654,7 @@ class sise_model extends CI_Model{
 				$regresa_datos_esperiencia = $this->db->get();
 				return $regresa_datos_esperiencia->result();
 			}
+
 		#Fin consultas
 		
 		#Inserciones
