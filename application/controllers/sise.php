@@ -511,6 +511,25 @@ class sise extends CI_Controller {
 						}
 					#Muestra la conformacion del grupo
 
+					#ver de Alta Semestres, Cuatrimestres, ect
+						public function periodo(){
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['periodo'] = $this->sise_model->devolver_periodo();
+
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_periodo',$data);
+							$this->load->view('templates/panel/footer');
+
+						}
+					#Fin ver de Alta Semestres, Cuatrimestres, ect
+
+					#Ver Asignaturas
+					#Fin ver Asignaturas
+
 		//-----Formularios------------
 			//juan carlos
 
@@ -1344,6 +1363,77 @@ class sise extends CI_Controller {
 
 				}
 			#Fin Ingresar Datos De Alumnos
+
+			#Registro de nuevo periodo
+				public function nuevo_periodo(){
+					$this->load->library('form_validation');
+
+					$data['sesion'] = $this->sise_model->datos_sesion();
+					$data['menu'] = $this->sise_model->datos_menu();
+
+					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+
+					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
+					$this->form_validation->set_rules('dur','Duración Periodo','required');
+
+
+					if ($this->form_validation->run() == FALSE) {
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/nuevo_periodo');
+							$this->load->view('templates/panel/footer');
+						}else{
+							$data_periodo = array(
+								'nombre_periodo' => $this->input->post('nom_pe') ,
+								'duracion_periodo' => $this->input->post('dur')
+							);
+							
+							$this->sise_model->insertar_periodo($data_periodo);
+							header('Location:'.base_url('index.php/sise/periodo').'');
+						}
+
+				}
+			#Periodo registro de nuevo periodo
+
+			#Registro de nuevo periodo
+				public function editar_periodo(){
+					$this->load->library('form_validation');
+
+					$data['clave_periodo'] = $this->uri->segment(3);
+
+					$data['sesion'] = $this->sise_model->datos_sesion();
+					$data['menu'] = $this->sise_model->datos_menu();
+
+					$data['periodo'] = $this->sise_model->datos_periodo($data['clave_periodo']);
+
+					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							  <strong>Alerta </strong>','</div>');
+
+					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
+					$this->form_validation->set_rules('dur','Duración Periodo','required');
+
+
+					if ($this->form_validation->run() == FALSE) {
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_periodo',$data);
+							$this->load->view('templates/panel/footer');
+						}else{
+							$periodo = $this->input->post('periodo');
+							$data_periodo = array(
+								'nombre_periodo' => $this->input->post('nom_pe') ,
+								'duracion_periodo' => $this->input->post('dur')
+							);
+							
+							$this->sise_model->editar_periodo($periodo,$data_periodo);
+							header('Location:'.base_url('index.php/sise/periodo').'');
+						}
+
+				}
+			#Periodo registro de nuevo periodo
 
 		//-----Funciones Especificas----------------	
 
