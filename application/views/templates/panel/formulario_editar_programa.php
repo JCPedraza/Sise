@@ -23,14 +23,28 @@
                           ?>
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
+                            
                             <div class="form-group"><label class="col-sm-2 control-label text-right" >Nombre del Prograa</label>
                               <div class="col-sm-10"><input type="text" class="form-control android" name="nom_pro" value="<?php if(set_value('nom_pro')) echo set_value('nom_pro'); else {if($programa) echo $programa['nombre_programa'];}?>"></div>
                             </div>
+                            
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Descripción</label>
                               <div class="col-sm-10"><input type="text" name="des_pro" class="form-control android" value="<?php if(set_value('des_pro')) echo set_value('des_pro'); else {if($programa) echo $programa['descripcion_programa'];}?>"></div>
                             </div>
+
+                            <div class="form-group"><label class="col-sm-2 control-label text-right">Oferta Académica</label>
+                              <div class="col-sm-10">
+                                <select name="ofe_aca" id="">
+                                  <?php foreach ($oferta_academica as $of): ?>
+                                    <option <?php if($of->clave_of_aca==$programa['oferta_academica']) echo 'selected=""' ; ?> value="<?php echo $of->clave_of_aca; ?>"><?php echo $of->nombre_of_aca ?></option>
+                                  <?php endforeach ?>
+                                </select>
+                              </div>
+                            </div>
+
                             <input type="hidden" name="clave_programa" value="<?php echo $programa['clave_programa']; ?>">
-      </br>
+                          </br>
+
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
                                    <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">

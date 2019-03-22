@@ -543,12 +543,16 @@ class sise_model extends CI_Model{
 		#Consultas
 
 			function devuelve_programa(){
-				$devuelve_programa=$this->db->get('programa');
+				$this->db->select('p.*,of.nombre_of_aca');
+				$this->db->from('programa p');
+				$this->db->join('oferta_academica as of','p.oferta_academica=of.clave_of_aca');
+				$devuelve_programa=$this->db->get();
 				return $devuelve_programa->result();
 			}
 			function datos_programa($data){
-				$this->db->select('*');
-				$this->db->from('programa');
+				$this->db->select('p.*,of.nombre_of_aca');
+				$this->db->from('programa p');
+				$this->db->join('oferta_academica as of','p.oferta_academica=of.clave_of_aca');
 				$this->db->where('clave_programa',$data);
 
 				$regresa_datos_programa = $this->db->get();
