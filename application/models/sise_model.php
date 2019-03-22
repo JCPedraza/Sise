@@ -777,15 +777,17 @@ class sise_model extends CI_Model{
 
 	//-----------------asignaturas---------------
 			#Consultas
-			function devolver_asignatura($data){
+				function devolver_asignatura(){
 
-				$id=$this->id_oferta_academica($data);
-				
-				$this->db->select('');
-				$this->db->from('');
-				$this->db->where('');
-
-			}
+					#$id=$this->id_oferta_academica($data);
+					
+					$this->db->select('as.*, ta.nombre_tipo_asi');
+					$this->db->from('asignatura as');
+					$this->db->join('tipo_asignatura ta','as.tipo_asignatura=ta.clave_tipo_asi','inner');
+					
+					$devolver_asignatura = $this->db->get();
+					return $devolver_asignatura->result();
+				}
 			#Fin Consultas
 
 			#Inserciones
