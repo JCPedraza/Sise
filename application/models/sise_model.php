@@ -777,15 +777,17 @@ class sise_model extends CI_Model{
 
 	//-----------------asignaturas---------------
 			#Consultas
-			function devolver_asignatura($data){
+				function devolver_asignatura(){
 
-				$id=$this->id_oferta_academica($data);
-				
-				$this->db->select('');
-				$this->db->from('');
-				$this->db->where('');
-
-			}
+					#$id=$this->id_oferta_academica($data);
+					
+					$this->db->select('as.*, ta.nombre_tipo_asi');
+					$this->db->from('asignatura as');
+					$this->db->join('tipo_asignatura ta','as.tipo_asignatura=ta.clave_tipo_asi','inner');
+					
+					$devolver_asignatura = $this->db->get();
+					return $devolver_asignatura->result();
+				}
 			#Fin Consultas
 
 			#Inserciones
@@ -797,6 +799,44 @@ class sise_model extends CI_Model{
 			#Delete
 			#Fin Delete
 	//-----------------fin asignaturas---------------
+
+	
+	//-----------------periodo---------------
+			#Consultas
+				function devolver_periodo(){
+					$this->db->select('*');
+					$this->db->from('periodo');
+					
+					$devolver_periodo = $this->db->get();
+					return $devolver_periodo->result();
+				}
+
+				function datos_periodo($data){
+					$this->db->select('*');
+					$this->db->from('periodo');
+					$this->db->where('id_periodo',$data);
+					$devolver_periodo = $this->db->get();
+					return $devolver_periodo->row_array();
+				}
+			#Fin Consultas
+
+			#Inserciones
+				function insertar_periodo($data){
+					$this->db->insert('periodo',$data);
+				}
+			#Fin Inserciones
+			
+			#Update
+				function editar_periodo($periodo,$data){
+					$this->db->where('id_periodo',$periodo);
+					$this->db->update('periodo',$data);
+				}
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin periodo---------------
+
 
 	#plantilla
 	//-----------------nombre---------------
