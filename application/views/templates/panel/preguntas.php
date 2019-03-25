@@ -1,4 +1,15 @@
 <!-- start: Content -->
+						<script>
+							function habilitar(value){
+								if (value==true) {
+									//Habilitamos
+									document.getElementById("segundo").disabled=false;
+								}else if(value==false){
+									//deshabilitamos
+									document.getElementById("segundo").disable=true;
+								}
+							}
+						</script>
 						<div id="content">
 							 <div class="panel box-shadow-none content-header">
 									<div class="panel-body">
@@ -18,7 +29,7 @@
 												<div class="col-md-12" style="margin-top:5px;">
 					                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong">
 					                                 <div>
-					                                  <span>Agregar Nueva Modalidad</span>
+					                                  <span>Agregar Pregunta</span>
 					                                 </div>
 					                                </button>
 					                        </div>
@@ -43,7 +54,7 @@
 				                    <div class="modal-dialog" role="document">
 				                      <div class="modal-content">
 				                        <div class="modal-header">
-				                          <h5 class="modal-title" id="exampleModalLongTitle">Nueva Modalidad</h5>
+				                          <h5 class="modal-title" id="exampleModalLongTitle">Pregunta</h5>
 				                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				                            <span aria-hidden="true">&times;</span>
 				                          </button>
@@ -58,19 +69,47 @@
 				                          </div>
 				                          <table>
 				                          <div class="form-group">
-				                          	<tr><td><label class="col-sm-2 control-label text-top" >Respuesta 1</label>
-				                              <div class="col-sm-1"><input type="text" class="for0-control android" name="des_mod"></div></td>
-				                              <td><label class="col-sm-2 control-label text-top" >Respuesta 2</label>
-				                              <div class="col-sm-3"><input type="text" class="form-control android" name="des_mod"></div></td></tr>
-				                              <tr><td><label class="col-sm-2 control-label text-top" >Respuesta 3</label>
-				                              <div class="col-sm-3"><input type="text" class="form-control android" name="des_mod"></div></td>
-				                              <td><label class="col-sm-2 control-label text-top" >Respuesta 4</label>
-				                              <div class="col-sm-3"><input type="text" class="form-control android" name="des_mod"></div></td></tr>
+				                          	  <div class="col-md-12">
+				        						<tr>
+				                          		<td><label class="control-label text-top">Respuesta 1</label></td>
+				                          			<td><input type="text" class="form-control android" id="segundo" name="des_mod"></td>
+				                          			<td>
+				                          				<div class="form-group form-animate-checkbox">
+														<input type="checkbox"  id="check" onChange="habilitar(this.checked);" class="checkbox" name="l"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" checked="">
+													</div>
+												</td>
+				                              </tr>
+				                              <tr>
+				                          		<td><label class="control-label text-top">Respuesta 2</label></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+				                              			<td>
+				                          				<div class="form-group form-animate-checkbox">
+														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+													</div>
+												</td>
+				                              	</tr>
+				                              	<tr>
+				                          		<td><label class="control-label text-top">Respuesta 3</label></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+														<td>
+				                          				<div class="form-group form-animate-checkbox">
+														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+													</div>
+												</td>
+				                              	</tr>
+				                              	<tr>				                          		<td><label class="control-label text-top">Respuesta 4</label></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+				                              			<td>
+				                          				<div class="form-group form-animate-checkbox">
+														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+													</div>
+												</td>
+				                              	</tr>
 				                          </div>
 				                          </div>
 				                      </div>
 				                  </div>
-				                          </table>
+				                         </div>
 				                        </div>
 				                        <div class="modal-footer">
 				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
