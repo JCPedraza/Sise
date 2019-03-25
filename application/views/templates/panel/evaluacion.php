@@ -29,7 +29,7 @@
 													<th>Nombre de la Evaluación</th>
 													<th>Activa</th>
 													<th>Editar</th>
-													<th>Agegar Peguntas a la evaluación</th>
+													<th>Peguntas de la evaluación</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -65,7 +65,7 @@
 																 <a href="<?php echo base_url();?>index.php/sise/agregar_pregunta/<?php echo $evalu->id_encuesta;?>">
 																	 <button class="btn ripple-infinite btn-round btn-warning">
 																		<div>
-																			<span>Agregar</span>
+																			<span>Preguntas</span>
 																		</div>
 																	</button>
 																	</a>
