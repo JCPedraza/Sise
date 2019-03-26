@@ -4,7 +4,7 @@
                <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Asignatura </h3>
+                        <h3 class="animated fadeInLeft">Programa </h3>
                         <p class="animated fadeInDown">
                          
                         </p>
@@ -15,15 +15,15 @@
               <div class="col-md-12 top-20 padding-0">
                 <div class="col-md-12">
                   <div class="panel">
-                    <div class="panel-heading"><h3>Asignatura</h3></div>
+                    <div class="panel-heading"><h3>Programa</h3></div>
                     <div class="panel-body">
                     	  
                         <div class="row">
                           <div class="col-md-6" style="margin-top:5px;">
-                            <a href="<?php echo base_url();?>index.php/sise/nueva_asignatura">
+                            <a href="<?php echo base_url();?>index.php/sise/nuevo_programa">
                                 <button class="btn ripple-infinite btn-raised btn-success">
                                  <div>
-                                  <span>Agregar Nueva Asignatura</span>
+                                  <span>Agregar Nuevo Programa</span>
                                  </div>
                                 </button>
                             </a>
@@ -48,7 +48,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <?php foreach ($asignatura as $asignatura){?>
+                              <?php /*foreach ($asignatura as $asignatura){?>
                       		      <tr>
                                   <th><?php echo $asignatura->nombre_asi;?></th>
                                   <th><?php echo $asignatura->duracion_asi;?> Hrs</th>
@@ -65,7 +65,7 @@
                                     </a>
                                   </th>
       		                      </tr>
-                                <?php } ?>
+                                <?php } */?>
                             </tbody>
                             
 

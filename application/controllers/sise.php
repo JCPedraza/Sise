@@ -539,20 +539,6 @@ class sise extends CI_Controller {
 						}
 					#Fin ver Asignaturas
 
-					#crear programas
-						public function programa(){
-							#$this->sise_model->valida_sesion();
-							#$this->sise_model->Estar_aqui();
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							#$this->load->view('templates/panel/nivel_academico',$data);
-							$this->load->view('templates/panel/footer');
-						}
-					#fin crear programas
-
 
 		//-----Formularios------------
 			
@@ -920,96 +906,6 @@ class sise extends CI_Controller {
 						}
 					#fin edita modalidad
 					
-					#Formulario de nuevo programa (editado)
-						public function registro_nuevo_programa(){
-							$this->load->library('form_validation');
-							$this->load->helper('form','url');
-							$this->sise_model->valida_sesion();
-							
-
-							 
-							
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							
-							$data['programa']=$this->sise_model->devuelve_programa();
-							$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
-
-							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							  <strong>Alerta </strong>','</div>');
-							$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
-							$this->form_validation->set_rules('des_pro','Descripción del Programa', 'required');
-							$this->form_validation->set_rules('ofe_aca','Oferta académica', 'required|callback_check_select');
-
-							if ($this->form_validation->run() == FALSE){
-								$this->load->view('templates/panel/header',$data);
-								$this->load->view('templates/panel/menu',$data);
-								$this->load->view('templates/panel/nuevo_programa');
-								$this->load->view('templates/panel/footer');
-							}else{
-								$data_nuevo_pro=array(
-									'nombre_programa'=>$this->input->post('nom_pro'),
-									'descripcion_programa'=>$this->input->post('des_pro'),
-									'oferta_academica'=>$this->input->post('ofe_aca')
-								);
-								//var_dump($data_nuevo_pri);
-								//die();
-								$this->sise_model->registro_nuevo_programa($data_nuevo_pro);
-								header('Location:'.base_url('index.php/sise/programas').'');
-							}	
-						}
-					#fin formulario de nuevo programa
-
-					#Formulario editar el privilegio (editado)
-						public function edita_programa(){
-							$this->sise_model->valida_sesion();
-							$this->load->library('form_validation');
-							$this->load->helper(array('form', 'url'));							
-
-							if(!empty($this->uri->segment(3))){
-
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-
-							$data['clave_programa'] = $this->uri->segment(3);
-							$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
-							$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
-
-
-
-							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Alerta </strong>','</div>');
-
-							$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
-							$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
-
-
-							if ($this->form_validation->run() == FALSE){
-
-							$data['clave_programa'] = $this->uri->segment(3);
-							$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
-
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/formulario_editar_programa',$data);
-							$this->load->view('templates/panel/footer');
-							
-							}else{
-								$data_edita_pro=array(
-									'nombre_programa'=>$this->input->post('nom_pro'),
-									'descripcion_programa'=>$this->input->post('des_pro'),
-									'oferta_academica'=>$this->input->post('ofe_aca'),
-								);
-									$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
-									header('Location:'.base_url('index.php/sise/programas').'');
-								}
-							}else{
-								header('Location:'.base_url('index.php/sise/programas').'');}
-						}
-					#fin del formulario de programa
-					
 					#Formulario de nueva oferta academica
 						public function registro_nueva_oferta_academica(){
 							$this->load->library('form_validation');
@@ -1165,7 +1061,6 @@ class sise extends CI_Controller {
 											header('Location:'.base_url('index.php/sise/nivel_academico').'');
 									}
 							}
-
 					#fin edita nivel Academico
 
 					#Formulario de personal
@@ -1420,138 +1315,266 @@ class sise extends CI_Controller {
 					
 			//joan alonso
 
-			#Ingresar Datos De Alumnos le agrege la s
-				public function ingreso_datos_alumno(){
-					$data['url'] = $this->uri->segment(3);
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
+				#Ingresar Datos De Alumnos le agrege la s
+					public function ingreso_datos_alumno(){
+						$data['url'] = $this->uri->segment(3);
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
-					$clave_alumno=$data['sesion']["id_persona"];
-					$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
+						$clave_alumno=$data['sesion']["id_persona"];
+						$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
 
-					$this->load->view('templates/panel/header',$data);
-					$this->load->view('templates/panel/menu',$data);
-					$this->load->view('templates/panel/formulario_alumno_info',$data);
-					$this->load->view('templates/panel/footer');
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/formulario_alumno_info',$data);
+						$this->load->view('templates/panel/footer');
 
-				}
-			#Fin Ingresar Datos De Alumnos
+					}
+				#Fin Ingresar Datos De Alumnos
 
-			#Registro de nuevo periodo
-				public function nuevo_periodo(){
-					$this->load->library('form_validation');
+				#Registro de nuevo periodo
+					public function nuevo_periodo(){
+						$this->load->library('form_validation');
 
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							  <strong>Alerta </strong>','</div>');
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								  <strong>Alerta </strong>','</div>');
 
-					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
-					$this->form_validation->set_rules('dur','Duración Periodo','required');
+						$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
+						$this->form_validation->set_rules('dur','Duración Periodo','required');
 
 
-					if ($this->form_validation->run() == FALSE) {
+						if ($this->form_validation->run() == FALSE) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nuevo_periodo');
+								$this->load->view('templates/panel/footer');
+							}else{
+								$data_periodo = array(
+									'nombre_periodo' => $this->input->post('nom_pe') ,
+									'duracion_periodo' => $this->input->post('dur')
+								);
+								
+								$this->sise_model->insertar_periodo($data_periodo);
+								header('Location:'.base_url('index.php/sise/periodo').'');
+							}
+
+					}
+				#Periodo registro de nuevo periodo
+
+				#edita de nuevo periodo
+					public function editar_periodo(){
+						$this->load->library('form_validation');
+
+						$data['clave_periodo'] = $this->uri->segment(3);
+
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						$data['periodo'] = $this->sise_model->datos_periodo($data['clave_periodo']);
+
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								  <strong>Alerta </strong>','</div>');
+
+						$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
+						$this->form_validation->set_rules('dur','Duración Periodo','required');
+
+
+						if ($this->form_validation->run() == FALSE) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/formulario_editar_periodo',$data);
+								$this->load->view('templates/panel/footer');
+							}else{
+								$periodo = $this->input->post('periodo');
+								$data_periodo = array(
+									'nombre_periodo' => $this->input->post('nom_pe') ,
+									'duracion_periodo' => $this->input->post('dur')
+								);
+								
+								$this->sise_model->editar_periodo($periodo,$data_periodo);
+								header('Location:'.base_url('index.php/sise/periodo').'');
+							}
+
+					}
+				#Periodo edita de nuevo periodo
+
+				#registrar nueva asignatura
+					public function nueva_asignatura(){
+						$this->load->library('form_validation');
+
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
+
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								  <strong>Alerta </strong>','</div>');
+
+						$this->form_validation->set_rules('nom_asi','Nombre periodo','required');
+						$this->form_validation->set_rules('dur_asi','Duración Periodo','required');
+						$this->form_validation->set_rules('cre_asi','Nombre periodo','required');
+						$this->form_validation->set_rules('des_asi','Duración Periodo','required');
+
+						
+						if ($this->form_validation->run() == FALSE||$this->input->post('tipo_asi')==null) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/nueva_asignatura');
+								$this->load->view('templates/panel/footer');
+							
+							}else{
+								$data_asignatura = array(
+									'nombre_asi' => $this->input->post('nom_asi') ,
+									'duracion_asi' => $this->input->post('dur_asi'),
+									'creditos_asi' => $this->input->post('cre_asi'),
+									'descripcion_asi' => $this->input->post('des_asi'),
+									'tipo_asignatura' => $this->input->post('tipo_asi')
+								);
+
+								
+								$this->sise_model->insertar_asignatura($data_asignatura);
+								header('Location:'.base_url('index.php/sise/asignaturas').'');
+							}
+					}
+				#fin registrar nueva asignatura
+
+				#actualiza nueva asignatura
+					public function editar_asignatura(){
+						$this->load->library('form_validation');
+
+						$id_asignatura = $this->uri->segment(3);
+
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
+						$data['asignatura'] = $this->sise_model->datos_asignatura($id_asignatura);
+
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								  <strong>Alerta </strong>','</div>');
+
+						$this->form_validation->set_rules('nom_asi','Nombre periodo','required');
+						$this->form_validation->set_rules('dur_asi','Duración Periodo','required');
+						$this->form_validation->set_rules('cre_asi','Nombre periodo','required');
+						$this->form_validation->set_rules('des_asi','Duración Periodo','required');
+
+						
+						if ($this->form_validation->run() == FALSE||$this->input->post('tipo_asi')==null) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/editar_asignatura');
+								$this->load->view('templates/panel/footer');
+							
+							}else{
+								$id_asignatura=$this->input->post('asignatura');
+								$data_asignatura = array(
+									'nombre_asi' => $this->input->post('nom_asi') ,
+									'duracion_asi' => $this->input->post('dur_asi'),
+									'creditos_asi' => $this->input->post('cre_asi'),
+									'descripcion_asi' => $this->input->post('des_asi'),
+									'tipo_asignatura' => $this->input->post('tipo_asi')
+								);
+
+								$this->sise_model->actualiza_datos_asignatura($id_asignatura,$data_asignatura);
+								header('Location:'.base_url('index.php/sise/asignaturas').'');
+							}
+					}
+				#fin actualiza nueva asignatura
+
+			//-------
+
+				#Formulario de nuevo programa (editado)
+					public function registro_nuevo_programa(){
+						$this->load->library('form_validation');
+						$this->load->helper('form','url');
+						$this->sise_model->valida_sesion();
+						
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$data['programa']=$this->sise_model->devuelve_programa();
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
+
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						  <strong>Alerta </strong>','</div>');
+						$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
+						$this->form_validation->set_rules('des_pro','Descripción del Programa', 'required');
+						$this->form_validation->set_rules('ofe_aca','Oferta académica', 'required|callback_check_select');
+
+						if ($this->form_validation->run() == FALSE ||$this->input->post('ofe_aca')==null){
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/nuevo_periodo');
+							$this->load->view('templates/panel/nuevo_programa');
 							$this->load->view('templates/panel/footer');
 						}else{
-							$data_periodo = array(
-								'nombre_periodo' => $this->input->post('nom_pe') ,
-								'duracion_periodo' => $this->input->post('dur')
+							$data_nuevo_pro=array(
+								'nombre_programa'=>$this->input->post('nom_pro'),
+								'descripcion_programa'=>$this->input->post('des_pro'),
+								'oferta_academica'=>$this->input->post('ofe_aca')
 							);
 							
-							$this->sise_model->insertar_periodo($data_periodo);
-							header('Location:'.base_url('index.php/sise/periodo').'');
-						}
+							$this->sise_model->registro_nuevo_programa($data_nuevo_pro);
+							header('Location:'.base_url('index.php/sise/programas').'');
+						}	
+					}
+				#fin formulario de nuevo programa
 
-				}
-			#Periodo registro de nuevo periodo
+				#Formulario editar el programa (editado)
+					public function edita_programa(){
+						$this->sise_model->valida_sesion();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));							
 
-			#edita de nuevo periodo
-				public function editar_periodo(){
-					$this->load->library('form_validation');
+						if(!empty($this->uri->segment(3))){
 
-					$data['clave_periodo'] = $this->uri->segment(3);
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-
-					$data['periodo'] = $this->sise_model->datos_periodo($data['clave_periodo']);
-
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							  <strong>Alerta </strong>','</div>');
-
-					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
-					$this->form_validation->set_rules('dur','Duración Periodo','required');
+						$data['clave_programa'] = $this->uri->segment(3);
+						$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
 
-					if ($this->form_validation->run() == FALSE) {
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/formulario_editar_periodo',$data);
-							$this->load->view('templates/panel/footer');
-						}else{
-							$periodo = $this->input->post('periodo');
-							$data_periodo = array(
-								'nombre_periodo' => $this->input->post('nom_pe') ,
-								'duracion_periodo' => $this->input->post('dur')
-							);
-							
-							$this->sise_model->editar_periodo($periodo,$data_periodo);
-							header('Location:'.base_url('index.php/sise/periodo').'');
-						}
 
-				}
-			#Periodo edita de nuevo periodo
+						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Alerta </strong>','</div>');
 
-			#registrar nueva asignatura
-				public function nueva_asignatura(){
-					$this->load->library('form_validation');
+						$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
+						$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
 
-					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();
-					$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
 
-					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							  <strong>Alerta </strong>','</div>');
+						if ($this->form_validation->run() == FALSE){
 
-					$this->form_validation->set_rules('nom_asi','Nombre periodo','required');
-					$this->form_validation->set_rules('dur_asi','Duración Periodo','required');
-					$this->form_validation->set_rules('cre_asi','Nombre periodo','required');
-					$this->form_validation->set_rules('des_asi','Duración Periodo','required');
+						$data['clave_programa'] = $this->uri->segment(3);
+						$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
 
-					
-					if ($this->form_validation->run() == FALSE||$this->input->post('tipo_asi')==null) {
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/nueva_asignatura');
-							$this->load->view('templates/panel/footer');
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/formulario_editar_programa',$data);
+						$this->load->view('templates/panel/footer');
 						
 						}else{
-							$data_asignatura = array(
-								'nombre_asi' => $this->input->post('nom_asi') ,
-								'duracion_asi' => $this->input->post('dur_asi'),
-								'creditos_asi' => $this->input->post('cre_asi'),
-								'descripcion_asi' => $this->input->post('des_asi'),
-								'tipo_asignatura' => $this->input->post('tipo_asi')
+							$data_edita_pro=array(
+								'nombre_programa'=>$this->input->post('nom_pro'),
+								'descripcion_programa'=>$this->input->post('des_pro'),
+								'oferta_academica'=>$this->input->post('ofe_aca'),
 							);
-
-							var_dump($data_asignatura);
-							die();
-							
-							#$this->sise_model->insertar_periodo($data_periodo);
-							#header('Location:'.base_url('index.php/sise/periodo').'');
-						}
-				}
-			#fin registrar nueva asignatura
+								$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
+								header('Location:'.base_url('index.php/sise/programas').'');
+							}
+						}else{
+							header('Location:'.base_url('index.php/sise/programas').'');}
+					}
+				#fin del formulario de programa
 
 
-			
 		//-----Funciones Especificas----------------	
 
 			//juan carlos
