@@ -27,7 +27,7 @@
 										<div class="panel-heading"><h3>Numero de preguntas con las que cuenta <?php echo $num_preguntas['num']; ?></h3></div>
 										<div class="panel-body">
 												<div class="col-md-12" style="margin-top:5px;">
-					                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong">
+					                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 					                                 <div>
 					                                  <span>Agregar Pregunta</span>
 					                                 </div>
@@ -50,7 +50,7 @@
 									</div>
 								</div>
 								<!-- Modal -->
-				                  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                  <div class="modal fade" id="exampleModalLong<?php echo $evaluacion_preguntas['id_encuesta'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 				                    <div class="modal-dialog" role="document">
 				                      <div class="modal-content">
 				                        <div class="modal-header">
@@ -62,17 +62,18 @@
 				                        <div class="modal-body">
 				                          <?php
 				                             $atributos = array('class'=>'form-horizontal');
-				                             echo form_open('sise/nueva_modalidad/',$atributos);
+				                             echo form_open('sise/nueva_pregunta/',$atributos);
 				                          ?>
 				                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Pregunta</label>
 				                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod"></div>
+				                              <input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 				                          </div>
 				                          <table>
 				                          <div class="form-group">
 				                          	  <div class="col-md-12">
 				        						<tr>
 				                          		<td><label class="control-label text-top">Respuesta 1</label></td>
-				                          			<td><input type="text" class="form-control android" id="segundo" name="des_mod"></td>
+				                          			<td><input type="text" class="form-control android" id="segundo" name="des_mod[]"></td>
 				                          			<td>
 				                          				<div class="form-group form-animate-checkbox">
 														<input type="checkbox"  id="check" onChange="habilitar(this.checked);" class="checkbox" name="l"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" checked="">
@@ -81,7 +82,7 @@
 				                              </tr>
 				                              <tr>
 				                          		<td><label class="control-label text-top">Respuesta 2</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
 				                              			<td>
 				                          				<div class="form-group form-animate-checkbox">
 														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
@@ -90,7 +91,7 @@
 				                              	</tr>
 				                              	<tr>
 				                          		<td><label class="control-label text-top">Respuesta 3</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
 														<td>
 				                          				<div class="form-group form-animate-checkbox">
 														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
@@ -98,7 +99,7 @@
 												</td>
 				                              	</tr>
 				                              	<tr>				                          		<td><label class="control-label text-top">Respuesta 4</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod"></td>
+				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
 				                              			<td>
 				                          				<div class="form-group form-animate-checkbox">
 														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">

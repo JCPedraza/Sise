@@ -938,6 +938,9 @@ class sise_model extends CI_Model{
 			function inserta_encuesta($data){
 				$this->db->insert('encuesta',$data);
 			}
+			function insertar_pregunta($data){
+				$this->db->insert('opciones',$data);
+			}
 		#Fin inserciones
 		
 		#Update
