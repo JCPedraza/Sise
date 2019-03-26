@@ -43,7 +43,7 @@
                                 </select>
                               </div>
                             </div>
-                            <?php echo form_error('ofe_aca'); ?>
+                            
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
                                    <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">

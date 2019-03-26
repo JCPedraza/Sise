@@ -794,12 +794,27 @@ class sise_model extends CI_Model{
 					$devolver_tipo_asignatura = $this->db->get();
 					return $devolver_tipo_asignatura->result();
 				}
+
+				function datos_asignatura($data){
+					$this->db->select('*');
+					$this->db->from('asignatura');
+					$this->db->where('clave_asi',$data);
+					$devolver_periodo = $this->db->get();
+					return $devolver_periodo->row_array();
+				}
 			#Fin Consultas
 
 			#Inserciones
+				function insertar_asignatura($data){
+					$this->db->insert('asignatura',$data);
+				}
 			#Fin Inserciones
 			
 			#Update
+				function actualiza_datos_asignatura($id,$data){
+					$this->db->where('clave_asi',$id);
+					$this->db->update('asignatura',$data);
+				}
 			#Fin Update
 			
 			#Delete
