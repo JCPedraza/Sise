@@ -396,8 +396,6 @@ class sise extends CI_Controller {
 					}
 				#fin de los niveles academicos
 
-
-
 			//joan alonso
 					#
 						public function mostrar_tipos_documento(){
@@ -541,7 +539,23 @@ class sise extends CI_Controller {
 						}
 					#Fin ver Asignaturas
 
+					#crear programas
+						public function programa(){
+							#$this->sise_model->valida_sesion();
+							#$this->sise_model->Estar_aqui();
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							#$this->load->view('templates/panel/nivel_academico',$data);
+							$this->load->view('templates/panel/footer');
+						}
+					#fin crear programas
+
+
 		//-----Formularios------------
+			
 			//juan carlos
 
 					#Formulario de Registro de un aspirante
@@ -1409,7 +1423,7 @@ class sise extends CI_Controller {
 				}
 			#Periodo registro de nuevo periodo
 
-			#Registro de nuevo periodo
+			#edita de nuevo periodo
 				public function editar_periodo(){
 					$this->load->library('form_validation');
 
@@ -1445,7 +1459,7 @@ class sise extends CI_Controller {
 						}
 
 				}
-			#Periodo registro de nuevo periodo
+			#Periodo edita de nuevo periodo
 
 			#registrar nueva asignatura
 				public function nueva_asignatura(){
@@ -1453,32 +1467,44 @@ class sise extends CI_Controller {
 
 					$data['sesion'] = $this->sise_model->datos_sesion();
 					$data['menu'] = $this->sise_model->datos_menu();
+					$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
 
 					$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 							  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							  <strong>Alerta </strong>','</div>');
 
-					$this->form_validation->set_rules('nom_pe','Nombre periodo','required');
-					$this->form_validation->set_rules('dur','Duración Periodo','required');
+					$this->form_validation->set_rules('nom_asi','Nombre periodo','required');
+					$this->form_validation->set_rules('dur_asi','Duración Periodo','required');
+					$this->form_validation->set_rules('cre_asi','Nombre periodo','required');
+					$this->form_validation->set_rules('des_asi','Duración Periodo','required');
 
-
-					if ($this->form_validation->run() == FALSE) {
+					
+					if ($this->form_validation->run() == FALSE||$this->input->post('tipo_asi')==null) {
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/nueva_asignatura');
 							$this->load->view('templates/panel/footer');
+						
 						}else{
-							$data_periodo = array(
-								'nombre_periodo' => $this->input->post('nom_pe') ,
-								'duracion_periodo' => $this->input->post('dur')
+							$data_asignatura = array(
+								'nombre_asi' => $this->input->post('nom_asi') ,
+								'duracion_asi' => $this->input->post('dur_asi'),
+								'creditos_asi' => $this->input->post('cre_asi'),
+								'descripcion_asi' => $this->input->post('des_asi'),
+								'tipo_asignatura' => $this->input->post('tipo_asi')
 							);
+
+							var_dump($data_asignatura);
+							die();
 							
-							$this->sise_model->insertar_periodo($data_periodo);
-							header('Location:'.base_url('index.php/sise/periodo').'');
+							#$this->sise_model->insertar_periodo($data_periodo);
+							#header('Location:'.base_url('index.php/sise/periodo').'');
 						}
 				}
 			#fin registrar nueva asignatura
 
+
+			
 		//-----Funciones Especificas----------------	
 
 			//juan carlos
