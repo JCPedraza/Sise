@@ -787,6 +787,13 @@ class sise_model extends CI_Model{
 					$devolver_asignatura = $this->db->get();
 					return $devolver_asignatura->result();
 				}
+
+				function devolver_tipo_asignatura(){
+					$this->db->select('*');
+					$this->db->from('tipo_asignatura');
+					$devolver_tipo_asignatura = $this->db->get();
+					return $devolver_tipo_asignatura->result();
+				}
 			#Fin Consultas
 
 			#Inserciones

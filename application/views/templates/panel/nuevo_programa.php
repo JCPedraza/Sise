@@ -59,7 +59,7 @@
                           <div class="col-md-4 padding-0">
                               <div class="panel bg-light-blue">
                                 <div class="panel-body text-white">
-                                   <p class="animated fadeInUp quote">Verifique los campos esten correctos</p>
+                                   <p class="animated fadeInUp quote">Verifique los campos estén correctos</p>
                                 </div>
                               </div>
                             </div>
