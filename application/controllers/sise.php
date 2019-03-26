@@ -1316,6 +1316,8 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
 							$this->load->view('templates/panel/footer');
+							
+
 						}
 					#fin de agregar preguntas
 
@@ -1370,6 +1372,51 @@ class sise extends CI_Controller {
 							}
 						}
 					#Fin editar oferta academica
+
+					#nueva pregunta
+						public function nueva_pregunta(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$id= $this->uri->segment(3);
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_mod','Nombre de la pregunta','required');
+							if ($this->form_validation->run() == FALSE){
+							$data['clave'] = $this->uri->segment(3);
+							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
+							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
+							$data['cuestionario']=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/preguntas',$data);
+							$this->load->view('templates/panel/footer');
+							}else{
+								$data_nueva_preg=array(
+									'pregunta'=>$this->input->post('nom_mod'),
+									'id_encuesta'=>$this->input->post('id')								
+								);
+								$a=1;
+								$f[]=$this->input->post('des_mod[]');
+								$r=count($f);
+								for($i=0; $i<$r; $i++){
+								$data_opciones_preg=array(
+									'id_cuestionario'=>$a,
+									'nombre'=>$f[$i],
+									'valor'=>0
+								);
+								#var_dump($data_opciones_preg);
+								#die();
+								$this->sise_model->insertar_pregunta($data_opciones_preg);
+								
+								}
+								
+							}
+						}
+					#fin de pregunta
 					
 			//joan alonso
 
