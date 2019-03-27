@@ -1510,7 +1510,7 @@ class sise extends CI_Controller {
 						if ($this->form_validation->run() == FALSE ||$this->input->post('ofe_aca')==null){
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/nuevo_programa');
+							$this->load->view('templates/panel/nuevo_programa',$data);
 							$this->load->view('templates/panel/footer');
 						}else{
 							$data_nuevo_pro=array(
