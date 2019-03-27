@@ -546,7 +546,7 @@ class sise extends CI_Controller {
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
-						#$this->load->view('templates/panel/ver_asignatura',$data);
+						$this->load->view('templates/panel/ver_planes',$data);
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin ver plan de estudios (editar nombre despues)
