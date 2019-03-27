@@ -369,8 +369,6 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['evaluacion']=$this->sise_model->devuelve_evaluaciones();
-						var_dump($data['evaluacion']);
-						die();
 						$resultado=$this->sise_model->devuelve_privilegio();
 						$data['privi']=$resultado;
 						#var_dump($data['privi']);
