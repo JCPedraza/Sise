@@ -369,6 +369,8 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['evaluacion']=$this->sise_model->devuelve_evaluaciones();
+						var_dump($data['evaluacion']);
+						die();
 						$resultado=$this->sise_model->devuelve_privilegio();
 						$data['privi']=$resultado;
 						#var_dump($data['privi']);
@@ -1287,12 +1289,11 @@ class sise extends CI_Controller {
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 							$id= $this->uri->segment(3);
-							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Alerta </strong>','</div>');
-
-							$this->form_validation->set_rules('nom_mod','Nombre de la pregunta','required');
-							if ($this->form_validation->run() == FALSE){
+							$validation=array(
+								array('field'=>'preg[]')
+							);
+							$this->form_validation->set_rules($validation);
+							if ($this->form_validation->run() == true){
 							$data['clave'] = $this->uri->segment(3);
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
@@ -1302,25 +1303,36 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/preguntas',$data);
 							$this->load->view('templates/panel/footer');
 							}else{
+								//insertar la pregunta
+								if ($this->input->post('id')!=2) {								
 								$data_nueva_preg=array(
 									'pregunta'=>$this->input->post('nom_mod'),
 									'id_encuesta'=>$this->input->post('id')								
 								);
-								$a=1;
-								$f[]=$this->input->post('des_mod[]');
-								$r=count($f);
-								for($i=0; $i<$r; $i++){
-								$data_opciones_preg=array(
-									'id_cuestionario'=>$a,
-									'nombre'=>$f[$i],
-									'valor'=>0
-								);
-								#var_dump($data_opciones_preg);
-								#die();
-								$this->sise_model->insertar_pregunta($data_opciones_preg);
-								
+								$a=$this->input->post('id');
+								$id=$this->sise_model->insertar_pregunta($data_nueva_preg);
+								//opciones de las preguntas
+								$data_preg=$this->input->post('preg[]');
+								$value=array();
+								foreach($data_preg as $p){
+									array_push($value, array(
+										'id_cuestionario'=>$id,
+										'nombre'=>$p,
+										'valor'=>0
+									));
 								}
-								
+								$a=$this->db->insert_batch('opciones',$value);
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$this->input->post('id').'');
+							}else{
+								$data_nueva_preg=array(
+									'pregunta'=>$this->input->post('nom_mod'),
+									'id_encuesta'=>$this->input->post('id')								
+								);
+								$a=$this->input->post('id');
+								$id=$this->sise_model->insertar_pregunta($data_nueva_preg);
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$this->input->post('id').'');
+							}
+															
 							}
 						}
 					#fin de pregunta

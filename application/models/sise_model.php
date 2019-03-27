@@ -886,7 +886,8 @@ class sise_model extends CI_Model{
 		#Consultas
 			function devuelve_evaluaciones(){
 				$this->db->select('*');
-                $this->db->from('encuesta');
+                $this->db->from('encuesta as e');
+                $this->db->join()
                 $devuelve_evaluaciones = $this->db->get();
                 return $devuelve_evaluaciones->result();
 			}
@@ -954,7 +955,8 @@ class sise_model extends CI_Model{
 				$this->db->insert('encuesta',$data);
 			}
 			function insertar_pregunta($data){
-				$this->db->insert('opciones',$data);
+				$this->db->insert('cuestionario',$data);
+				return $this->db->insert_id();
 			}
 		#Fin inserciones
 		
