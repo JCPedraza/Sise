@@ -32,9 +32,7 @@
               echo $c->pregunta,"<br>";
               $a=$c->pregunta;
             }
-              if ($c->nombre!=$b) {
                 echo '<li><input name="valor" type="radio" value="'.$c->id_cuestionario.'"><span>'.$c->nombre.'</span></li>';
-              }
 
             ?></td>
             
