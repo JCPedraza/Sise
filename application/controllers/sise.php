@@ -247,8 +247,8 @@ class sise extends CI_Controller {
 				#Muestra las modalidades
 					public function modalidad(){
 
-					$this->load->library('form_validation');
-					$this->load->helper('form','url');
+						$this->load->library('form_validation');
+						$this->load->helper('form','url');
 						$this->sise_model->valida_sesion();
 						
 						$this->sise_model->Estar_aqui();
@@ -267,8 +267,7 @@ class sise extends CI_Controller {
 				#fin de las modalidades
 
 				#Muestra los programas actuales (editado)
-					public function programas()
-					{
+					public function programas(){
 						$this->sise_model->valida_sesion();
 						
 						$this->sise_model->Estar_aqui();
@@ -285,9 +284,9 @@ class sise extends CI_Controller {
 					}
 				#fin de los programas
 
-				#Muestra los oferta_academica e
-					public function oferta_academica()
-					{
+
+				#Muestra los oferta_academica
+					public function oferta_academica(){
 						$this->sise_model->valida_sesion();
 						$this->load->library('form_validation');
 						$this->load->helper('form','url');
@@ -306,10 +305,8 @@ class sise extends CI_Controller {
 				#fin de oferta_academica
 
 				#Muestra los experiencia_academica
-					public function experiencia_academica()
-					{
+					public function experiencia_academica(){
 						$this->sise_model->valida_sesion();
-						
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
@@ -326,11 +323,9 @@ class sise extends CI_Controller {
 				#Muestra la evluación
 					public function evaluacion_docente(){
 						$this->sise_model->valida_sesion();
-									
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						//$data['']
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/encuesta');
@@ -341,13 +336,12 @@ class sise extends CI_Controller {
 				#Muestra la encuesta con las preguntas
 					public function eva(){
 						$this->sise_model->valida_sesion();
-									
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$resultado=$this->sise_model->evaluacion();
 						$data['evaluacio']=$resultado;
-						#var_dump($resultado['id_cuestionario']);
-						#die();
 						$id_encuesta=$resultado['id_encuesta'];
 						$id_cuestionario=$resultado['id_cuestionario'];
 						$r=$this->sise_model->consultaencuesta($id_encuesta);
@@ -372,8 +366,6 @@ class sise extends CI_Controller {
 						$data['evaluacion']=$this->sise_model->devuelve_evaluaciones();
 						$resultado=$this->sise_model->devuelve_privilegio();
 						$data['privi']=$resultado;
-						#var_dump($data['privi']);
-						#die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/evaluacion',$data);
@@ -574,8 +566,7 @@ class sise extends CI_Controller {
 			//juan carlos
 
 					#Formulario de Registro de un aspirante
-						public function formulario_registro()
-						{
+						public function formulario_registro(){
 							$this->load->library('form_validation');
 							$this->load->helper('form','url');
 
@@ -602,8 +593,6 @@ class sise extends CI_Controller {
 
 
 							}else{
-
-
 								$data_registro= array(
 									'nombre_alumno'=> $this->input->post('nombre'),
 									'ap_pa_alumno'=> $this->input->post('a_p'),
@@ -613,8 +602,6 @@ class sise extends CI_Controller {
 									'telefono_alumno' => $this->input->post('tel'),
 									'clave_of_aca'=>$this->input->post('carrera')
 								);
-								#var_dump($data_registro);
-								#die();
 								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
 									'usuario'=>$this->input->post('email'),
@@ -623,13 +610,9 @@ class sise extends CI_Controller {
 									'id_privilegio'=>5,
 									'activo'=>1
 								);
-
 								$usuario=$this->sise_model->inserta_usuario($data_usuario);
 								header('Location:'.base_url('index.php/sise').'');
-
 							}
-							
-							
 						  }
 				    #fin formulario de registro
 					
@@ -638,8 +621,6 @@ class sise extends CI_Controller {
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
 							$this->load->helper(array('form', 'url'));
-
-							
 
 							if(!empty($this->uri->segment(3))){
 
@@ -668,12 +649,12 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 							
 							}else{
-								$data_edita_pri=array(
+								$data_edita_privilegio=array(
 									'nombre_privilegio'=>$this->input->post('nom_pri'),
 									'descripcion'=>$this->input->post('des_pri'),
 									'publico'=>0
 								);
-									$this->sise_model->actualiza_datos_privilegio($this->input->post('id_privilegio'),$data_edita_pri);
+									$this->sise_model->actualiza_datos_privilegio($this->input->post('id_privilegio'),$data_edita_privilegio);
 									header('Location:'.base_url('index.php/sise/privilegios').'');
 								}
 							}else{
@@ -702,14 +683,14 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/nuevo_privilegio');
 								$this->load->view('templates/panel/footer');
 							}else{
-								$data_nuevo_pri=array(
+								$data_nuevo_privilegio=array(
 									'nombre_privilegio'=>$this->input->post('nom_pri'),
 									'descripcion'=>$this->input->post('des_pri'),
 									'publico'=>0
 								);
 								//var_dump($data_nuevo_pri);
 								//die();
-								$u=$this->sise_model->registro_nuevo_privilegio($data_nuevo_pri);
+								$u=$this->sise_model->registro_nuevo_privilegio($data_nuevo_privilegio);
 								header('Location:'.base_url('index.php/sise/privilegios').'');
 							}	
 						}
@@ -738,7 +719,7 @@ class sise extends CI_Controller {
 							}else{
 								$a="asterisk";
 								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
-								$data_nueva_sec=array(
+								$data_nueva_seccion=array(
 									'nombre_seccion'=>$this->input->post('nom_sec'),
 									'icono'=>$a,
 									'descripcion'=>$this->input->post('des_sec'),
@@ -747,7 +728,7 @@ class sise extends CI_Controller {
 								);
 								#var_dump($data_nueva_sec);
 								#die();
-								$seccion=$this->sise_model->registra_nueva_seccion($data_nueva_sec);
+								$seccion=$this->sise_model->registra_nueva_seccion($data_nueva_seccion);
 								header('Location:'.base_url('index.php/sise/secciones').'');
 							}	
 						}
@@ -790,14 +771,14 @@ class sise extends CI_Controller {
 							
 							}else{
 								if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
-								$data_edita_sec=array(
+								$data_edita_seccion=array(
 									'nombre_seccion'=>$this->input->post('nom_sec'),
 									'icono'=>$this->input->post('icono'),
 									'descripcion'=>$this->input->post('des_sec'),
 									'url'=>$this->input->post('url'),
 									'activo'=>$activo
 								);
-									$this->sise_model->actualiza_datos_seccion($this->input->post('id_seccion'),$data_edita_sec);
+									$this->sise_model->actualiza_datos_seccion($this->input->post('id_seccion'),$data_edita_seccion);
 									header('Location:'.base_url('index.php/sise/secciones').'');
 								}
 							}else{
@@ -808,11 +789,11 @@ class sise extends CI_Controller {
 					
 					#formulario agregar seccion al privilegio
 						public function agrega_seccion(){
-						$this->load->library('form_validation');
+							$this->load->library('form_validation');
 							$this->load->helper('form','url');
 							$this->sise_model->valida_sesion();
 
-						if(!empty($this->uri->segment(3))){
+							if(!empty($this->uri->segment(3))){
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 
@@ -875,13 +856,11 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/nueva_modalidad',$data);
 								$this->load->view('templates/panel/footer',$data);
 							}else{
-								$data_modalidad = array(
+								$data_nueva_modalidad = array(
 									'nombre_mod' => $this->input->post('nom_mod'),
 									'descripcion_mod' => $this->input->post('des_mod'),
 									);
-							//var_dump($data_modalidad);
-							//die();
-							$this->sise_model->inserta_modalidad($data_modalidad);
+							$this->sise_model->inserta_modalidad($data_nueva_modalidad);
 							header('Location:'.base_url('index.php/sise/modalidad/'));
 							}
 						}
@@ -892,8 +871,6 @@ class sise extends CI_Controller {
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
 							$this->load->helper(array('form', 'url'));
-
-							
 
 							if(!empty($this->uri->segment(3))){
 
@@ -921,13 +898,11 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer',$data);
 							
 							}else{
-								$data_edita_mod=array(
+								$data_edita_modalidad=array(
 									'nombre_mod'=>$this->input->post('nom_mod'),
 									'descripcion_mod'=>$this->input->post('des_mod')
 								);
-								//var_dump($this->input->post('clave_modalidad'),'<br>',$data_edita_mod);
-								//die();
-									$this->sise_model->actualiza_datos_modalidad($this->input->post('clave_modalidad'),$data_edita_mod);
+									$this->sise_model->actualiza_datos_modalidad($this->input->post('clave_modalidad'),$data_edita_modalidad);
 									header('Location:'.base_url('index.php/sise/modalidad').'');
 								}
 							}else{
@@ -1000,11 +975,6 @@ class sise extends CI_Controller {
 											'institucion_exp_aca'=>$this->input->post('ins_experiencia'),
 											'clave_externa'=>0
 										);
-										//var_dump($this->input->post('nom_experiencia'));
-										//die();
-
-										//var_dump($data_nueva_experiencia_academica);
-										//die();
 										$this->sise_model->registro_nueva_experiencia_academica($data_nueva_experiencia_academica);
 										header('Location:'.base_url('index.php/sise/experiencia_academica').'');
 									}	
@@ -1031,11 +1001,11 @@ class sise extends CI_Controller {
 									$this->load->view('templates/panel/footer',$data);
 								}else{
 									if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
-									$data_nivel = array(
+									$data_nuevo_nivel = array(
 										'nombre_exp_aca	' => $this->input->post('nom_nivel'),
 										'activo' => $activo
 										);
-									$this->sise_model->inserta_nivel_academico($data_nivel);
+									$this->sise_model->inserta_nivel_academico($data_nuevo_nivel);
 									header('Location:'.base_url('index.php/sise/nivel_academico/'));
 								}
 						}
@@ -1046,8 +1016,6 @@ class sise extends CI_Controller {
 									$this->sise_model->valida_sesion();
 									$this->load->library('form_validation');
 									$this->load->helper(array('form', 'url'));
-
-									
 
 									if(!empty($this->uri->segment(3))){
 
@@ -1064,7 +1032,6 @@ class sise extends CI_Controller {
 
 									$this->form_validation->set_rules('nom_nivel','Nombre de la modalidad','required');
 
-
 									if ($this->form_validation->run() == FALSE){
 
 									$data['clave_exp_aca'] = $this->uri->segment(3);
@@ -1077,13 +1044,11 @@ class sise extends CI_Controller {
 									
 									}else{
 										if (empty($this->input->post('e'))){$activo=0;}else{$activo=1;}
-										$data_edita_niv=array(
+										$data_edita_nivel=array(
 											'nombre_exp_aca'=>$this->input->post('nom_nivel'),
 											'activo' => $activo
 										);
-										#var_dump($this->input->post('clave_ex'),'<br>',$data_edita_niv);
-										#die();
-										$this->sise_model->actualiza_datos_nivel_academico($this->input->post('clave_ex'),$data_edita_niv);
+										$this->sise_model->actualiza_datos_nivel_academico($this->input->post('clave_ex'),$data_edita_nivel);
 										header('Location:'.base_url('index.php/sise/nivel_academico').'');
 										}
 									}else{
@@ -1113,7 +1078,7 @@ class sise extends CI_Controller {
 										$this->load->view('templates/panel/formulario_personal');
 										$this->load->view('templates/panel/footer');
 									}else{
-										$data_personal= array(
+										$data_nueva_personal= array(
 											'nombres_personal'=> $this->input->post('nombre'),
 											'ap_paterno_personal'=> $this->input->post('a_p'),
 											'ap_materno_personal'=> $this->input->post('a_m'),
@@ -1122,20 +1087,16 @@ class sise extends CI_Controller {
 											'genero_personal'=> $this->input->post('g'),
 											'especialidad_personal'=>$this->input->post('especialidad')
 										);
-										//var_dump($data_personal);
-										//die();
-										$clave_personal=$this->sise_model->insertar_personal($data_personal);
+										$clave_personal=$this->sise_model->insertar_personal($data_nueva_personal);
 										
-										$data_usuario= array(
+										$data_usuario_personal= array(
 											'usuario'=>$this->input->post('email'),
 											'contrasena'=>md5($this->input->post('contra')),
 											'id_persona'=>$clave_personal,
 											'id_privilegio'=>2,
 											'activo'=>1
 										);
-										//var_dump($data_usuario);
-										//die();
-										$usuario=$this->sise_model->inserta_usuario($data_usuario);
+										$usuario=$this->sise_model->inserta_usuario($data_usuario_personal);
 										header('Location:'.base_url('index.php/sise/panel').'');
 
 									}
@@ -1159,14 +1120,12 @@ class sise extends CI_Controller {
 					#Nueva evaluación 
 							public function nueva_encuesta(){
 								if (empty($this->input->post('l'))){$r=0;}else{$r=1;}
-								$data_encuesta= array(
+								$data_nueva_encuesta= array(
 											'nom_encuesta'=>$this->input->post('nom_enc'),
 											'id_privilegio'=>$this->input->post('hola'),
 											'activo'=>$r										
 										);
-								#var_dump($data_encuesta);
-								#die();
-								$this->sise_model->inserta_encuesta($data_encuesta);
+								$this->sise_model->inserta_encuesta($data_nueva_encuesta);
 								header('Location:'.base_url('index.php/sise/evaluaciones').'');
 							}
 					#fin de la evaluación
@@ -1176,8 +1135,6 @@ class sise extends CI_Controller {
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
 							$this->load->helper(array('form', 'url'));
-
-							
 
 							if(!empty($this->uri->segment(3))){
 
@@ -1191,7 +1148,6 @@ class sise extends CI_Controller {
 							<strong>Alerta </strong>','</div>');
 
 							$this->form_validation->set_rules('nom_eva','Nombre de la evaluacion','required');
-
 
 							if ($this->form_validation->run() == FALSE){
 
@@ -1210,14 +1166,12 @@ class sise extends CI_Controller {
 							
 							}else{
 								if (empty($this->input->post('ll'))){$r=0;}else{$r=1;}
-								$data_edita_eva=array(
+								$data_edita_evaluacion=array(
 									'nom_encuesta'=>$this->input->post('nom_eva'),
 									'id_privilegio'=>$this->input->post('hola'),
 									'activo'=>$r
 								);
-								#var_dump($this->input->post('id'),'<br>',$data_edita_eva);
-								#die();
-									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_eva);
+									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_evaluacion);
 									header('Location:'.base_url('index.php/sise/evaluaciones').'');
 								}
 							}else{
@@ -1240,8 +1194,6 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
 							$this->load->view('templates/panel/footer');
-							
-
 						}
 					#fin de agregar preguntas
 
@@ -1249,9 +1201,7 @@ class sise extends CI_Controller {
 						public function edita_oferta_academica(){
 							$this->sise_model->valida_sesion();
 							$this->load->library('form_validation');
-							$this->load->helper(array('form', 'url'));
-
-							
+							$this->load->helper(array('form', 'url'));							
 
 							if(!empty($this->uri->segment(3))){
 
@@ -1286,8 +1236,6 @@ class sise extends CI_Controller {
 									'descripcion_of_aca'=>$this->input->post('des_ofe_aca'),
 									'activo'=>$activo
 								);
-								#var_dump($this->input->post('id'),'<br>',$data_edita_oferta_educativa);
-								#die();
 									$this->sise_model->actualiza_datos_oferta_academica($this->input->post('id'),$data_edita_oferta_educativa);
 									header('Location:'.base_url('index.php/sise/oferta_academica').'');
 								}
@@ -1304,12 +1252,11 @@ class sise extends CI_Controller {
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
 							$id= $this->uri->segment(3);
-							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Alerta </strong>','</div>');
-
-							$this->form_validation->set_rules('nom_mod','Nombre de la pregunta','required');
-							if ($this->form_validation->run() == FALSE){
+							$validation=array(
+								array('field'=>'preg[]')
+							);
+							$this->form_validation->set_rules($validation);
+							if ($this->form_validation->run() == true){
 							$data['clave'] = $this->uri->segment(3);
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
@@ -1319,28 +1266,65 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/preguntas',$data);
 							$this->load->view('templates/panel/footer');
 							}else{
-								$data_nueva_preg=array(
+								//insertar la pregunta
+								if ($this->input->post('id')!=2) {								
+								$data_nueva_pregunta=array(
 									'pregunta'=>$this->input->post('nom_mod'),
 									'id_encuesta'=>$this->input->post('id')								
 								);
-								$a=1;
-								$f[]=$this->input->post('des_mod[]');
-								$r=count($f);
-								for($i=0; $i<$r; $i++){
-								$data_opciones_preg=array(
-									'id_cuestionario'=>$a,
-									'nombre'=>$f[$i],
-									'valor'=>0
-								);
-								#var_dump($data_opciones_preg);
-								#die();
-								$this->sise_model->insertar_pregunta($data_opciones_preg);
-								
+								$a=$this->input->post('id');
+								$id=$this->sise_model->insertar_pregunta($data_nueva_pregunta);
+								//opciones de las preguntas
+								$data_pregunta=$this->input->post('preg[]');
+								$value=array();
+								foreach($data_pregunta as $p){
+									array_push($value, array(
+										'id_cuestionario'=>$id,
+										'nombre'=>$p,
+										'valor'=>0
+									));
 								}
-								
+								$a=$this->db->insert_batch('opciones',$value);
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$this->input->post('id').'');
+							}else{
+								$data_nueva_pregunta=array(
+									'pregunta'=>$this->input->post('nom_mod'),
+									'id_encuesta'=>$this->input->post('id')								
+								);
+								$a=$this->input->post('id');
+								$id=$this->sise_model->insertar_pregunta($data_nueva_pregunta);
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$this->input->post('id').'');
+							}
+															
 							}
 						}
 					#fin de pregunta
+
+					#guardar_respuestas de las evaluaciones
+						public function guardar_respuestas(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+
+							$data_evaluacion_contestada= array(
+								'id_alumno'=> $this->input->post('clave_alumno'),
+								'id_encuesta'=> $this->input->post('clave_evaluacion')
+							);
+							$a=$this->input->post('l[]');
+							var_dump($a);
+							die();
+							/*$r=$this->sise_model->devuelve_valor();
+							$data_personal_evaluacion=array(
+								'valor'=> $$a
+								'id_encuesta'=> $this->input->post('clave_evaluacion')
+							);*/
+							var_dump($data_evaluacion_contestada);
+							die();
+						}
+					#fin de las evaluaciones
 					
 			//joan alonso
 
@@ -1357,7 +1341,6 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/formulario_alumno_info',$data);
 						$this->load->view('templates/panel/footer');
-
 					}
 				#Fin Ingresar Datos De Alumnos
 
@@ -1420,12 +1403,12 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/footer');
 							}else{
 								$periodo = $this->input->post('periodo');
-								$data_periodo = array(
+								$data_edita_periodo = array(
 									'nombre_periodo' => $this->input->post('nom_pe') ,
 									'duracion_periodo' => $this->input->post('dur')
 								);
 								
-								$this->sise_model->editar_periodo($periodo,$data_periodo);
+								$this->sise_model->editar_periodo($periodo,$data_edita_periodo);
 								header('Location:'.base_url('index.php/sise/periodo').'');
 							}
 
@@ -1457,7 +1440,7 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/footer');
 							
 							}else{
-								$data_asignatura = array(
+								$data_nueva_asignatura = array(
 									'nombre_asi' => $this->input->post('nom_asi') ,
 									'duracion_asi' => $this->input->post('dur_asi'),
 									'creditos_asi' => $this->input->post('cre_asi'),
@@ -1466,7 +1449,7 @@ class sise extends CI_Controller {
 								);
 
 								
-								$this->sise_model->insertar_asignatura($data_asignatura);
+								$this->sise_model->insertar_asignatura($data_nueva_asignatura);
 								header('Location:'.base_url('index.php/sise/asignaturas').'');
 							}
 					}
@@ -1501,7 +1484,7 @@ class sise extends CI_Controller {
 							
 							}else{
 								$id_asignatura=$this->input->post('asignatura');
-								$data_asignatura = array(
+								$data_edita_asignatura = array(
 									'nombre_asi' => $this->input->post('nom_asi') ,
 									'duracion_asi' => $this->input->post('dur_asi'),
 									'creditos_asi' => $this->input->post('cre_asi'),
@@ -1509,7 +1492,7 @@ class sise extends CI_Controller {
 									'tipo_asignatura' => $this->input->post('tipo_asi')
 								);
 
-								$this->sise_model->actualiza_datos_asignatura($id_asignatura,$data_asignatura);
+								$this->sise_model->actualiza_datos_asignatura($id_asignatura,$data_edita_asignatura);
 								header('Location:'.base_url('index.php/sise/asignaturas').'');
 							}
 					}
@@ -1542,13 +1525,13 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/nuevo_programa',$data);
 							$this->load->view('templates/panel/footer');
 						}else{
-							$data_nuevo_pro=array(
+							$data_nuevo_programa=array(
 								'nombre_programa'=>$this->input->post('nom_pro'),
 								'descripcion_programa'=>$this->input->post('des_pro'),
 								'oferta_academica'=>$this->input->post('ofe_aca')
 							);
 							
-							$this->sise_model->registro_nuevo_programa($data_nuevo_pro);
+							$this->sise_model->registro_nuevo_programa($data_nuevo_programa);
 							header('Location:'.base_url('index.php/sise/programas').'');
 						}	
 					}
@@ -1569,15 +1552,12 @@ class sise extends CI_Controller {
 						$data['programa'] = $this->sise_model->datos_programa($data['clave_programa']);
 						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
-
-
 						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						<strong>Alerta </strong>','</div>');
 
 						$this->form_validation->set_rules('nom_pro','Nombre Programa','required');
 						$this->form_validation->set_rules('des_pro','Descripcion del Programa', 'required');
-
 
 						if ($this->form_validation->run() == FALSE){
 
@@ -1590,12 +1570,12 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 						
 						}else{
-							$data_edita_pro=array(
+							$data_edita_programa=array(
 								'nombre_programa'=>$this->input->post('nom_pro'),
 								'descripcion_programa'=>$this->input->post('des_pro'),
 								'oferta_academica'=>$this->input->post('ofe_aca'),
 							);
-								$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_pro);
+								$this->sise_model->actualiza_datos_programa($this->input->post('clave_programa'),$data_edita_programa);
 								header('Location:'.base_url('index.php/sise/programas').'');
 							}
 						}else{
