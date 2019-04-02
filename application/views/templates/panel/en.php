@@ -37,7 +37,7 @@
                                   }?>
                                   <div class="form-group form-animate-checkbox">
                             <label><?php echo $c->nombre; ?></label>
-                            <input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" value="<?php echo $c->id_cuestionario; ?>" style="margin:5px;" >
+                            <input type="checkbox" class="checkbox" name="l[]" data-toggle="tooltip" data-placement="right" title="" value="<?php echo $c->id_cuestionario; ?>" style="margin:5px;" >
                             
                           </div>
                                   
