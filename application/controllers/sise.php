@@ -1295,7 +1295,7 @@ class sise extends CI_Controller {
 								'id_alumno'=> $this->input->post('clave_alumno'),
 								'id_encuesta'=> $this->input->post('clave_evaluacion')
 							);
-							$a=$this->input->post('l');
+							$a=$this->input->post('l[]');
 							var_dump($a);
 							die();
 							/*$r=$this->sise_model->devuelve_valor();
