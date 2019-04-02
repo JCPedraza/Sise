@@ -334,6 +334,8 @@ class sise extends CI_Controller {
 				#Muestra la encuesta con las preguntas
 					public function eva(){
 						$this->sise_model->valida_sesion();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$resultado=$this->sise_model->evaluacion();
@@ -342,6 +344,8 @@ class sise extends CI_Controller {
 						$id_cuestionario=$resultado['id_cuestionario'];
 						$r=$this->sise_model->consultaencuesta($id_encuesta);
 						$data['cuestionario']=$r;
+						#var_dump($r);
+						#die();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/en',$data);
@@ -1265,6 +1269,32 @@ class sise extends CI_Controller {
 							}
 						}
 					#fin de pregunta
+
+					#guardar_respuestas de las evaluaciones
+						public function guardar_respuestas(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+
+							$data_evaluacion_contestada= array(
+								'id_alumno'=> $this->input->post('clave_alumno'),
+								'id_encuesta'=> $this->input->post('clave_evaluacion')
+							);
+							$a=$this->input->post('l');
+							var_dump($a);
+							die();
+							/*$r=$this->sise_model->devuelve_valor();
+							$data_personal_evaluacion=array(
+								'valor'=> $$a
+								'id_encuesta'=> $this->input->post('clave_evaluacion')
+							);*/
+							var_dump($data_evaluacion_contestada);
+							die();
+						}
+					#fin de las evaluaciones
 					
 			//joan alonso
 
