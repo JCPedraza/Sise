@@ -1,4 +1,4 @@
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +21,7 @@
     <!-- end: Css -->
 
     <!--start: javascript-->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="<?php echo base_url();?>assets/js/jquery3-3-1.min.js"></script>
     <!--end: javascript-->
 
   <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/logomi.png">

@@ -7,6 +7,10 @@ $activado_f="";
 
 #anidados
 
+$nombre="";
+$genero="";
+$fecha_nac="";
+
 $rfc="";
 $curp="";
 $residencia="";
@@ -54,15 +58,15 @@ if ($alumno["genero_alumno"]=='M') {
                               <?php if ($url=='editar') {
                                 
                                 $nombre='<div class="form-group"><label class="col-sm-2 control-label text-right">Nombre(s): </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" name="nombre" placeholder="'.$alumno['nombre_alumno'].'"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" name="nombre" value="'.$alumno['nombre_alumno'].'"></div>
                                 </div>
                                 
                                 <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Paterno: </label>
-                                  <div class="col-sm-8"><input type="text" placeholder="'.$alumno['ap_pa_alumno'].'" class="form-control android" name="ap_p"></div>
+                                  <div class="col-sm-8"><input type="text" value="'.$alumno['ap_pa_alumno'].'" class="form-control android" name="ap_p"></div>
                                 </div>
 
                                 <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Materno: </label>
-                                  <div class="col-sm-8"><input type="text" placeholder="'.$alumno['ap_ma_alumno'].'" class="form-control android" name="ap_m"></div>
+                                  <div class="col-sm-8"><input type="text" value="'.$alumno['ap_ma_alumno'].'" class="form-control android" name="ap_m"></div>
                                 </div>';
 
                                 $genero='<div class="form-group"><label class="col-sm-2 control-label text-right">Genero</label>
@@ -81,11 +85,11 @@ if ($alumno["genero_alumno"]=='M') {
                                 </div>';
 
                                 $tel='<div class="form-group"><label class="col-sm-2 control-label text-right">Telefono de contacto:  </label>
-                                  <div class="col-sm-8"><input type="number" placeholder="'.$alumno['telefono_alumno'].'" class="form-control android" maxlength="10" name="telefono"></div>
+                                  <div class="col-sm-8"><input type="number" value="'.$alumno['telefono_alumno'].'" class="form-control android" maxlength="10" name="telefono"></div>
                                   </div>';
 
                                 $email='<div class="form-group"><div '.$tooltip.'><label class="col-sm-2 control-label text-right">Correo electrónico:  </label>
-                                  <div class="col-sm-8"><input type="email" class="form-control android" placeholder="'.$alumno['usuario'].'" name="email"></div>
+                                  <div class="col-sm-8"><input type="email" class="form-control android" value="'.$alumno['usuario'].'" name="email"></div>
                                   </div></div>';
 
                                 $rfc=$alumno['RFC_alumno'];
@@ -126,30 +130,30 @@ if ($alumno["genero_alumno"]=='M') {
                               <?php endif ?>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">RFC:  </label>
-                                  <div class="col-sm-8"><input type="text" placeholder="<?php echo $rfc; ?>" class="form-control android" minlength="12" maxlength="13" name="rfc"></div>
+                                  <div class="col-sm-8"><input type="text"  value="<?php echo $rfc; ?>" class="form-control android" minlength="12" maxlength="13" name="rfc"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">CURP:  </label>
-                                  <div class="col-sm-8"><input type="text" placeholder="<?php echo $curp; ?>" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
+                                  <div class="col-sm-8"><input type="text"  value="<?php echo $curp; ?>" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
                               </div>
                               <br>
                               
                               <h2>información de Vivienda</h2>
                                 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Residencia:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $residencia; ?>" name="residencia"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $residencia; ?>" name="residencia"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Ciudad:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $ciudad; ?>" name="ciudad"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $ciudad; ?>" name="ciudad"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Estado:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $estado; ?>" name="estado"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $estado; ?>" name="estado"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">País:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $pais; ?>" name="pais"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $pais; ?>" name="pais"></div>
                               </div>
 
                               <?php if ($url=="editar"): ?>
@@ -164,10 +168,10 @@ if ($alumno["genero_alumno"]=='M') {
                               <br>
                               <h3>información de cargo desempañado</h3>
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Institución:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $institucion ?>" name="instituto"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $institucion ?>" name="instituto"></div>
                               </div>
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Cargo desempeñado en la Institución:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" placeholder="<?php echo $cargo;?>" name="cargo"></div>
+                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $cargo;?>" name="cargo"></div>
                               </div>
 
 
