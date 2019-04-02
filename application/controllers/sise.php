@@ -284,6 +284,7 @@ class sise extends CI_Controller {
 					}
 				#fin de los programas
 
+
 				#Muestra los oferta_academica
 					public function oferta_academica(){
 						$this->sise_model->valida_sesion();
@@ -293,6 +294,7 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['ofe_aca']=$this->sise_model->devuelve_oferta_academica();
+
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -453,7 +455,7 @@ class sise extends CI_Controller {
 
 						if ($oferta==null) {
 							$oferta="";
-						}
+						}	
 						
 
 
@@ -532,8 +534,24 @@ class sise extends CI_Controller {
 
 				#Ver plan de estudios (editar nombre despues)
 					public function plan_estudios(){
+						
+						$oferta_academica_consulta = $this->input->post('ofer_aca');
+
+						if ($oferta_academica_consulta!=null) {
+							
+							
+								
+							
+							
+						}
+
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
+
+
+						#$data['plan_estudios'] = $this->sise_model->devolver_plan_estudios();
+
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);

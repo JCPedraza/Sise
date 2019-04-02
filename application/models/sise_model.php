@@ -857,7 +857,31 @@ class sise_model extends CI_Model{
 			
 			#Delete
 			#Fin Delete
+				
 	//-----------------fin periodo---------------
+
+	
+	//-----------------plan de estudios---------------
+			#Consultas
+				function devolver_plan_estudios(){
+					$this->db->select('*');
+					$this->db->from('');
+
+					$devolver_plan_estudios = $this->db->get();
+					return $devolver_plan_estudios->result();
+				}
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin plan de estudios---------------
+	
 
 
 	#plantilla

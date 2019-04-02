@@ -17,7 +17,18 @@
                   <div class="panel">
                     <div class="panel-heading"><h3>Programa</h3></div>
                     <div class="panel-body">
-                    	  
+                        
+                        <div class="row">
+                          <div class="col-md-6" style="margin-top:5px;">
+                            <select name="ofer_aca" id="oferta_academica" onchange="buscarplanes()">
+                              <option value="">Seleccione la oferta academica</option>
+                              <?php foreach ($oferta_academica as $oferta_academica): ?>
+                                <option value="<?php echo $oferta_academica->clave_of_aca ;  ?>"><?php echo $oferta_academica->nombre_of_aca ; ?></option>
+                              <?php endforeach ?>
+                            </select>
+                          </div>
+                        </div>                  	  
+  
                         <div class="row">
                           <div class="col-md-6" style="margin-top:5px;">
                             <a href="<?php echo base_url();?>index.php/sise/nuevo_programa">
@@ -29,6 +40,7 @@
                             </a>
                           </div>
                         </div>
+
                         <br>
                         <br>
 
@@ -42,17 +54,11 @@
                                 <th>Asignatura</th>
                                 <th>Duración<!-- de la asignatura--></th>
                                 <th>Créditos<!-- de la asignatura--></th>
-                                <th>Créditos<!-- de la asignatura--></th>
-                                <th>Descripción<!-- de la asignatura--></th>
-                                <th>Editar</th>
                               </tr>
                             </thead>
                             <tbody>
                               <?php /*foreach ($asignatura as $asignatura){?>
                       		      <tr>
-                                  <th><?php echo $asignatura->nombre_asi;?></th>
-                                  <th><?php echo $asignatura->duracion_asi;?> Hrs</th>
-                                  <th><?php echo $asignatura->creditos_asi;?></th>
                                   <th><?php echo $asignatura->descripcion_asi;?></th>
                                   <th><?php echo $asignatura->nombre_tipo_asi;?></th>
                                   <th>
@@ -78,3 +84,19 @@
               </div>
             </div>
           <!-- end: content -->
+
+<script>
+
+  function buscarplanes () {
+    var oferta_academica = document.getElementById('oferta_academica');
+    var ofer_aca = oferta_academica.options[oferta_academica.selectedIndex].value;
+    $.ajax({
+      url:window.location,
+      data:{"ofer_aca":ofer_aca},
+      type:"post",
+      success:function(r){
+      alert(r);
+      }
+    });
+  }
+</script>
