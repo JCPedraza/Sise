@@ -17,10 +17,21 @@
                   <div class="panel">
                     <div class="panel-heading"><h3>Programa</h3></div>
                     <div class="panel-body">
-                    	  
+                        
                         <div class="row">
                           <div class="col-md-6" style="margin-top:5px;">
-                            <a href="<?php echo base_url();?>index.php/sise/nuevo_programa">
+                            <select name="ofer_aca" id="oferta_academica" onchange="buscarprogramas()">
+                              <option value="">Seleccione la oferta academica</option>
+                              <?php foreach ($oferta_academica as $oferta_academica): ?>
+                                <option value="<?php echo $oferta_academica->clave_of_aca ;  ?>"><?php echo $oferta_academica->nombre_of_aca ; ?></option>
+                              <?php endforeach ?>
+                            </select>
+                          </div>
+                        </div>                      
+  
+                        <div class="row">
+                          <div class="col-md-6" style="margin-top:5px;">
+                            <a id="nuevoprogramas" href="<?php echo base_url();?>index.php/sise/nuevo_programa">
                                 <button class="btn ripple-infinite btn-raised btn-success">
                                  <div>
                                   <span>Agregar Nuevo Programa</span>
@@ -29,6 +40,7 @@
                             </a>
                           </div>
                         </div>
+
                         <br>
                         <br>
 
@@ -40,32 +52,12 @@
                             <thead>
                               <tr>
                                 <th>Asignatura</th>
-                                <th>Duración<!-- de la asignatura--></th>
-                                <th>Créditos<!-- de la asignatura--></th>
-                                <th>Créditos<!-- de la asignatura--></th>
-                                <th>Descripción<!-- de la asignatura--></th>
-                                <th>Editar</th>
+                                <th>Duración</th>
+                                <th>Ver</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <?php /*foreach ($asignatura as $asignatura){?>
-                      		      <tr>
-                                  <th><?php echo $asignatura->nombre_asi;?></th>
-                                  <th><?php echo $asignatura->duracion_asi;?> Hrs</th>
-                                  <th><?php echo $asignatura->creditos_asi;?></th>
-                                  <th><?php echo $asignatura->descripcion_asi;?></th>
-                                  <th><?php echo $asignatura->nombre_tipo_asi;?></th>
-                                  <th>
-                                    <a href="<?php echo base_url();?>index.php/sise/editar_asignatura/<?php echo $asignatura->clave_asi;?>">
-                                      <button class="btn ripple-infinite btn-raised btn-success">
-                                         <div>
-                                          <span>Editar Asignatura</span>
-                                         </div>
-                                      </button>
-                                    </a>
-                                  </th>
-      		                      </tr>
-                                <?php } */?>
+                            <tbody id="listaprogramas">
+                              
                             </tbody>
                             
 
@@ -78,3 +70,33 @@
               </div>
             </div>
           <!-- end: content -->
+
+<script>
+  function buscarprogramas () {
+    var oferta_academica = document.getElementById('oferta_academica');
+
+    var ofer_aca = oferta_academica.options[oferta_academica.selectedIndex].value;
+    $.ajax({
+      url:window.location,
+      data:{"ofer_aca":ofer_aca},
+      type:"post",
+      success:function(respuesta){
+      
+      var registros = eval(respuesta);
+      html="";
+
+      for (var i = 0; i < registros.length; i++) {
+        html +="<tr><td>"+registros[i]["nombre_programa"]+"</td><td>"+registros[i]["descripcion_programa"]+"</td><td>";
+        html +="<a href=\"http://localhost/Sise/index.php/sise/conformacion_progrmamas/"+registros[i]["clave_programa"]+"\">";
+        html +="<button class=\"btn ripple-infinite btn-round btn-warning\">";
+        html +="<div><span>Ver</span></div></button></a>";
+        html +="</td></tr>";
+      };
+      
+      $("#listaprogramas").html(html);
+    
+      }
+    });
+  }
+  
+</script>

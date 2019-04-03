@@ -541,32 +541,74 @@ class sise extends CI_Controller {
 				#Fin ver Asignaturas
 
 				#Ver plan de estudios (editar nombre despues)
-					public function plan_estudios(){
+					public function conformacion_progrmamas_programa(){
 						
 						$oferta_academica_consulta = $this->input->post('ofer_aca');
 
 						if ($oferta_academica_consulta!=null) {
-							
-							
-								
-							
-							
+							$programas_devueltos = $this->sise_model->devolver_programas_de_ofertas_educativas($oferta_academica_consulta);
+							echo json_encode($programas_devueltos);
+							die();
 						}
 
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 
-
-						#$data['plan_estudios'] = $this->sise_model->devolver_plan_estudios();
-
 						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/ver_planes',$data);
+						$this->load->view('templates/panel/ver_programa',$data);
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin ver plan de estudios (editar nombre despues)
+				
+				#Mostrar conformacion de progarama
+					public function conformacion_progrmamas(){
+							
+							$data['id_programa'] = $this->uri->segment(3);
+
+							$data['asignaturas_encntradas'] = $this->sise_model->asignatura_programa($data['id_programa']);
+							
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/mostrar_programas',$data);
+							$this->load->view('templates/panel/footer');
+					}
+
+				#Fin mostrar conformacion de progarama
+
+				#Asignar Asignaturas a Programa
+					public function asignar_asignatura_programa(){
+							$this->load->library('form_validation');
+							
+
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+
+							$this->form_validation->set_rules('programa','programa','required');
+
+							$data['id_programa'] = $this->uri->segment(3);
+							$data['asignaturas'] = $this->sise_model->devolver_asignatura_no_asignadas();
+							$data['periodo'] = $this->sise_model->devolver_periodo();
+
+							if ($this->form_validation->run() == FALSE||$this->input->post('asignaturas_agregar[]')==null) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/asignar_asignatura_programa',$data);
+								$this->load->view('templates/panel/footer');
+							}else{
+								foreach ($this->input->post('asignaturas_agregar[]') as $asignatura_a_agregar) {
+									
+								}
+							}
+					}
+				#Fin asignar Asignaturas a Programa
 
 
 		//-----Formularios------------

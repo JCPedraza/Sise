@@ -550,14 +550,24 @@ class sise_model extends CI_Model{
 				$devuelve_programa=$this->db->get();
 				return $devuelve_programa->result();
 			}
-			function datos_programa($data){
+
+			function datos_programa($id_programa){
 				$this->db->select('p.*,of.nombre_of_aca');
 				$this->db->from('programa p');
 				$this->db->join('oferta_academica as of','p.oferta_academica=of.clave_of_aca');
-				$this->db->where('clave_programa',$data);
+				$this->db->where('clave_programa',$id_programa);
 
 				$regresa_datos_programa = $this->db->get();
 				return $regresa_datos_programa->row_array();
+			}
+
+			function devolver_programas_de_ofertas_educativas($id_oferta_academica){
+				$this->db->select('*');
+				$this->db->from('programa');
+				$this->db->where('oferta_academica',$id_oferta_academica);
+
+				$regresa_datos_programa_oferta = $this->db->get();
+				return $regresa_datos_programa_oferta->result();
 			}
 		#Fin consultas
 		
@@ -802,6 +812,23 @@ class sise_model extends CI_Model{
 					$this->db->where('clave_asi',$data);
 					$devolver_periodo = $this->db->get();
 					return $devolver_periodo->row_array();
+				}
+				function asignatura_programa($id_programa){
+					 #$this->db->select('*');
+					 #$this->db->from();
+					 #$this->db->join(,'inner');
+					 #$this->db->where();
+				}
+
+				function devolver_asignatura_no_asignadas(){
+					$this->db->select('as.*, ta.nombre_tipo_asi,pc.*');
+					$this->db->from('asignatura as');
+					$this->db->join('tipo_asignatura ta','as.tipo_asignatura=ta.clave_tipo_asi','left');
+					$this->db->join('programa_conformacion pc','as.clave_asi=pc.asignatura','left');
+					$this->db->where('pc.asignatura',null);
+					
+					$devolver_asignatura_no_asignadas = $this->db->get();
+					return $devolver_asignatura_no_asignadas->result();
 				}
 			#Fin Consultas
 

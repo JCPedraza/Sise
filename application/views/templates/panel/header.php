@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/plugins/datatables.bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/plugins/fullcalendar.min.css"/>
     <link href="<?php echo base_url();?>assets/css/style.css" rel="stylesheet">
+    <!-- Multi Select Css -->
+    <link href="<?php echo base_url(); ?>assets/plugins/multi-select/css/multi-select.css" rel="stylesheet">
     <!-- end: Css -->
 
     <!--start: javascript-->
