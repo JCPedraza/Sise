@@ -998,6 +998,23 @@ class sise_model extends CI_Model{
 				$regresa_datos_preguntas = $this->db->get();
 				return $regresa_datos_preguntas->row_array();
 			}
+			function devuelve_valor($id){
+				$this->db->select('o.valor');
+				$this->db->from('opciones as o');
+				$this->db->where('id_opcion',$id);
+
+				$devuelve_valor=$this->db->get();
+				return $devuelve_valor->row_array();
+			}
+			function debuelve_evaluacion_contestada(){
+				$data=$this->datos_sesion();
+				$this->db->select('*');
+				$this->db->from('alu_enc');
+				$this->db->where('id_alumno',$data['id_persona']);
+
+				$debuelve_evaluacion_contestada=$this->db->get();
+				return $debuelve_evaluacion_contestada->row_array();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -1008,12 +1025,20 @@ class sise_model extends CI_Model{
 				$this->db->insert('cuestionario',$data);
 				return $this->db->insert_id();
 			}
+			function evaluacion_contestada($data){
+				$this->db->insert('alu_enc',$data);
+			}
 		#Fin inserciones
 		
 		#Update
 			function actualiza_datos_evaluacion($id,$data){
 				$this->db->where('id_encuesta', $id);
 				$this->db->update('encuesta',$data);
+			}
+			function insertar_valor($data,$id){
+				$this->db->where('id_opcion',$id);
+				$this->db->update('opciones',$data);
+
 			}
 		#Fin update
 
