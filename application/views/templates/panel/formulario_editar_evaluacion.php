@@ -27,7 +27,7 @@
                             </div>
                             <div class="" style="margin-top:40px !important;">
                               <label>Selecciona a quien va a contestar la encuesta</label>
-                              <select name="hola" id="" class="form-control form-control android">
+                              <select name="hola" id="" class="col-sm-10 form-control form-control android">
                                     <option value="<?php echo $priv['id_privilegio'];?>" selected="selected"><?php echo $priv['nombre_privilegio']; ?></option>
                                     <?php foreach ($nom as $no) {?>                                   
                                     <option value="<?php echo $no->id_privilegio; ?>"><?php echo $no->nombre_privilegio; ?></option>
@@ -41,7 +41,14 @@
                             
                           </div>
                           </div>
-                            
+                            <?php if ($evaluacion['Activo']==1) {?>
+                            <div class="form-group"><label class="col-sm-2 control-label text-right" >Fecha de inicio de la evaluación</label>
+                              <div class="col-sm-10"><input type="date" minlength="12" maxlength="100" class="form-control android" name="inicio_eva" value=""></div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label text-right" >Fecha de fin de la evaluación</label>
+                              <div class="col-sm-10"><input type="date" minlength="12" maxlength="100" class="form-control android" name="fin_eva" value=""></div>
+                            </div>
+                          <?php } ?>
                         </div>
                             <input type="hidden" name="id" value="<?php echo $evaluacion['id_encuesta']; ?>">
                         <div class="modal-footer">

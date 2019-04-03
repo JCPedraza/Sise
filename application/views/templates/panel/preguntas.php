@@ -40,7 +40,22 @@
 					                          <div class="badges-v1">
 
 					                            	<br>
-					                            	<div class="col-md-12">
+					                            	<div class="col-md-2">
+					                            		  <a href="<?php echo base_url();?>index.php/sise/eliminar_pregunta/<?php echo $evalu->id_encuesta;?>">
+							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-danger">
+							                                <div class="flip">
+							                                  <div class="side">
+							                                    Borrar <span class="fa fa-trash"></span>
+							                                  </div>
+							                                  <div class="side back">
+							                                    Esta segur@?
+							                                  </div>
+							                                </div>
+							                                <span class="icon"></span>
+							                              </button>
+							                          </a>
+							                          </div>
+					                            	<div class="col-md-8">
 										                    <center><h4 class="text-black"><?php echo $c->pregunta;?></h4></center>
 										              </div>
 					                             <div class="badges-ribbon">

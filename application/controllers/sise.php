@@ -324,9 +324,10 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
+						$data['evaluacion']=$this->sise_model->debuelve_evaluacion_contestada();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/encuesta');
+						$this->load->view('templates/panel/encuesta',$data);
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin de la evaluación
@@ -1139,7 +1140,9 @@ class sise extends CI_Controller {
 								$data_edita_evaluacion=array(
 									'nom_encuesta'=>$this->input->post('nom_eva'),
 									'id_privilegio'=>$this->input->post('hola'),
-									'activo'=>$r
+									'activo'=>$r,
+									'fecha_inicio'=>$this->input->post('inicio_eva'),
+									'fecha_fin'=>$this->input->post('fin_eva')
 								);
 									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_evaluacion);
 									header('Location:'.base_url('index.php/sise/evaluaciones').'');
@@ -1166,6 +1169,12 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 						}
 					#fin de agregar preguntas
+
+					#Eliminar pregunta
+						public function eliminar_pregunta(){
+							
+						}
+					#fin de eliminar pregunta
 
 					#formulario editar oferta academica
 						public function edita_oferta_academica(){
@@ -1283,16 +1292,26 @@ class sise extends CI_Controller {
 								'id_alumno'=> $this->input->post('clave_alumno'),
 								'id_encuesta'=> $this->input->post('clave_evaluacion')
 							);
-							$a=$this->input->post('l[]');
-							var_dump($a);
-							die();
-							/*$r=$this->sise_model->devuelve_valor();
-							$data_personal_evaluacion=array(
-								'valor'=> $$a
+							$this->sise_model->evaluacion_contestada($data_evaluacion_contestada);
+							$id_opcion=$this->input->post('l[]');
+							foreach ($id_opcion as $k) {
+								$r=$this->sise_model->devuelve_valor($k);
+								foreach ($r as $e) {
+								$value= array(
+										'valor'=>$r['valor']+1,
+									);
+								}
+								
+								#$v=$this->db->where('id_opcion',$k);
+								#$query=$this->db->update_batch('opciones',$value,$v);
+								$this->sise_model->insertar_valor($value,$k);
+							}
+	    					header('Location:'.base_url('index.php/sise/evaluacion_docente/').'');
+							/*$data_personal_evaluacion=array(
+								'valor'=> $a,
 								'id_encuesta'=> $this->input->post('clave_evaluacion')
 							);*/
-							var_dump($data_evaluacion_contestada);
-							die();
+							
 						}
 					#fin de las evaluaciones
 					
