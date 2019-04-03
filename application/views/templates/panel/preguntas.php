@@ -1,15 +1,5 @@
 <!-- start: Content -->
-						<script>
-							function habilitar(value){
-								if (value==true) {
-									//Habilitamos
-									document.getElementById("segundo").disabled=false;
-								}else if(value==false){
-									//deshabilitamos
-									document.getElementById("segundo").disable=true;
-								}
-							}
-						</script>
+						
 						<div id="content">
 							 <div class="panel box-shadow-none content-header">
 									<div class="panel-body">
@@ -27,11 +17,22 @@
 										<div class="panel-heading"><h3>Numero de preguntas con las que cuenta <?php echo $num_preguntas['num']; ?></h3></div>
 										<div class="panel-body">
 												<div class="col-md-12" style="margin-top:5px;">
-					                                  <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong<?php echo $evaluacion_preguntas['id_encuesta'];?>">
+													<div class="col-sm-5">
+					                                  <button type="button" class="btn ripple-infinite btn-raised btn-primary" data-toggle="modal" data-target="#exampleModalLong<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 					                                 <div>
 					                                  <span>Agregar Pregunta</span>
 					                                 </div>
 					                                </button>
+					                            </div>
+					                                <div class="col-sm-5">
+													<a href="<?php echo base_url();?>index.php/sise/evaluaciones/">
+					                                <button type="button" class="btn ripple-infinite btn-raised btn-success">
+					                                 <div>
+					                                  <span>Regresar a las evaluaciónes</span>
+					                                 </div>
+					                                </button>
+					                            </a>
+					                            </div>
 					                        </div>
 					                    </div>
 					                    <div class="panel-body">
@@ -60,6 +61,41 @@
 				                          </button>
 				                        </div>
 				                        <div class="modal-body">
+				                        	<script>
+												/*function habilitar(value){
+													if (value==true) {
+														//Habilitamos
+														document.getElementById("segundo").disabled=false;
+													}else if(value==false){
+														//deshabilitamos
+														document.getElementById("segundo").disable=true;
+													}
+												}*/
+												function habilitar1(campor1)
+												{
+												    var estadoActual = document.getElementById(campor1);
+												 
+												    estadoActual.disabled = !estadoActual.disabled;
+												}
+												function habilitar2(campor2)
+												{
+												    var estadoActual = document.getElementById(campor2);
+												 
+												    estadoActual.disabled = !estadoActual.disabled;
+												}
+												function habilitar3(campor3)
+												{
+												    var estadoActual = document.getElementById(campor3);
+												 
+												    estadoActual.disabled = !estadoActual.disabled;
+												}
+												function habilitar4(campor4)
+												{
+												    var estadoActual = document.getElementById(campor4);
+												 
+												    estadoActual.disabled = !estadoActual.disabled;
+												}
+											</script>
 				                          <?php
 				                             $atributos = array('class'=>'form-horizontal');
 				                             echo form_open('sise/nueva_pregunta/',$atributos);
@@ -68,50 +104,57 @@
 				                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod"></div>
 				                              <input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 				                          </div>
+				                          <?php if ($evaluacion_preguntas['id_encuesta']!=2) {?>
+				                          
 				                          <table>
 				                          <div class="form-group">
 				                          	  <div class="col-md-12">
 				        						<tr>
 				                          		<td><label class="control-label text-top">Respuesta 1</label></td>
-				                          			<td><input type="text" class="form-control android" id="segundo" name="des_mod[]"></td>
+				                          			<td><input type="text" class="form-control android" id="r1" name="preg[]" disabled="true"></td>
 				                          			<td>
 				                          				<div class="form-group form-animate-checkbox">
-														<input type="checkbox"  id="check" onChange="habilitar(this.checked);" class="checkbox" name="l"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa" checked="">
+														<input type="checkbox"  onclick="habilitar1('r1')" class="checkbox" name="l"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar utilizar">
 													</div>
 												</td>
 				                              </tr>
 				                              <tr>
 				                          		<td><label class="control-label text-top">Respuesta 2</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
+				                              			<td><input type="text" class="form-control android" id="r2" name="preg[]" disabled="true"></td>
 				                              			<td>
 				                          				<div class="form-group form-animate-checkbox">
-														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+														<input type="checkbox" onclick="habilitar2('r2')" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar utilizar">
 													</div>
 												</td>
 				                              	</tr>
 				                              	<tr>
 				                          		<td><label class="control-label text-top">Respuesta 3</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
+				                              			<td><input type="text" class="form-control android" id="r3" name="preg[]" disabled="true"></td>
 														<td>
 				                          				<div class="form-group form-animate-checkbox">
-														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+														<input type="checkbox" onclick="habilitar3('r3')" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar utilizar">
 													</div>
 												</td>
 				                              	</tr>
 				                              	<tr>				                          		<td><label class="control-label text-top">Respuesta 4</label></td>
-				                              			<td><input type="text" class="form-control android" name="des_mod[]"></td>
+				                              			<td><input type="text" class="form-control android" id="r4" name="preg[]" disabled="true"></td>
 				                              			<td>
 				                          				<div class="form-group form-animate-checkbox">
-														<input type="checkbox" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar activa">
+														<input type="checkbox" onclick="habilitar4('r4')" class="checkbox" name="l" data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar utilizar">
 													</div>
 												</td>
 				                              	</tr>
+				                      
 				                          </div>
 				                          </div>
-				                      </div>
-				                  </div>
+				                          	</table>
+				                              <div class="panel bg-light-blue">
+				                                <div class="panel-body text-white">
+				                                   <p class="animated fadeInUp quote">seleccione el número de opciones correspondientes a la pregunta, Minimo 2</p>
+				                                </div>
+				                              </div>
+				                          <?php } ?>
 				                         </div>
-				                        </div>
 				                        <div class="modal-footer">
 				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 				                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
