@@ -41,7 +41,8 @@
 
 					                            	<br>
 					                            	<div class="col-md-2">
-					                            		  <a href="<?php echo base_url();?>index.php/sise/eliminar_pregunta/<?php echo $evalu->id_encuesta;?>">
+					                            		  	<form action="<?php echo base_url('index.php/sise/'); ?>eliminar_pregunta/<?php echo $c->id_cuestionario;?>" method="post">
+																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-danger">
 							                                <div class="flip">
 							                                  <div class="side">
@@ -53,9 +54,28 @@
 							                                </div>
 							                                <span class="icon"></span>
 							                              </button>
-							                          </a>
+							                              </form>
 							                          </div>
-					                            	<div class="col-md-8">
+							                          <div class="col-md-2">
+							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning" data-toggle="modal" data-target="#exampleModalLong1<?php echo $c->id_cuestionario;?>" >
+							                                <div class="flip">
+							                                  <div class="side">
+							                                    agregar opción <span class="fa fa-trash"></span>
+							                                  </div>
+							                                  <div class="side back">
+							                                    Esta segur@?
+							                                  </div>
+							                                </div>
+							                                <span class="icon"></span>
+							                              </button>
+
+							                          </div>
+							                          <div class="col-md-1">
+							                          	<button class=" btn btn-circle btn-outline btn-sm btn-default" value="primary">
+						                                <span class="fa fa-flash"></span>
+						                              </button>
+							                          </div>
+					                            	<div class="col-md-5">
 										                    <center><h4 class="text-black"><?php echo $c->pregunta;?></h4></center>
 										              </div>
 					                             <div class="badges-ribbon">
@@ -183,10 +203,66 @@
 				                    </div>
 				                  </div> 
 				                <!-- Fin Modal --> 
+				                <!-- Modal -->
+				                  <div class="modal fade" id="exampleModalLong1<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                    <div class="modal-dialog" role="document">
+				                      <div class="modal-content">
+				                        <div class="modal-header">
+				                          <h5 class="modal-title" id="exampleModalLongTitle">Pregunta</h5>
+				                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                            <span aria-hidden="true">&times;</span>
+				                          </button>
+				                        </div>
+				                        <script>
+												function habilita1(campor1)
+												{
+												    var estadoActual = document.getElementById(campor1);
+												 
+												    estadoActual.disabled = !estadoActual.disabled;
+												}
+											</script>
+				                        <div class="modal-body">
+				                          <?php
+				                             $atributos = array('class'=>'form-horizontal');
+				                             echo form_open('sise/nueva_opcion/',$atributos);
+				                          ?>
+				                          
+				                          <table>
+				                          <div class="form-group">
+				                          	  <div class="col-md-12">
+				        						<tr>
+				                          		<td><label class="control-label text-top">opcion</label></td>
+				                          			<td><input type="text" class="form-control android" minlength="2" maxlength="15" id="e1" name="preg" disabled="true"></td>
+				                          			<td>
+				                          				<div class="form-group form-animate-checkbox">
+														<input type="checkbox"  onclick="habilita1('e1')" class="checkbox" name="l"  data-toggle="tooltip" data-placement="right" title="" style="margin:5px;" data-original-title="Marcar si va a estar utilizar">
+													</div>
+												</td>
+				                              </tr>
+				                      
+				                          </div>
+				                          </div>
+				                          	</table>
+				                          	<input type="hidden" name="id_cuestionario" value="<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>">
+				                          	<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
+				                         </div>
+				                        <div class="modal-footer">
+				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
+				                                    <div>
+				                                      <span>Guardar Cambios</span>
+				                                    </div>
+				                                  </button>
+				                        </div>
+				                         </form>
+				                      </div>
+				                    </div>
+				                  </div> 
+				                <!-- Fin Modal --> 
 							</div>
-
+							
 						</div>
 						
-							</div>
 						</div>
 					<!-- end: content -->
+							</div>
