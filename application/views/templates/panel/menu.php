@@ -11,14 +11,15 @@
                     </li>
                     <li class="active ripple">
                       <?php
-            foreach ($menu as $m ){
-              $ruta = base_url('index.php/sise/').$m->url;
-            ?>
+                          foreach ($menu as $m ){
+                            echo $ruta = base_url('index.php/sise/').$m->url;
 
-            <li <?php if(current_url()==$ruta) echo "class=\"active\""; ?> ><a href="<?php echo $ruta;?>"><span class="fa fa-<?php echo $m->icono;?>"></span><?php echo $m->nombre_seccion;?></a></li>
-           <?php
-          }
-           ?>
+                          ?>
+
+                          <li <?php if(current_url()==$ruta) echo "class=\"active\""; ?> ><a href="<?php echo $ruta;?>"><span class="fa fa-<?php echo $m->icono;?>"></span><?php echo $m->nombre_seccion;?></a></li>
+                         <?php
+                        }
+                         ?>
                     </li>
                     
                     
@@ -42,7 +43,7 @@
                     <li class="active ripple">
                       <?php
             foreach ($menu as $m ){
-              $ruta = base_url('index.php/proyecto/').$m->url;
+              $ruta = base_url('index.php/sise/').$m->url;
             ?>
 
             <li <?php if(current_url()==$ruta) echo "class=\"active\""; ?>><a href="<?php echo $ruta;?>"><?php echo $m->nombre_seccion;?></a></li>

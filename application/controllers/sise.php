@@ -559,7 +559,7 @@ class sise extends CI_Controller {
 				#Fin ver Asignaturas
 
 				#Ver plan de estudios (editar nombre despues)
-					public function conformacion_progrmamas_programa(){
+					public function conformacion_programamas_programa(){
 						
 						$oferta_academica_consulta = $this->input->post('ofer_aca');
 
@@ -568,33 +568,27 @@ class sise extends CI_Controller {
 							echo json_encode($programas_devueltos);
 							die();
 						}
-
-						$data['sesion'] = $this->sise_model->datos_sesion();
-						$data['menu'] = $this->sise_model->datos_menu();
-
 						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
+						
 						$this->load->view('templates/panel/ver_programa',$data);
-						$this->load->view('templates/panel/footer');
+						
 					}
 				#Fin ver plan de estudios (editar nombre despues)
 				
 				#Mostrar conformacion de progarama
-					public function conformacion_progrmamas(){
-							
-							$data['id_programa'] = $this->uri->segment(3);
+					public function conformacion_programamas(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
-							$data['asignaturas_encntradas'] = $this->sise_model->asignatura_programa($data['id_programa']);
-							
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
+						$data['id_programa'] = $this->uri->segment(3);
 
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/mostrar_programas',$data);
-							$this->load->view('templates/panel/footer');
+						$data['asignaturas_encontradas'] = $this->sise_model->asignatura_programa($data['id_programa']);
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/mostrar_programas',$data);
+						$this->load->view('templates/panel/footer');
 					}
 
 				#Fin mostrar conformacion de progarama
@@ -621,12 +615,27 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/asignar_asignatura_programa',$data);
 								$this->load->view('templates/panel/footer');
 							}else{
+								$programa = $this->input->post('programa');
+								$periodo = $this->input->post('periodo');
 								foreach ($this->input->post('asignaturas_agregar[]') as $asignatura_a_agregar) {
-									
+									$insertar_asignatura_programa = array(
+										'programa' => $programa,
+										'asignatura' => $asignatura_a_agregar,
+										'periodo' => $periodo
+									);
+									$this->sise_model->agregar_asignatura_programa($insertar_asignatura_programa);
 								}
+								header('Location:'.base_url('index.php/sise/conformacion_programamas/'.$programa.'').'');
 							}
 					}
 				#Fin asignar Asignaturas a Programa
+
+				#Eliminar asignatura de un programa
+					public function eliminar_asignatura_programa(){
+						$asignatura_a_eliminar = $this->input->post('eliminar_asignatura');
+						$this->sise_model->eliminar_asignatura_programa($asignatura_a_eliminar);
+					}
+				#Fin eliminar asignatura de un programa
 
 
 		//-----Formularios------------

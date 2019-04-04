@@ -575,6 +575,10 @@ class sise_model extends CI_Model{
 			function registro_nuevo_programa($data){
 				$this->db->insert('programa',$data);
 			}
+
+			function agregar_asignatura_programa($insertar_asignatura_progrma){
+				$this->db->insert('programa_conformacion',$insertar_asignatura_progrma);
+			}
 		#Fin inserciones
 		
 		#Update
@@ -813,11 +817,14 @@ class sise_model extends CI_Model{
 					$devolver_periodo = $this->db->get();
 					return $devolver_periodo->row_array();
 				}
+
 				function asignatura_programa($id_programa){
-					 #$this->db->select('*');
-					 #$this->db->from();
-					 #$this->db->join(,'inner');
-					 #$this->db->where();
+					$this->db->select('asi.*');
+					$this->db->from('programa_conformacion pc');
+					$this->db->join('asignatura as asi', 'asi.clave_asi = pc.asignatura', 'left');
+					$this->db->where('pc.programa',$id_programa);
+					$devolver_tipo_asignatura = $this->db->get();
+					return $devolver_tipo_asignatura->result();
 				}
 
 				function devolver_asignatura_no_asignadas(){
@@ -846,6 +853,10 @@ class sise_model extends CI_Model{
 			#Fin Update
 			
 			#Delete
+				function eliminar_asignatura_programa($id_asignatura_a_borrar){
+					$this->db->where('asignatura',$id_asignatura_a_borrar);
+					$this->db->delete('programa_conformacion');
+				}
 			#Fin Delete
 	//-----------------fin asignaturas---------------
 
