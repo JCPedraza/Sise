@@ -46,15 +46,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td></td>
-                                <td></td>
-                                <td><button class="btn ripple-infinite btn-round btn-warning" data-toggle="modal" data-target="#modaleliminar" data-whaterver="">
-                                  <div>
-                                    <span>Eliminar</span>
-                                  </div>
-                                  </button></td>
-                              </tr>
+                              <?php foreach ($asignaturas_encontradas as $asignaturas): ?>
+                                <tr>
+                                  <td><?php echo $asignaturas->nombre_asi;?></td>
+                                  <td>Duración: <?php echo $asignaturas->duracion_asi;?><br>Descripción: <?php echo $asignaturas->descripcion_asi;?></td>
+                                  <td><button class="btn ripple-infinite btn-round btn-warning" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar" data-whaterver="<?php echo $asignaturas->clave_asi;?>">
+                                    <div>
+                                      <span>Eliminar</span>
+                                    </div>
+                                    </button></td>
+                                </tr>
+                              <?php endforeach ?>
                             </tbody>
                             
 
@@ -69,22 +71,45 @@
           <!-- end: content -->
 
          <!--modal--> 
-          <div class="modal fade" id="modaleliminar" tabindex="-1" role="dialog" aria-labelledby="modaleliminar" aria-hidden="true">
+          <div class="modal fade" id="modaleliminar" tabindex="-1" role="dialog" aria-labelledby="modaleliminarLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="modal-title">Modal title</h4>
+                  <h4 class="modal-title">¿Seguro que desea eliminar?</h4>
                 </div>
-                <div class="modal-body">
-                  <p>One fine body…</p>
-                </div>
+                <form method="post" action="<?php echo base_url();?>index.php/sise/eliminar_asignatura_programa/">
+                  <input type="hidden" name="eliminar_asignatura" id="eliminar_modal">
+                
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-default" id="cerrar" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
-      
 
+          <script>
+            $(document).ready(function(){
+              $('#modaleliminar').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var recipient = button.data('whaterver');
+                $('#eliminar_modal').val(recipient);
+              })
+            })
+            $("form").submit(function (event){
+    
+                event.preventDefault();
+
+                $.ajax({
+                  url:$("form").attr("action"),
+                  type:$("form").attr("method"),
+                  data:$("form").serialize(),
+                });
+
+                $('#modaleliminar').modal("hide");
+                
+              });
+
+          </script>

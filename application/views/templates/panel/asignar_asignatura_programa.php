@@ -62,30 +62,41 @@
                             <form action="<?php echo base_url('index.php/sise/'); ?>asignar_asignatura_programa" method="post">
 
                               <input type="hidden" name="programa" value="<?php echo $id_programa; ?>">
-
-                                  <select name="periodo" id="">
-                                    <?php foreach ($periodo as $per): ?>
-                                      <option value="<?php echo $per->id_periodo; ?>"><?php echo $per->nombre_periodo; ?></option>
-                                    <?php endforeach ?>
-                                  </select>
-                                  <br>
-                                  <select id="optgroup" name="asignaturas_agregar[]" class="ms" multiple="multiple">
-                                      
-                                      <?php foreach ($asignaturas as $asignatura): ?>
-                                        <option value="<?php echo $asignatura->clave_asi; ?>"><?php echo $asignatura->nombre_asi; ?></option>
-                                      <?php endforeach ?>
-                                      
-                                  </select>
-
+                            
+                                <div class="form-group">
+                                  <div class="col-sm-10">
+                                    <div class="col-sm-12 padding-0">
+                                      <select name="periodo" id="">
+                                        <?php foreach ($periodo as $per): ?>
+                                          <option value="<?php echo $per->id_periodo; ?>"><?php echo $per->nombre_periodo; ?></option>
+                                        <?php endforeach ?>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
                               <br>
                               <br>
-                              <div class="form-group">
-                                <div class="col-sm-10">
+                                
+                                <div class="form-group">
+                                  <div class="col-sm-10">
+                                    <div class="col-sm-12 padding-0"> 
+                                      <select id="optgroup" name="asignaturas_agregar[]" class="ms" multiple="multiple">
+                                          <?php foreach ($asignaturas as $asignatura): ?>
+                                            <option value="<?php echo $asignatura->clave_asi; ?>"><?php echo $asignatura->nombre_asi; ?></option>
+                                          <?php endforeach ?>                                          
+                                      </select>
+                                      <br>
+                                    </div>
+                                  </div>
+                                </div>
+                          
+                                <div class="form-group">
+                                  <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0">
                                         <button type="submit" class="btn ripple-infinite btn-round btn-warning">Enviar</button>
                                     </div>
+                                  </div>
                                 </div>
-                              </div>
                               </div>
                             </form>
                           </div>

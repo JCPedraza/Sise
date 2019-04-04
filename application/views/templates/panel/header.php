@@ -48,21 +48,9 @@
                  <b>Proto</b>
                 </a>
 
-              <ul class="nav navbar-nav search-nav">
-                <li>
-                   <div class="search">
-                    <span class="fa fa-search icon-search" style="font-size:23px;"></span>
-                    <div class="form-group form-animate-text">
-                      <input type="text" class="form-text" required>
-                      <span class="bar"></span>
-                      <label class="label-search">Type anywhere to <b>Search</b> </label>
-                    </div>
-                  </div>
-                </li>
-              </ul>
 
               <ul class="nav navbar-nav navbar-right user-nav">
-                <li><a href="#"><?php echo $sesion['nombre']." - ".$sesion['nombre_privilegio'];?></a></li>
+                <li class="user-name"><a href="#"><?php echo $sesion['nombre']." - ".$sesion['nombre_privilegio'];?></a></li>
                   <li class="dropdown avatar-dropdown">
                    <img src="<?php echo base_url();?>assets/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                    <ul class="dropdown-menu user-dropdown">
