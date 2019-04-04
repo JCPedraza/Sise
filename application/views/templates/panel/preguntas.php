@@ -60,7 +60,7 @@
 							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning" data-toggle="modal" data-target="#exampleModalLong1<?php echo $c->id_cuestionario;?>" >
 							                                <div class="flip">
 							                                  <div class="side">
-							                                    agregar opción <span class="fa fa-trash"></span>
+							                                    agregar opción <span class="fa fa-pencil-square-o"></span>
 							                                  </div>
 							                                  <div class="side back">
 							                                    Esta segur@?
@@ -72,7 +72,7 @@
 							                          </div>
 							                          <div class="col-md-1">
 							                          	<button class=" btn btn-circle btn-outline btn-sm btn-default" value="primary">
-						                                <span class="fa fa-flash"></span>
+						                                <span class="fa fa-eye"></span>
 						                              </button>
 							                          </div>
 					                            	<div class="col-md-5">
