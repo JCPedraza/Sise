@@ -390,6 +390,31 @@ class sise extends CI_Controller {
 					}
 				#fin de los niveles academicos
 
+				#Editar la pregunta
+						public function editar_pregunta(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$a=$this->input->post('id');
+							if(!empty($this->uri->segment(3))){
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+								$pregunta=(int)$this->uri->segment(3);
+								$data['pregunta']=$this->sise_model->comsulta_pregunta_edicion($pregunta);
+								/*var_dump($data['pregunta']);
+								die();*/
+									$this->load->view('templates/panel/header',$data);
+									$this->load->view('templates/panel/menu',$data);
+									$this->load->view('templates/panel/formulario_editar_pregunta',$data);
+									$this->load->view('templates/panel/footer');
+								
+							}else{
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+							}
+
+						}
+				#fin de editar Pregunta
+
 			//joan alonso
 				#
 					public function mostrar_tipos_documento(){
@@ -1244,10 +1269,15 @@ class sise extends CI_Controller {
 
 					#Eliminar pregunta
 						public function eliminar_pregunta(){
-							
+							$pregunta =(int) $this->uri->segment(3);
+							$a=$this->input->post('id');
+							$this->sise_model->eliminar_opciones_pregunta($pregunta);
+							$this->sise_model->eliminar_pregunta($pregunta);
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
 						}
 					#fin de eliminar pregunta
 
+					
 					#formulario editar oferta academica
 						public function edita_oferta_academica(){
 							$this->sise_model->valida_sesion();
@@ -1387,6 +1417,18 @@ class sise extends CI_Controller {
 						}
 					#fin de las evaluaciones
 					
+					#nueva opción de las preguntas
+						public function nueva_opcion(){
+							$a=$this->input->post('id');
+							$data_nueva_opcion=array(
+								'id_cuestionario'=>$this->input->post('id_cuestionario'),
+								'nombre'=>$this->input->post('preg'),
+								'valor'=>0
+							);
+							$this->sise_model->nueva_opcion_pregunta($data_nueva_opcion);
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+						}
+					#fin de las opcines de las preguntas
 			//joan alonso
 
 				#Ingresar Datos De Alumnos le agrege la s

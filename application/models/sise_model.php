@@ -965,7 +965,7 @@ class sise_model extends CI_Model{
 					return $ce->result();
 			}
 			function consulta_encuesta_cuestionario($id_encuesta){
-					$this->db->select('c.pregunta');
+					$this->db->select('c.*');
 					$this->db->from('encuesta as e');
 					$this->db->join('cuestionario as c','c.id_encuesta=e.id_encuesta');
 					$this->db->where('c.id_encuesta',$id_encuesta);
@@ -1015,6 +1015,15 @@ class sise_model extends CI_Model{
 				$debuelve_evaluacion_contestada=$this->db->get();
 				return $debuelve_evaluacion_contestada->row_array();
 			}
+			function comsulta_pregunta_edicion($pregunta){
+				$this->db->select('c.*, o.*');
+				$this->db->from('cuestionario as c');
+				$this->db->join('opciones as o','c.id_cuestionario=o.id_cuestionario');
+				$this->db->where('c.id_cuestionario',$pregunta);
+
+				$consulta_pregunta_edicion=$this->db->get();
+				return $consulta_pregunta_edicion->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -1027,6 +1036,9 @@ class sise_model extends CI_Model{
 			}
 			function evaluacion_contestada($data){
 				$this->db->insert('alu_enc',$data);
+			}
+			function nueva_opcion_pregunta($data){
+				$this->db->insert('opciones',$data);
 			}
 		#Fin inserciones
 		
@@ -1043,7 +1055,14 @@ class sise_model extends CI_Model{
 		#Fin update
 
 		#Delete
-
+			function eliminar_pregunta($pregunta){
+				$this->db->where('id_cuestionario',$pregunta);
+				$this->db->delete('cuestionario');
+			}
+			function eliminar_opciones_pregunta($pregunta){
+				$this->db->where('id_cuestionario',$pregunta);
+				$this->db->delete('opciones');
+			}
 		#Fin delete
 	//-------------------fin evaluacion-------------------------
 
