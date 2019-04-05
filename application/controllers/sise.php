@@ -1187,7 +1187,12 @@ class sise extends CI_Controller {
 							$data['menu'] = $this->sise_model->datos_menu();
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
-							$data['cuestionario']=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
+							$r=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
+							$data['cuestionario']=$r;
+							foreach ($r as $l) {
+								$re=$l->id_cuestionario;
+							}
+							$data['opciones']=$this->sise_model->devueve_opciones_cuestionario($re);
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
@@ -1199,11 +1204,11 @@ class sise extends CI_Controller {
 						public function eliminar_pregunta(){
 							$pregunta =(int) $this->uri->segment(3);
 							$a=$this->input->post('id');
-							var_dump("pregunta",$pregunta,'<br>',"identificador ",$a);
-							die();
-							#$this->sise_model->eliminar_opciones_pregunta($pregunta);
-							#$this->sise_model->eliminar_pregunta($pregunta);
-							#header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+							/*var_dump("pregunta",$pregunta,'<br>',"identificador ",$a);
+							die();*/
+							$this->sise_model->eliminar_opciones_pregunta($pregunta);
+							$this->sise_model->eliminar_pregunta($pregunta);
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
 						}
 					#fin de eliminar pregunta
 

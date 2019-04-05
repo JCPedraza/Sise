@@ -69,7 +69,7 @@
 
 							                          </div>
 							                          <div class="col-md-1">
-							                          	<button class=" btn btn-circle btn-outline btn-sm btn-default" value="primary">
+							                          	<button class=" btn btn-circle btn-outline btn-sm btn-default" value="primary" data-toggle="modal" data-target="#exampleModalLongVer<?php echo $c->id_cuestionario;?>">
 						                                <span class="fa fa-eye"></span>
 						                              </button>
 							                          </div>
@@ -201,8 +201,9 @@
 				                    </div>
 				                  </div> 
 				                <!-- Fin Modal --> 
+				                <?php foreach ($cuestionario as $c) { ?>
 				                <!-- Modal -->
-				                  <div class="modal fade" id="exampleModalLongOpcion<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                  <div class="modal fade" id="exampleModalLongOpcion<?php echo $c->id_cuestionario;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 				                    <div class="modal-dialog" role="document">
 				                      <div class="modal-content">
 				                        <div class="modal-header">
@@ -258,20 +259,28 @@
 				                  </div> 
 				                <!-- Fin Modal --> 
 				                <!-- Modal -->
-				                  <div class="modal fade" id="exampleModalLongBorrar<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                  <div class="modal fade" id="exampleModalLongBorrar<?php echo $c->id_cuestionario;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 				                    <div class="modal-dialog" role="document">
 				                      <div class="modal-content">
 				                        <div class="modal-header">
-				                          <h5 class="modal-title" id="exampleModalLongTitle">Pregunta</h5>
+				                          <h5 class="modal-title" id="exampleModalLongTitle">Esta realmente seguro</h5>
 				                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				                            <span aria-hidden="true">&times;</span>
 				                          </button>
 				                        </div>
 				                        <div class="modal-body">
-				                          <form action="<?php echo base_url('index.php/sise/'); ?>eliminar_pregunta/<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" method="post">
+				                          <form action="<?php echo base_url('index.php/sise/'); ?>eliminar_pregunta/<?php  echo $c->id_cuestionario;?>" method="post">
 																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
 				                          
-				                         
+				                         <div class="col-md-12">
+				                          <div class="alert col-md-12 col-sm-12 alert-icon alert-danger alert-dismissible fade in" role="alert">
+				                            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+				                              <span class="fa fa-flash fa-2x"></span></div>
+				                              <div class="col-md-10 col-sm-10">
+				                                <p><strong>Precaución!</strong> Una vez que sea eliminado no hay forma de volver a recuperarlo</p>
+				                              </div>
+				                            </div>
+				                          </div>
 				                          	
 				                         </div>
 				                        <div class="modal-footer">
@@ -287,6 +296,51 @@
 				                    </div>
 				                  </div> 
 				                <!-- Fin Modal -->
+				                <!-- Modal -->
+				                  <div class="modal fade" id="exampleModalLongVer<?php echo $c->id_cuestionario;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                    <div class="modal-dialog" role="document">
+				                      <div class="modal-content">
+				                        <div class="modal-header">
+				                          <h5 class="modal-title" id="exampleModalLongTitle">Opciones que tiene la pregunta</h5>
+				                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                            <span aria-hidden="true">&times;</span>
+				                          </button>
+				                        </div>
+				                        <div class="modal-body">
+				                          <form action="<?php echo base_url('index.php/sise/'); ?>actualizar_opciones/" method="post">
+																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
+				                          
+				                         <div class="col-md-12">
+				                          <div class="alert alert-warning col-md-12 col-sm-12 alert-icon alert-dismissible fade in" role="alert">
+				                            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+				                              <span class="fa fa-exclamation-triangle fa-2x"></span></div>
+				                              <div class="col-md-10 col-sm-10">
+				                                <p><strong>Precaución!</strong> En caso de cambiar las opciones ya que asi es como se van a guardar</p>
+				                              </div>
+				                            </div>
+				                          </div>
+				                          	<?php foreach ($opciones as $o) {
+				                          		$a=0;
+				                          		$a++?>
+				                          		<div class="form-group"><label class="col-sm-2 control-label text-right" >Opcion <?php echo $a; ?></label>
+				                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod" value="<?php echo $o->nombre?>"></div>
+				                          </div>
+				                          	<?php } ?>
+				                         </div>
+				                        <div class="modal-footer">
+				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
+				                                    <div>
+				                                      <span>Continuar</span>
+				                                    </div>
+				                                  </button>
+				                        </div>
+				                         </form>
+				                      </div>
+				                    </div>
+				                  </div> 
+				                <!-- Fin Modal -->
+				            <?php } ?>
 							</div>
 							
 						</div>
