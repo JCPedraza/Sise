@@ -1199,9 +1199,11 @@ class sise extends CI_Controller {
 						public function eliminar_pregunta(){
 							$pregunta =(int) $this->uri->segment(3);
 							$a=$this->input->post('id');
-							$this->sise_model->eliminar_opciones_pregunta($pregunta);
-							$this->sise_model->eliminar_pregunta($pregunta);
-							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+							var_dump("pregunta",$pregunta,'<br>',"identificador ",$a);
+							die();
+							#$this->sise_model->eliminar_opciones_pregunta($pregunta);
+							#$this->sise_model->eliminar_pregunta($pregunta);
+							#header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
 						}
 					#fin de eliminar pregunta
 

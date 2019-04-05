@@ -41,9 +41,8 @@
 
 					                            	<br>
 					                            	<div class="col-md-2">
-					                            		  	<form action="<?php echo base_url('index.php/sise/'); ?>eliminar_pregunta/<?php echo $c->id_cuestionario;?>" method="post">
-																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
-							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-danger">
+					                            		  	
+							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-danger" data-toggle="modal" data-target="#exampleModalLongBorrar<?php echo $c->id_cuestionario;?>" >
 							                                <div class="flip">
 							                                  <div class="side">
 							                                    Borrar <span class="fa fa-trash"></span>
@@ -54,10 +53,9 @@
 							                                </div>
 							                                <span class="icon"></span>
 							                              </button>
-							                              </form>
 							                          </div>
 							                          <div class="col-md-2">
-							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning" data-toggle="modal" data-target="#exampleModalLong1<?php echo $c->id_cuestionario;?>" >
+							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning" data-toggle="modal" data-target="#exampleModalLongOpcion<?php echo $c->id_cuestionario;?>" >
 							                                <div class="flip">
 							                                  <div class="side">
 							                                    agregar opción <span class="fa fa-pencil-square-o"></span>
@@ -204,7 +202,7 @@
 				                  </div> 
 				                <!-- Fin Modal --> 
 				                <!-- Modal -->
-				                  <div class="modal fade" id="exampleModalLong1<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                  <div class="modal fade" id="exampleModalLongOpcion<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 				                    <div class="modal-dialog" role="document">
 				                      <div class="modal-content">
 				                        <div class="modal-header">
@@ -259,6 +257,36 @@
 				                    </div>
 				                  </div> 
 				                <!-- Fin Modal --> 
+				                <!-- Modal -->
+				                  <div class="modal fade" id="exampleModalLongBorrar<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				                    <div class="modal-dialog" role="document">
+				                      <div class="modal-content">
+				                        <div class="modal-header">
+				                          <h5 class="modal-title" id="exampleModalLongTitle">Pregunta</h5>
+				                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                            <span aria-hidden="true">&times;</span>
+				                          </button>
+				                        </div>
+				                        <div class="modal-body">
+				                          <form action="<?php echo base_url('index.php/sise/'); ?>eliminar_pregunta/<?php foreach ($cuestionario as $c) { echo $c->id_cuestionario;}?>" method="post">
+																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
+				                          
+				                         
+				                          	
+				                         </div>
+				                        <div class="modal-footer">
+				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				                          <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">
+				                                    <div>
+				                                      <span>Continuar</span>
+				                                    </div>
+				                                  </button>
+				                        </div>
+				                         </form>
+				                      </div>
+				                    </div>
+				                  </div> 
+				                <!-- Fin Modal -->
 							</div>
 							
 						</div>
