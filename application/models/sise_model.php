@@ -1035,6 +1035,14 @@ class sise_model extends CI_Model{
 				$consulta_pregunta_edicion=$this->db->get();
 				return $consulta_pregunta_edicion->result();
 			}
+			function devueve_opciones_cuestionario($re){
+				$this->db->select('o.*');
+				$this->db->from('opciones as o');
+				$this->db->where('o.id_cuestionario',$re);
+
+				$devueve_opciones_cuestionario=$this->db->get();
+				return $devueve_opciones_cuestionario->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
