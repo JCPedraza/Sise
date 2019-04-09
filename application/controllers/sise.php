@@ -416,6 +416,22 @@ class sise extends CI_Controller {
 						}
 				#fin de editar Pregunta
 
+				#vista del personal registrado
+						public function personal_registrado(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['personal']= $this->sise_model->debuelve_personal();
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_personal',$data);
+							$this->load->view('templates/panel/footer');
+						}
+					# fin del personal registrado
+
 			//joan alonso
 				#
 					public function mostrar_tipos_documento(){
@@ -1146,7 +1162,7 @@ class sise extends CI_Controller {
 
 								$data['sesion'] = $this->sise_model->datos_sesion();
 								$data['menu'] = $this->sise_model->datos_menu();
-
+								$data['cargo']=$this->sise_model->devuelve_cargo();
 								$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
 								$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 								$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
@@ -1174,7 +1190,7 @@ class sise extends CI_Controller {
 											'usuario'=>$this->input->post('email'),
 											'contrasena'=>md5($this->input->post('contra')),
 											'id_persona'=>$clave_personal,
-											'id_privilegio'=>2,
+											'id_privilegio'=>$this->input->post('privilegio'),
 											'activo'=>1
 										);
 										$usuario=$this->sise_model->inserta_usuario($data_usuario_personal);
@@ -1449,6 +1465,58 @@ class sise extends CI_Controller {
 							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
 						}
 					#fin de las opcines de las preguntas
+
+					#Edicion del personal
+						public function edita_personal(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+
+							if(!empty($this->uri->segment(3))){
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+								$id= $this->uri->segment(3);
+								$data['datos']=$this->sise_model->consulta_personal_edicion($id);	
+
+								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Alerta </strong>','</div>');
+
+								$this->form_validation->set_rules('nombre','Nombre de la evaluacion','required');
+
+
+								if ($this->form_validation->run() == FALSE){
+								$id= $this->uri->segment(3);
+								$resultado=$this->sise_model->consulta_personal_edicion($id);
+								$data['datos']=$resultado;
+								$data['privilegio']=$this->sise_model->consulta_personal_edicion_privilegio($resultado['id_privilegio']);
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/formulario_editar_personal',$data);
+								$this->load->view('templates/panel/footer',$data);
+								
+								}else{
+									$data_edita_personal=array(
+										'nombres_personal'=>$this->input->post('nombre'),
+										'ap_materno_personal'=>$this->input->post('am'),
+										'ap_paterno_personal'=>$this->input->post('ap'),
+										'rfc_personal'=>$this->input->post('rfc'),
+										'fecha_ingreso_ciidet'=>$this->input->post('fecha'),
+										'genero_personal'=>$this->input->post('genero'),
+										'especialidad_personal'=>$this->input->post('esp'),
+									);
+										$this->sise_model->actualiza_datos_personal($this->input->post('id'),$data_edita_personal);
+									$data_edita_personal_privilegio=array(
+										'id_privilegio'=>$this->input->post('privilegio'),
+									);	
+									$this->sise_model->actualiza_privilegio_personal($this->input->post('idu'),$data_edita_personal_privilegio);
+										header('Location:'.base_url('index.php/sise/personal_registrado').'');
+									}
+								}else{
+									header('Location:'.base_url('index.php/sise/personal_registrado').'');
+								}
+						
+						}
+					#fin de la edicion del personal
 			//joan alonso
 
 				#Ingresar Datos De Alumnos le agrege la s
