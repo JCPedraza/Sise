@@ -8,6 +8,7 @@ class sise extends CI_Controller {
 		parent::__construct();
 		$this->load->model('sise_model');
 	}
+
 		//-----Vistas-----------------
 			
 			//juan carlos
@@ -560,7 +561,9 @@ class sise extends CI_Controller {
 
 				#Ver plan de estudios (editar nombre despues)
 					public function conformacion_programamas_programa(){
-						
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
 						$oferta_academica_consulta = $this->input->post('ofer_aca');
 
 						if ($oferta_academica_consulta!=null) {
@@ -570,9 +573,10 @@ class sise extends CI_Controller {
 						}
 						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
-						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/ver_programa',$data);
-						
+						$this->load->view('templates/panel/footer');
 					}
 				#Fin ver plan de estudios (editar nombre despues)
 				
