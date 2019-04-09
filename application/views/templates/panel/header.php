@@ -1,4 +1,4 @@
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +18,12 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/plugins/datatables.bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/plugins/fullcalendar.min.css"/>
     <link href="<?php echo base_url();?>assets/css/style.css" rel="stylesheet">
+    <!-- Multi Select Css -->
+    <link href="<?php echo base_url(); ?>assets/plugins/multi-select/css/multi-select.css" rel="stylesheet">
     <!-- end: Css -->
 
     <!--start: javascript-->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="<?php echo base_url();?>assets/js/jquery3-3-1.min.js"></script>
     <!--end: javascript-->
 
   <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/logomi.png">
@@ -59,7 +61,7 @@
               </ul>
 
               <ul class="nav navbar-nav navbar-right user-nav">
-                <li><a href="#"><?php echo $sesion['nombre']." - ".$sesion['nombre_privilegio'];?></a></li>
+                <li class="user-name"><a href="#"><?php echo $sesion['nombre']." - ".$sesion['nombre_privilegio'];?></a></li>
                   <li class="dropdown avatar-dropdown">
                    <img src="<?php echo base_url();?>assets/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                    <ul class="dropdown-menu user-dropdown">

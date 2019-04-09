@@ -559,20 +559,34 @@ class sise_model extends CI_Model{
 				$devuelve_programa=$this->db->get();
 				return $devuelve_programa->result();
 			}
-			function datos_programa($data){
+
+			function datos_programa($id_programa){
 				$this->db->select('p.*,of.nombre_of_aca');
 				$this->db->from('programa p');
 				$this->db->join('oferta_academica as of','p.oferta_academica=of.clave_of_aca');
-				$this->db->where('clave_programa',$data);
+				$this->db->where('clave_programa',$id_programa);
 
 				$regresa_datos_programa = $this->db->get();
 				return $regresa_datos_programa->row_array();
+			}
+
+			function devolver_programas_de_ofertas_educativas($id_oferta_academica){
+				$this->db->select('*');
+				$this->db->from('programa');
+				$this->db->where('oferta_academica',$id_oferta_academica);
+
+				$regresa_datos_programa_oferta = $this->db->get();
+				return $regresa_datos_programa_oferta->result();
 			}
 		#Fin consultas
 		
 		#Inserciones
 			function registro_nuevo_programa($data){
 				$this->db->insert('programa',$data);
+			}
+
+			function agregar_asignatura_programa($insertar_asignatura_progrma){
+				$this->db->insert('programa_conformacion',$insertar_asignatura_progrma);
 			}
 		#Fin inserciones
 		
@@ -854,6 +868,26 @@ class sise_model extends CI_Model{
 					$devolver_periodo = $this->db->get();
 					return $devolver_periodo->row_array();
 				}
+
+				function asignatura_programa($id_programa){
+					$this->db->select('asi.*');
+					$this->db->from('programa_conformacion pc');
+					$this->db->join('asignatura as asi', 'asi.clave_asi = pc.asignatura', 'left');
+					$this->db->where('pc.programa',$id_programa);
+					$devolver_tipo_asignatura = $this->db->get();
+					return $devolver_tipo_asignatura->result();
+				}
+
+				function devolver_asignatura_no_asignadas(){
+					$this->db->select('as.*, ta.nombre_tipo_asi,pc.*');
+					$this->db->from('asignatura as');
+					$this->db->join('tipo_asignatura ta','as.tipo_asignatura=ta.clave_tipo_asi','left');
+					$this->db->join('programa_conformacion pc','as.clave_asi=pc.asignatura','left');
+					$this->db->where('pc.asignatura',null);
+					
+					$devolver_asignatura_no_asignadas = $this->db->get();
+					return $devolver_asignatura_no_asignadas->result();
+				}
 			#Fin Consultas
 
 			#Inserciones
@@ -870,6 +904,10 @@ class sise_model extends CI_Model{
 			#Fin Update
 			
 			#Delete
+				function eliminar_asignatura_programa($id_asignatura_a_borrar){
+					$this->db->where('asignatura',$id_asignatura_a_borrar);
+					$this->db->delete('programa_conformacion');
+				}
 			#Fin Delete
 	//-----------------fin asignaturas---------------
 
@@ -908,7 +946,31 @@ class sise_model extends CI_Model{
 			
 			#Delete
 			#Fin Delete
+				
 	//-----------------fin periodo---------------
+
+	
+	//-----------------plan de estudios---------------
+			#Consultas
+				function devolver_plan_estudios(){
+					$this->db->select('*');
+					$this->db->from('');
+
+					$devolver_plan_estudios = $this->db->get();
+					return $devolver_plan_estudios->result();
+				}
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin plan de estudios---------------
+	
 
 
 	#plantilla

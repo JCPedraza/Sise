@@ -8,6 +8,7 @@ class sise extends CI_Controller {
 		parent::__construct();
 		$this->load->model('sise_model');
 	}
+
 		//-----Vistas-----------------
 			
 			//juan carlos
@@ -284,6 +285,7 @@ class sise extends CI_Controller {
 					}
 				#fin de los programas
 
+
 				#Muestra los oferta_academica
 					public function oferta_academica(){
 						$this->sise_model->valida_sesion();
@@ -293,6 +295,7 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['ofe_aca']=$this->sise_model->devuelve_oferta_academica();
+
 
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -430,147 +433,229 @@ class sise extends CI_Controller {
 					# fin del personal registrado
 
 			//joan alonso
-					#
-						public function mostrar_tipos_documento(){
+				#
+					public function mostrar_tipos_documento(){
 
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							$data['documentos'] = $this->sise_model->devolver_tipo_archivos();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['documentos'] = $this->sise_model->devolver_tipo_archivos();
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/panel_tipos_documentos',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#
+
+				#
+					public function registrar_tipos_documentos(){
+						$this->load->library('form_validation');
+						$this->load->helper('form','url');
+
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['documentos'] = $this->sise_model->devolver_tipo_archivos();
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/formulario_tipo_documento');
+						$this->load->view('templates/panel/footer');
+					}
+				#
+
+				#
+					public function editar_tipo_documento(){
+						$this->load->helper('form','url');
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$id = $this->uri->segment(3);
+						if (!empty($id)) {
+							$data['info']=$this->sise_model->devolver_info_tipo_archivos($id);
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/panel_tipos_documentos',$data);
+							$this->load->view('templates/panel/editar_tip_doc',$data);
 							$this->load->view('templates/panel/footer');
+						}else{
+							header('location:'.base_url('sise/').'');
 						}
-					#
+					}
+				#
 
-					#
-						public function registrar_tipos_documentos(){
+				#el que sube los archivos
+					public function pruebas(){
+						$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();#devolucion de la consulta
+						#var_dump($data);
+						#die();
+						$this->load->view('pruebas/ejemplo',$data);
+					}
+				#el que sube los archivos
+
+				#Muestran lista de grupos conformados
+					public function grupos(){
+
+						$oferta = ''.urldecode(str_replace("_", " ", $this->uri->segment(3)));
+						
+						
+
+						if ($oferta==null) {
+							$oferta="";
+						}	
+						
+
+
+						if ($oferta=="") {
+							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
+						}else{
+							$data['asignatura'] = $this->sise_model->devolver_asignatura($oferta);
+							var_dump($data['asignatura']);
+							die();
+							foreach ($data['asignatura'] as $asignatura) {
+								$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($asignatura);
+							}
+						}
+
+
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_grupos',$data);
+						$this->load->view('templates/panel/footer');
+
+					}
+				#Fin muestran lista de grupos conformados
+
+				#Muestra la conformacion del grupo
+					public function ver_grupo(){
+						
+						$clave_grupo = $this->uri->segment(3);
+						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
+						$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
+						
+						#var_dump($data['alumnos_grupo']);
+						#die();
+						
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/grupo',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#Muestra la conformacion del grupo
+
+				#ver de Alta Semestres, Cuatrimestres, ect
+					public function periodo(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						$data['periodo'] = $this->sise_model->devolver_periodo();
+
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_periodo',$data);
+						$this->load->view('templates/panel/footer');
+
+					}
+				#Fin ver de Alta Semestres, Cuatrimestres, ect
+
+				#Ver Asignaturas
+					public function asignaturas(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						$data['asignatura'] = $this->sise_model->devolver_asignatura();
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_asignatura',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#Fin ver Asignaturas
+
+				#Ver plan de estudios (editar nombre despues)
+					public function conformacion_programamas_programa(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						$oferta_academica_consulta = $this->input->post('ofer_aca');
+
+						if ($oferta_academica_consulta!=null) {
+							$programas_devueltos = $this->sise_model->devolver_programas_de_ofertas_educativas($oferta_academica_consulta);
+							echo json_encode($programas_devueltos);
+							die();
+						}
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_programa',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#Fin ver plan de estudios (editar nombre despues)
+				
+				#Mostrar conformacion de progarama
+					public function conformacion_programamas(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						$data['id_programa'] = $this->uri->segment(3);
+
+						$data['asignaturas_encontradas'] = $this->sise_model->asignatura_programa($data['id_programa']);
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/mostrar_programas',$data);
+						$this->load->view('templates/panel/footer');
+					}
+
+				#Fin mostrar conformacion de progarama
+
+				#Asignar Asignaturas a Programa
+					public function asignar_asignatura_programa(){
 							$this->load->library('form_validation');
-							$this->load->helper('form','url');
-
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							$data['documentos'] = $this->sise_model->devolver_tipo_archivos();
 							
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/formulario_tipo_documento');
-							$this->load->view('templates/panel/footer');
-						}
-					#
-
-					#
-						public function editar_tipo_documento(){
-							$this->load->helper('form','url');
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							$id = $this->uri->segment(3);
-							if (!empty($id)) {
-								$data['info']=$this->sise_model->devolver_info_tipo_archivos($id);
-								$this->load->view('templates/panel/header',$data);
-								$this->load->view('templates/panel/menu',$data);
-								$this->load->view('templates/panel/editar_tip_doc',$data);
-								$this->load->view('templates/panel/footer');
-							}else{
-								header('location:'.base_url('sise/').'');
-							}
-						}
-					#
-
-					#el que sube los archivos
-						public function pruebas(){
-							$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();#devolucion de la consulta
-							#var_dump($data);
-							#die();
-							$this->load->view('pruebas/ejemplo',$data);
-						}
-					#el que sube los archivos
-
-					#Muestran lista de grupos conformados
-						public function grupos(){
-
-							$oferta = ''.urldecode(str_replace("_", " ", $this->uri->segment(3)));
-							
-							
-
-							if ($oferta==null) {
-								$oferta="";
-							}
-							
-
-
-							if ($oferta=="") {
-								$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
-							}else{
-								$data['asignatura'] = $this->sise_model->devolver_asignatura($oferta);
-								var_dump($data['asignatura']);
-								die();
-								foreach ($data['asignatura'] as $asignatura) {
-									$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($asignatura);
-								}
-							}
 
 
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$data['menu'] = $this->sise_model->datos_menu();
-							
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/ver_grupos',$data);
-							$this->load->view('templates/panel/footer');
 
-						}
-					#Fin muestran lista de grupos conformados
 
-					#Muestra la conformacion del grupo
-						public function ver_grupo(){
-							
-							$clave_grupo = $this->uri->segment(3);
-							$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
-							$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
-							
-							#var_dump($data['alumnos_grupo']);
-							#die();
-							
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-							
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/grupo',$data);
-							$this->load->view('templates/panel/footer');
-						}
-					#Muestra la conformacion del grupo
+							$this->form_validation->set_rules('programa','programa','required');
 
-					#ver de Alta Semestres, Cuatrimestres, ect
-						public function periodo(){
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-
+							$data['id_programa'] = $this->uri->segment(3);
+							$data['asignaturas'] = $this->sise_model->devolver_asignatura_no_asignadas();
 							$data['periodo'] = $this->sise_model->devolver_periodo();
 
+							if ($this->form_validation->run() == FALSE||$this->input->post('asignaturas_agregar[]')==null) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/asignar_asignatura_programa',$data);
+								$this->load->view('templates/panel/footer');
+							}else{
+								$programa = $this->input->post('programa');
+								$periodo = $this->input->post('periodo');
+								foreach ($this->input->post('asignaturas_agregar[]') as $asignatura_a_agregar) {
+									$insertar_asignatura_programa = array(
+										'programa' => $programa,
+										'asignatura' => $asignatura_a_agregar,
+										'periodo' => $periodo
+									);
+									$this->sise_model->agregar_asignatura_programa($insertar_asignatura_programa);
+								}
+								header('Location:'.base_url('index.php/sise/conformacion_programamas/'.$programa.'').'');
+							}
+					}
+				#Fin asignar Asignaturas a Programa
 
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/ver_periodo',$data);
-							$this->load->view('templates/panel/footer');
-
-						}
-					#Fin ver de Alta Semestres, Cuatrimestres, ect
-
-					#Ver Asignaturas
-						public function asignaturas(){
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-
-							$data['asignatura'] = $this->sise_model->devolver_asignatura();
-
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/ver_asignatura',$data);
-							$this->load->view('templates/panel/footer');
-						}
-					#Fin ver Asignaturas
+				#Eliminar asignatura de un programa
+					public function eliminar_asignatura_programa(){
+						$asignatura_a_eliminar = $this->input->post('eliminar_asignatura');
+						$this->sise_model->eliminar_asignatura_programa($asignatura_a_eliminar);
+					}
+				#Fin eliminar asignatura de un programa
 
 
 		//-----Formularios------------
@@ -1628,7 +1713,7 @@ class sise extends CI_Controller {
 						if ($this->form_validation->run() == FALSE ||$this->input->post('ofe_aca')==null){
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/nuevo_programa');
+							$this->load->view('templates/panel/nuevo_programa',$data);
 							$this->load->view('templates/panel/footer');
 						}else{
 							$data_nuevo_programa=array(
