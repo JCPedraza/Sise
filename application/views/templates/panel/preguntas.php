@@ -318,14 +318,40 @@
 				                                <p><strong>Precaución!</strong> En caso de cambiar las opciones ya que asi es como se van a guardar</p>
 				                              </div>
 				                            </div>
-				                          </div>
-				                          	<?php foreach ($opciones as $o) {
+				                            <?php foreach ($opciones as $o) {
 				                          		$a=0;
 				                          		$a++?>
 				                          		<div class="form-group"><label class="col-sm-2 control-label text-right" >Opcion <?php echo $a; ?></label>
-				                              <div class="col-sm-10"><input type="text" class="form-control android" name="nom_mod" value="<?php echo $o->nombre?>"></div>
+				                          			<div class="col-sm-2"><a class="delete" id="delete<?php echo $o->id_opcion;?>"><span class="fa fa fa-trash fa-2x"></span></a></div>
+				                              <div class="col-sm-8"><input type="text" class="form-control android" name="nom_mod" value="<?php echo $o->nombre?>"></div>
+				                              
 				                          </div>
 				                          	<?php } ?>
+				                          </div>
+				                          	<script type="text/javascript">
+												$(document).ready(function() {
+
+													$('.delete').click(function(){
+													
+														var parent = $(this).parent().attr('id');
+														var service = $(this).parent().attr('data');
+																
+														var dataString = 'id='+service;
+														
+														$.ajax({
+												            type: "POST",
+												            url: "base_url();?>index.php/sise/evaluaciones/",
+												            data: dataString,
+												            success: function() {			
+																$('#delete-ok').empty();
+																$('#delete-ok').append('<div class="correcto">Se ha eliminado correctamente el servicio con id='+service+'.</div>').fadeIn("slow");
+																$('#'+parent).fadeOut("slow");
+																//$('#'+parent).remove();
+												            }
+												        });
+												    });                 
+												});    
+												</script>
 				                         </div>
 				                        <div class="modal-footer">
 				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
