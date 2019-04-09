@@ -43,17 +43,16 @@
                 <span class="bottom"></span>
               </div>
                 <a href="index.html" class="navbar-brand"> 
-                 <b>Proto</b>
+                 <b>SISE</b>
                 </a>
 
               <ul class="nav navbar-nav search-nav">
                 <li>
                    <div class="search">
-                    <span class="fa fa-search icon-search" style="font-size:23px;"></span>
+                   
                     <div class="form-group form-animate-text">
                       <input type="text" class="form-text" required>
-                      <span class="bar"></span>
-                      <label class="label-search">Type anywhere to <b>Search</b> </label>
+                      
                     </div>
                   </div>
                 </li>
@@ -64,13 +63,8 @@
                   <li class="dropdown avatar-dropdown">
                    <img src="<?php echo base_url();?>assets/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                    <ul class="dropdown-menu user-dropdown">
-                     <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
-                     <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>
-                     <li role="separator" class="divider"></li>
                      <li class="more">
                       <ul>
-                        <li><a href=""><span class="fa fa-cogs"></span></a></li>
-                        <li><a href=""><span class="fa fa-lock"></span></a></li>
                         <li><a href="<?php echo base_url();?>index.php/sise/salir"><span class="fa fa-power-off "></span></a></li>
                       </ul>
                     </li>

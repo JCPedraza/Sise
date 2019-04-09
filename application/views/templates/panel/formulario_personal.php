@@ -42,7 +42,7 @@
                               <div class="col-sm-10"><input type="date" class="form-text mask-placeholder" name="fecha" placeholder="__/__/____" required="">
                             <span class="bar"></span></div>
                             </div>
-                             <div class="form-group"><label class="col-sm-1 control-label text-right">Genero</label>
+                             <div class="form-group"><label class="col-sm-2 control-label text-right">Genero</label>
                               <div class="col-sm-10"><select name="g" id="" class="form-text mask-placeholder">
                                     <option value="" selected="selected">Seleccionar</option>
                                     <option value="M">Masculino</option>
@@ -52,6 +52,17 @@
                           <div class="form-group"><label class="col-sm-2 control-label text-right">Especialidad</label>
                               <div class="col-sm-10"><input type="text" name="especialidad" class="form-control android" value=""></div>
                           </div>
+                          <div class="form-group" style="margin-top:40px !important;">
+                             <label class="col-sm-2 control-label text-right">Seleccionar cargo para la persona</label>
+                             <div class="col-sm-10">
+                              <select name="privilegio" id="" class="form-control form-control android">
+                                    <option value="" selected="selected">Seleccionar</option>
+                                    <?php foreach ($cargo as $c) {?>                                   
+                                    <option value="<?php echo $c->id_privilegio; ?>"><?php echo $c->nombre_privilegio; ?></option>
+                                    <?php } ?>
+                            </select>
+                            </div>
+                        </div>
                            <hr>
                                 <h3 style="color: #918C8C">Información de Cuenta</h3>
                                 <p style="colo: #918C8C">Recuerda que tu usuario es tu correo electrónico </p>
@@ -85,9 +96,9 @@
                       </div>
                       </div>
                           <div class="col-md-4 padding-0">
-                              <div class="panel bg-light-blue">
+                              <div class="panel bg-orange">
                                 <div class="panel-body text-white">
-                                   <p class="animated fadeInUp quote">Modifica Solamente Los Campos Que Se Necesiten</p>
+                                   <p class="animated fadeInUp quote">Asegurese de que todos los campos este llenados de manera correcta</p>
                                 </div>
                               </div>
                             </div>

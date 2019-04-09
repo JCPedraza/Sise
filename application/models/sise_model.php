@@ -300,6 +300,15 @@ class sise_model extends CI_Model{
 				$devuelve_pri=$this->db->get();
 				return $devuelve_pri->row_array();
 			}
+			function devuelve_cargo(){
+				$this->db->select('p.nombre_privilegio,p.id_privilegio');
+				$this->db->from('privilegio as p');
+				$this->db->where('id_privilegio !=3');
+				$this->db->where('id_privilegio !=4');
+				$this->db->where('id_privilegio !=5');
+				$devuelve_cargo=$this->db->get();
+				return $devuelve_cargo->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -758,6 +767,40 @@ class sise_model extends CI_Model{
 	//-----------------------personal-------------------------
 		
 		#Consultas
+			function debuelve_personal(){
+				$this->db->select('p.*,pri.*');
+				$this->db->from('personal as p');
+				$this->db->join('usuario as u','u.id_persona=p.id_personal','inner');
+				$this->db->join('privilegio as pri','pri.id_privilegio=u.id_privilegio');
+				$this->db->where('u.activo',1);
+				$this->db->where('u.id_privilegio !=3');
+				$this->db->where('u.id_privilegio !=4');
+				$this->db->where('u.id_privilegio !=5');
+
+				$devuelve_personal=$this->db->get();
+				return $devuelve_personal->result();
+			}
+			public function consulta_personal_edicion($id){
+				$this->db->select('p.*,u.id_privilegio,pri.nombre_privilegio,u.id_usuario');
+				$this->db->from('personal as p');
+				$this->db->join('usuario as u','u.id_persona=p.id_personal','inner');
+				$this->db->join('privilegio as pri','pri.id_privilegio=u.id_privilegio');
+				$this->db->where('p.id_personal',$id);
+
+				$devuelve_personal_edicion=$this->db->get();
+				return $devuelve_personal_edicion->row_array();
+			}
+			function consulta_personal_edicion_privilegio($id){
+				$this->db->select('pri.*');
+				$this->db->from('privilegio as pri');
+				$this->db->where('pri.id_privilegio !=3');
+				$this->db->where('pri.id_privilegio !=4');
+				$this->db->where('pri.id_privilegio !=5');
+				$this->db->where('pri.id_privilegio !=',$id);
+				
+				$devuelve_edicion_personal_privilegio=$this->db->get();
+				return $devuelve_edicion_personal_privilegio->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -768,6 +811,14 @@ class sise_model extends CI_Model{
 		#Fin inserciones
 		
 		#Update
+			function actualiza_datos_personal($id,$data){
+				$this->db->where('id_personal',$id);
+				$this->db->update('personal',$data);
+			}
+			function actualiza_privilegio_personal($id,$data){
+				$this->db->where('id_usuario',$id);
+				$this->db->update('usuario',$data);
+			}
 		#Fin update
 
 		#Delete
