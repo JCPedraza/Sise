@@ -1,5 +1,4 @@
-<!-- start: Content -->
-						
+<!-- start: Content -->	
 						<div id="content">
 							 <div class="panel box-shadow-none content-header">
 									<div class="panel-body">
@@ -58,7 +57,7 @@
 							                              <button style="margin-top:0px !important;" class="btn-flip btn btn-3d btn-warning" data-toggle="modal" data-target="#exampleModalLongOpcion<?php echo $c->id_cuestionario;?>" >
 							                                <div class="flip">
 							                                  <div class="side">
-							                                    agregar opción <span class="fa fa-pencil-square-o"></span>
+							                                    Agregar opción <span class="fa fa-pencil-square-o"></span>
 							                                  </div>
 							                                  <div class="side back">
 							                                    Esta segur@?
@@ -201,6 +200,7 @@
 				                    </div>
 				                  </div> 
 				                <!-- Fin Modal --> 
+
 				                <?php foreach ($cuestionario as $c) { ?>
 				                <!-- Modal -->
 				                  <div class="modal fade" id="exampleModalLongOpcion<?php echo $c->id_cuestionario;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -309,13 +309,14 @@
 				                        <div class="modal-body">
 				                          <form action="<?php echo base_url('index.php/sise/'); ?>actualizar_opciones/" method="post">
 																<input type="hidden" name="id" value="<?php echo $evaluacion_preguntas['id_encuesta'];?>">
+																<input type="hidden" name="idp" value="<?php echo $c->id_cuestionario;?>">
 				                          
 				                         <div class="col-md-12">
 				                          <div class="alert alert-warning col-md-12 col-sm-12 alert-icon alert-dismissible fade in" role="alert">
 				                            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
 				                              <span class="fa fa-exclamation-triangle fa-2x"></span></div>
 				                              <div class="col-md-10 col-sm-10">
-				                                <p><strong>Precaución!</strong> En caso de cambiar las opciones ya que asi es como se van a guardar</p>
+				                                <p><strong>Precaución!</strong> En caso de cambiar las opciones asi es como se van a guardar</p>
 				                              </div>
 				                            </div>
 				                            <?php foreach ($opciones as $o) {
@@ -323,35 +324,12 @@
 				                          		$a++?>
 				                          		<div class="form-group"><label class="col-sm-2 control-label text-right" >Opcion <?php echo $a; ?></label>
 				                          			<div class="col-sm-2"><a class="delete" id="delete<?php echo $o->id_opcion;?>"><span class="fa fa fa-trash fa-2x"></span></a></div>
-				                              <div class="col-sm-8"><input type="text" class="form-control android" name="nom_mod" value="<?php echo $o->nombre?>"></div>
+				                              <div class="col-sm-8"><input type="text" class="form-control android" name="nom_mod[]" value="<?php echo $o->nombre?>"></div>
+				                              <input type="hidden" name="ido[]" value="<?php echo $o->id_opcion;?>">
 				                              
 				                          </div>
 				                          	<?php } ?>
 				                          </div>
-				                          	<script type="text/javascript">
-												$(document).ready(function() {
-
-													$('.delete').click(function(){
-													
-														var parent = $(this).parent().attr('id');
-														var service = $(this).parent().attr('data');
-																
-														var dataString = 'id='+service;
-														
-														$.ajax({
-												            type: "POST",
-												            url: "base_url();?>index.php/sise/evaluaciones/",
-												            data: dataString,
-												            success: function() {			
-																$('#delete-ok').empty();
-																$('#delete-ok').append('<div class="correcto">Se ha eliminado correctamente el servicio con id='+service+'.</div>').fadeIn("slow");
-																$('#'+parent).fadeOut("slow");
-																//$('#'+parent).remove();
-												            }
-												        });
-												    });                 
-												});    
-												</script>
 				                         </div>
 				                        <div class="modal-footer">
 				                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
