@@ -430,7 +430,23 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/ver_personal',$data);
 							$this->load->view('templates/panel/footer');
 						}
-					# fin del personal registrado
+				# fin del personal registrado
+
+				#Subir Calificaciones pendiente
+						public function subir_calificaciones(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_personal',$data);
+							$this->load->view('templates/panel/footer');
+						}
+				#Fin de subir calificaciones 
 
 			//joan alonso
 				#
@@ -1313,6 +1329,29 @@ class sise extends CI_Controller {
 						}
 					#fin de eliminar pregunta
 
+					#Actulizar opciones de la pregunta
+						public function actualizar_opciones(){
+							$opciones=$this->input->post('nom_mod[]');
+							$idp=$this->input->post('idp');
+							$id=$this->input->post('id');
+							$g=$this->input->post('ido[]');
+
+							/*var_dump("Las opciones: ",$opciones,"<br>","Identificador de las opciones: ",$g,"<br","Identificador de las pregutas: ",$idp,"<br>","Ientificador de la encuesta: ",$id);
+							die();*/
+							foreach($opciones as $o){
+								foreach ($g as $y) {
+									$data[]= array(
+										'id_opcion'=>$y,
+										'nombre'=>$o,
+									);
+									}
+									$a=$this->db->update_batch('opciones',$data,'id_opcion');
+							}
+							
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$id.'');
+							
+						}
+					#Fin de actualizar las opciones de la pregunta
 					
 					#formulario editar oferta academica
 						public function edita_oferta_academica(){
