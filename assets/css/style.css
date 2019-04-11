@@ -297,7 +297,7 @@ p.quote{
 /*end: product grid*/
 
 /*start: Login*/
- .form-signin-wrapper{background: #2196f3 !important;}
+ .form-signin-wrapper{background: rgb(213, 52, 37) !important;}
  .form-signin{
          max-width: 330px;
          padding: 15px;
@@ -306,7 +306,7 @@ p.quote{
     .form-signin a{color: #fff !important;font-weight: bold;}
     .form-signin .btn{margin-top: 30px;}
     .form-signin .form-group{margin-bottom: 20px !important;}
-    .form-signin .panel{background: #2196f3;color: #fff;padding: 10px;border:none !important;box-shadow: 0 7px 16px #0a86e9, 0 4px 5px #0a86e9;}
+    .form-signin .panel{background: rgb(213, 52, 37);color: #fff;padding: 10px;border:none !important;box-shadow: 0 7px 16px #0a86e9, 0 4px 5px #0a86e9;}
     .form-signin .panel-body{padding-bottom: 50px;padding-top: 30px;}
     .form-signin .atomic-number{font-size: 20px;}
     .form-signin .atomic-symbol{font-size: 10em !important;font-weight: 500;padding-bottom: 20spx;}
@@ -1799,7 +1799,7 @@ ul li a:focus {
 
   .navbar {
     height: 55px;
-    background-color: #2196F3;
+    background-color: rgb(213, 52, 37);
     color: #fff;
     border: none;
   }
@@ -2057,15 +2057,15 @@ ul li a:focus {
   float: left;
   padding: 20px;
   padding-top: 35px;
-  background-color: #2196F3;
+  background-color: rgb(213, 52, 37);
   padding-bottom: 11px;
   color: #C62828;
   cursor: pointer;
-  -webkit-box-shadow: 0px 9px 0px 0px #2196F3, 0 -9px 0px 0px #2196F3, 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
-  -moz-box-shadow: 0px 9px 0px 0px #2196F3, 0 -9px 0px 0px #2196F3, 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
-  -ms-box-shadow: 0px 9px 0px 0px #2196F3, 0 -9px 0px 0px #2196F3, 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
-  -o-box-shadow: 0px 9px 0px 0px #2196F3, 0 -9px 0px 0px #2196F3, 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
-  box-shadow: 0px 9px 0px 0px #2196F3, 0 -9px 0px 0px #2196F3, 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0px 9px 0px 0px rgb(213, 52, 37), 0 -9px 0px 0px rgb(213, 52, 37), 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0px 9px 0px 0px rgb(213, 52, 37), 0 -9px 0px 0px rgb(213, 52, 37), 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
+  -ms-box-shadow: 0px 9px 0px 0px rgb(213, 52, 37), 0 -9px 0px 0px rgb(213, 52, 37), 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
+  -o-box-shadow: 0px 9px 0px 0px rgb(213, 52, 37), 0 -9px 0px 0px rgb(213, 52, 37), 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 9px 0px 0px rgb(213, 52, 37), 0 -9px 0px 0px rgb(213, 52, 37), 4px 0 15px -4px rgba(0, 0, 0, 0.16), -4px 0 15px -4px rgba(0, 0, 0, 0.12);
 }
 
 
