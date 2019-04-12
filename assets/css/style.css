@@ -1961,7 +1961,7 @@ ul li a:focus {
 /*-----Left menu-------*/
 #left-menu{}
 #left-menu .left-bg {
-  background: url('../img/left-bg.png');
+  background: url('../img/left-bg-ciidet.png');
   background-repeat: repeat-x;
   height: 100px;
   left: 0;
