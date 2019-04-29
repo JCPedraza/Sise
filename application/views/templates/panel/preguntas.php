@@ -73,7 +73,7 @@
 						                              </button>
 							                          </div>
 					                            	<div class="col-md-5">
-										                    <center><h4 class="text-black"><?php echo $c->pregunta;?></h4></center>
+										                    <center><h4  class="text-black"><?php echo $c->pregunta;?></h4></center>
 										              </div>
 					                             <div class="badges-ribbon">
 					                              <div class="badges-ribbon-content badge-primary">Pregunta</div>
@@ -316,16 +316,18 @@
 				                            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
 				                              <span class="fa fa-exclamation-triangle fa-2x"></span></div>
 				                              <div class="col-md-10 col-sm-10">
-				                                <p><strong>Precaución!</strong> En caso de cambiar las opciones asi es como se van a guardar</p>
+				                                <p><strong>Precaución!</strong> solo es para ver las opciones con las que cuenta la pregunta</p>
 				                              </div>
 				                            </div>
+				                            <?php  $a=0; ?>
 				                            <?php foreach ($opciones as $o) {
-				                          		$a=0;
-				                          		$a++?>
+				                          		
+				                          		$b=1;
+				                          		$a=$a+$b;?>
 				                          		<div class="form-group"><label class="col-sm-2 control-label text-right" >Opcion <?php echo $a; ?></label>
-				                          			<div class="col-sm-2"><a class="delete" id="delete<?php echo $o->id_opcion;?>"><span class="fa fa fa-trash fa-2x"></span></a></div>
-				                              <div class="col-sm-8"><input type="text" class="form-control android" name="nom_mod[]" value="<?php echo $o->nombre?>"></div>
-				                              <input type="hidden" name="ido[]" value="<?php echo $o->id_opcion;?>">
+				                          			<div class="col-sm-2"></div>
+				                              <div class="col-sm-8"><input type="text" class="form-control android" name="nom_mod[]" value="<?php echo $o->nombre?>" disabled ></div>
+				                              <input type="hidden" name="ido[]" value="<?php echo $o->id_opcion;?>" >
 				                              
 				                          </div>
 				                          	<?php } ?>

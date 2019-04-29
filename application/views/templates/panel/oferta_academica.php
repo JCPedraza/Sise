@@ -19,7 +19,7 @@
                     	<div class="col-md-6" style="margin-top:5px;">
                                   <button type="button" class="btn ripple-infinite btn-raised btn-success" data-toggle="modal" data-target="#exampleModalLong">
                                  <div>
-                                  <span>Agregar Nueva Evaluación</span>
+                                  <span>Agregar Nueva Oferta Academica</span>
                                  </div>
                                 </button>
                         </div>
