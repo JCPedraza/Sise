@@ -1304,8 +1304,9 @@ class sise extends CI_Controller {
 							$data['menu'] = $this->sise_model->datos_menu();
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
-							$r=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
+							$r=$this->sise_model->consulta_encuesta_cuestionario((int)$data['clave']);
 							$data['cuestionario']=$r;
+							$re=0;
 							foreach ($r as $l) {
 								$re=$l->id_cuestionario;
 							}
