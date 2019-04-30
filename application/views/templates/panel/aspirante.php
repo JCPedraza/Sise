@@ -36,6 +36,7 @@
                       <tbody>
                         <?php
                           foreach ($aspirante as $asp) {
+                            if ($asp->id_privilegio!=3) {
                         ?>
                             <tr>
                               <td><?php echo $asp->nombre_alumno; ?></td>
@@ -93,7 +94,8 @@
                             </td>
                             </tr>
                            <?php
-                          }
+                          ;}
+                        }
                         ?>
                       </tbody>
                         </table>
