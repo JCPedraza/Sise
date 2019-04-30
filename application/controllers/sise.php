@@ -335,9 +335,10 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
+						$data['evaluacion']=$this->sise_model->debuelve_evaluacion_contestada();
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/encuesta');
+						$this->load->view('templates/panel/encuesta',$data);
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin de la evaluación
@@ -397,6 +398,63 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#fin de los niveles academicos
+
+				#Editar la pregunta
+						public function editar_pregunta(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$a=$this->input->post('id');
+							if(!empty($this->uri->segment(3))){
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+								$pregunta=(int)$this->uri->segment(3);
+								$data['pregunta']=$this->sise_model->comsulta_pregunta_edicion($pregunta);
+								/*var_dump($data['pregunta']);
+								die();*/
+									$this->load->view('templates/panel/header',$data);
+									$this->load->view('templates/panel/menu',$data);
+									$this->load->view('templates/panel/formulario_editar_pregunta',$data);
+									$this->load->view('templates/panel/footer');
+								
+							}else{
+								header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+							}
+
+						}
+				#fin de editar Pregunta
+
+				#vista del personal registrado
+						public function personal_registrado(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['personal']= $this->sise_model->debuelve_personal();
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_personal',$data);
+							$this->load->view('templates/panel/footer');
+						}
+				# fin del personal registrado
+
+				#Subir Calificaciones pendiente
+						public function subir_calificaciones(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/ver_personal',$data);
+							$this->load->view('templates/panel/footer');
+						}
+				#Fin de subir calificaciones 
 
 			//joan alonso
 
@@ -1130,7 +1188,7 @@ class sise extends CI_Controller {
 
 								$data['sesion'] = $this->sise_model->datos_sesion();
 								$data['menu'] = $this->sise_model->datos_menu();
-
+								$data['cargo']=$this->sise_model->devuelve_cargo();
 								$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[25]');
 								$this->form_validation->set_rules('a_p','Apellido Paterno', 'required|min_length[2]|max_length[25]');
 								$this->form_validation->set_rules('a_m','Apellido Materno', 'required|min_length[2]|max_length[25]');
@@ -1158,7 +1216,7 @@ class sise extends CI_Controller {
 											'usuario'=>$this->input->post('email'),
 											'contrasena'=>md5($this->input->post('contra')),
 											'id_persona'=>$clave_personal,
-											'id_privilegio'=>2,
+											'id_privilegio'=>$this->input->post('privilegio'),
 											'activo'=>1
 										);
 										$usuario=$this->sise_model->inserta_usuario($data_usuario_personal);
@@ -1235,7 +1293,9 @@ class sise extends CI_Controller {
 								$data_edita_evaluacion=array(
 									'nom_encuesta'=>$this->input->post('nom_eva'),
 									'id_privilegio'=>$this->input->post('hola'),
-									'activo'=>$r
+									'activo'=>$r,
+									'fecha_inicio'=>$this->input->post('inicio_eva'),
+									'fecha_fin'=>$this->input->post('fin_eva')
 								);
 									$this->sise_model->actualiza_datos_evaluacion($this->input->post('id'),$data_edita_evaluacion);
 									header('Location:'.base_url('index.php/sise/evaluaciones').'');
@@ -1255,7 +1315,13 @@ class sise extends CI_Controller {
 							$data['menu'] = $this->sise_model->datos_menu();
 							$data['evaluacion_preguntas']=$this->sise_model->datos_evaluacion_p($data['clave']);
 							$data['num_preguntas']=$this->sise_model->pregunta_cuantas($data['clave']);
-							$data['cuestionario']=$this->sise_model->consulta_encuesta_cuestionario($data['clave']);
+							$r=$this->sise_model->consulta_encuesta_cuestionario((int)$data['clave']);
+							$data['cuestionario']=$r;
+							$re=0;
+							foreach ($r as $l) {
+								$re=$l->id_cuestionario;
+							}
+							$data['opciones']=$this->sise_model->devueve_opciones_cuestionario($re);
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
 							$this->load->view('templates/panel/preguntas',$data);
@@ -1263,6 +1329,42 @@ class sise extends CI_Controller {
 						}
 					#fin de agregar preguntas
 
+					#Eliminar pregunta
+						public function eliminar_pregunta(){
+							$pregunta =(int) $this->uri->segment(3);
+							$a=$this->input->post('id');
+							/*var_dump("pregunta",$pregunta,'<br>',"identificador ",$a);
+							die();*/
+							$this->sise_model->eliminar_opciones_pregunta($pregunta);
+							$this->sise_model->eliminar_pregunta($pregunta);
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+						}
+					#fin de eliminar pregunta
+
+					#Actulizar opciones de la pregunta
+						public function actualizar_opciones(){
+							$opciones=$this->input->post('nom_mod[]');
+							$idp=$this->input->post('idp');
+							$id=$this->input->post('id');
+							$g=$this->input->post('ido[]');
+
+							/*var_dump("Las opciones: ",$opciones,"<br>","Identificador de las opciones: ",$g,"<br","Identificador de las pregutas: ",$idp,"<br>","Ientificador de la encuesta: ",$id);
+							die();*/
+							foreach($opciones as $o){
+								foreach ($g as $y) {
+									$data[]= array(
+										'id_opcion'=>$y,
+										'nombre'=>$o,
+									);
+									}
+									$a=$this->db->update_batch('opciones',$data,'id_opcion');
+							}
+							
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$id.'');
+							
+						}
+					#Fin de actualizar las opciones de la pregunta
+					
 					#formulario editar oferta academica
 						public function edita_oferta_academica(){
 							$this->sise_model->valida_sesion();
@@ -1379,19 +1481,93 @@ class sise extends CI_Controller {
 								'id_alumno'=> $this->input->post('clave_alumno'),
 								'id_encuesta'=> $this->input->post('clave_evaluacion')
 							);
-							$a=$this->input->post('l[]');
-							var_dump($a);
-							die();
-							/*$r=$this->sise_model->devuelve_valor();
-							$data_personal_evaluacion=array(
-								'valor'=> $$a
+							$this->sise_model->evaluacion_contestada($data_evaluacion_contestada);
+							$id_opcion=$this->input->post('l[]');
+							foreach ($id_opcion as $k) {
+								$r=$this->sise_model->devuelve_valor($k);
+								foreach ($r as $e) {
+								$value= array(
+										'valor'=>$r['valor']+1,
+									);
+								}
+								
+								#$v=$this->db->where('id_opcion',$k);
+								#$query=$this->db->update_batch('opciones',$value,$v);
+								$this->sise_model->insertar_valor($value,$k);
+							}
+	    					header('Location:'.base_url('index.php/sise/evaluacion_docente/').'');
+							/*$data_personal_evaluacion=array(
+								'valor'=> $a,
 								'id_encuesta'=> $this->input->post('clave_evaluacion')
 							);*/
-							var_dump($data_evaluacion_contestada);
-							die();
+							
 						}
 					#fin de las evaluaciones
 					
+					#nueva opción de las preguntas
+						public function nueva_opcion(){
+							$a=$this->input->post('id');
+							$data_nueva_opcion=array(
+								'id_cuestionario'=>$this->input->post('id_cuestionario'),
+								'nombre'=>$this->input->post('preg'),
+								'valor'=>0
+							);
+							$this->sise_model->nueva_opcion_pregunta($data_nueva_opcion);
+							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
+						}
+					#fin de las opcines de las preguntas
+
+					#Edicion del personal
+						public function edita_personal(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+
+							if(!empty($this->uri->segment(3))){
+								$data['sesion'] = $this->sise_model->datos_sesion();
+								$data['menu'] = $this->sise_model->datos_menu();
+								$id= $this->uri->segment(3);
+								$data['datos']=$this->sise_model->consulta_personal_edicion($id);	
+
+								$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Alerta </strong>','</div>');
+
+								$this->form_validation->set_rules('nombre','Nombre de la evaluacion','required');
+
+
+								if ($this->form_validation->run() == FALSE){
+								$id= $this->uri->segment(3);
+								$resultado=$this->sise_model->consulta_personal_edicion($id);
+								$data['datos']=$resultado;
+								$data['privilegio']=$this->sise_model->consulta_personal_edicion_privilegio($resultado['id_privilegio']);
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/formulario_editar_personal',$data);
+								$this->load->view('templates/panel/footer',$data);
+								
+								}else{
+									$data_edita_personal=array(
+										'nombres_personal'=>$this->input->post('nombre'),
+										'ap_materno_personal'=>$this->input->post('am'),
+										'ap_paterno_personal'=>$this->input->post('ap'),
+										'rfc_personal'=>$this->input->post('rfc'),
+										'fecha_ingreso_ciidet'=>$this->input->post('fecha'),
+										'genero_personal'=>$this->input->post('genero'),
+										'especialidad_personal'=>$this->input->post('esp'),
+									);
+										$this->sise_model->actualiza_datos_personal($this->input->post('id'),$data_edita_personal);
+									$data_edita_personal_privilegio=array(
+										'id_privilegio'=>$this->input->post('privilegio'),
+									);	
+									$this->sise_model->actualiza_privilegio_personal($this->input->post('idu'),$data_edita_personal_privilegio);
+										header('Location:'.base_url('index.php/sise/personal_registrado').'');
+									}
+								}else{
+									header('Location:'.base_url('index.php/sise/personal_registrado').'');
+								}
+						
+						}
+					#fin de la edicion del personal
 			//joan alonso
 
 				#Ingresar Datos De Alumnos le agrege la s

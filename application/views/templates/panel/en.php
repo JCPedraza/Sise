@@ -6,7 +6,7 @@
                     <div class="panel-heading"><h3>Instrucciones</h3></div>
                      <div class="panel-body">
                       <p>
-                              De acuerdo 
+                      Considerando la necesidad de evluar los cursos a las que asistió, se le solicita que conteste las siguiente preguntas, marcando con una letra la respuesta que a su juicio correponda a la afirmación propuesta.
                       </p>
 
                     </div>
@@ -27,17 +27,19 @@
                       <thead>
                       </thead>
                       <tbody>
-                         <?php  $a="";$b="";
+                         <?php  $a="";$b="";$aa="";$f="";
                              foreach ($cuestionario as $c) {
                               ?>
                                 <tr>
                                   <td><?php if ($c->pregunta!=$a) {
-                                    echo $c->pregunta,"<br>";
+                                    $aa.='<h4>';
+                                    $f.='</h4>';
+                                   echo $aa,$c->pregunta,$f;
                                     $a=$c->pregunta;
                                   }?>
                                   <div class="form-group form-animate-checkbox">
                             <label><?php echo $c->nombre; ?></label>
-                            <input type="checkbox" class="checkbox" name="l[]" data-toggle="tooltip" data-placement="right" title="" value="<?php echo $c->id_cuestionario; ?>" style="margin:5px;" >
+                            <input type="checkbox" class="checkbox" name="l[]" data-toggle="tooltip" data-placement="right" title="" value="<?php echo $c->id_opcion; ?>" style="margin:5px;" >
                             
                           </div>
                                   
