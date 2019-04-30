@@ -19,10 +19,10 @@
                     	  
                         <div class="row">
                            <div class="col-md-6" style="margin-top:5px;">
-                              <a href="<?php echo base_url();?>index.php/sise/nuevo_privilegio">
+                              <a href="<?php echo base_url();?>index.php/sise/registrar_nuevo_grupo">
                                   <button class="btn ripple-infinite btn-raised btn-success">
                                    <div>
-                                    <span>Conformar Grupo</span>
+                                    <span>Agregar Nuevo Grupo</span>
                                    </div>
                                   </button>
                               </a>
@@ -40,7 +40,7 @@
                                 <tr>
                                   <th>Oferta Académica</th>
                                   <th>Descripción</th>
-                                  <th>Ver</th>
+                                  <th>Ver Grupos Pertenecientes</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -82,13 +82,14 @@
                                       <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
                           		        <td>
                                         <div class="col-md-6" style="margin-top:5px;">
-                                           <a href="<?php echo base_url();?>index.php/sise/ver_grupo/<?php echo $grupo->clave_grupo ; ?>">
+                                          <form method="post" action="<?php echo base_url();?>index.php/sise/ver_grupo/">
+                                           <input type="hidden" name="grupo" value="<?php echo $grupo->clave_grupo ; ?>">
                                              <button class="btn ripple-infinite btn-round btn-warning">
                                               <div>
                                                 <span>Ver</span>
                                               </div>
                                             </button>
-                                            </a>
+                                          </form>
                                         </div>
                                       </td>
                                     <?php }; ?>

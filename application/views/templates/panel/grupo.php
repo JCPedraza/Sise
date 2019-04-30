@@ -1,17 +1,14 @@
 	<?php 
-
-  #var_dump($key->alumno);
-  #die();
-
+  foreach ($grupo_info as $grupo_info) {
    ?>
   <!-- start: Content -->
             <div id="content">
                <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Grupo: </h3>
+                        <h3 class="animated fadeInLeft">Grupo: <?php echo $grupo_info->nombre_grupo; ?></h3>
                         <p class="animated fadeInDown">
-                         Conformación del Grupo tal
+                         Conformación del Grupo 
                         </p>
                     </div>
                   </div>
@@ -30,7 +27,17 @@
                         </div>
                         <br>
                         <br>
+                        
+                        <a href="">
+                          <button class="btn ripple-infinite btn-round btn-success">
+                            <div>
+                              <span>Agregar Alumnos</span>
+                            </div>
+                          </button>
+                        </a>
 
+                    <br>  
+                    <br>  
                       <div class="responsive-table">
                         <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
                             
@@ -62,3 +69,4 @@
               </div>
             </div>
           <!-- end: content -->
+<?php } ?>

@@ -274,7 +274,15 @@ class sise extends CI_Controller {
 						$this->sise_model->Estar_aqui();
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
-						$data['programa']=$this->sise_model->devuelve_programa();
+
+						$oferta_academica_consulta = $this->input->post('ofer_aca');
+
+						if ($oferta_academica_consulta!=null) {
+							$programas_devueltos = $this->sise_model->devolver_programas_de_ofertas_educativas($oferta_academica_consulta);
+							echo json_encode($programas_devueltos);
+							die();
+						}
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 
 
 						$this->load->view('templates/panel/header',$data);
@@ -449,6 +457,20 @@ class sise extends CI_Controller {
 				#Fin de subir calificaciones 
 
 			//joan alonso
+
+				#vista datos alumnos
+				public function datos_alumno(){
+					$data['sesion'] = $this->sise_model->datos_sesion();
+					$data['menu'] = $this->sise_model->datos_menu();					
+
+					$this->load->view('templates/panel/header',$data);
+					$this->load->view('templates/panel/menu',$data);
+					$this->load->view('templates/panel/datos_alumnos',$data);
+					$this->load->view('templates/panel/footer');
+
+				}
+				#vistas datos alumnos
+
 				#
 					public function mostrar_tipos_documento(){
 
@@ -508,27 +530,18 @@ class sise extends CI_Controller {
 				#Muestran lista de grupos conformados
 					public function grupos(){
 
-						$oferta = ''.urldecode(str_replace("_", " ", $this->uri->segment(3)));
+						$oferta_recivida=$this->uri->segment(3);
+						$oferta = ''.urldecode(str_replace("_", " ", $oferta_recivida));
 						
-						
-
 						if ($oferta==null) {
 							$oferta="";
 						}	
-						
-
 
 						if ($oferta=="") {
 							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
 						}else{
-							$data['asignatura'] = $this->sise_model->devolver_asignatura($oferta);
-							var_dump($data['asignatura']);
-							die();
-							foreach ($data['asignatura'] as $asignatura) {
-								$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($asignatura);
-							}
+							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($oferta);
 						}
-
 
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
@@ -544,7 +557,9 @@ class sise extends CI_Controller {
 				#Muestra la conformacion del grupo
 					public function ver_grupo(){
 						
-						$clave_grupo = $this->uri->segment(3);
+						$clave_grupo = $this->input->post('grupo');
+						
+						
 						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
 						$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
 						
@@ -560,6 +575,21 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#Muestra la conformacion del grupo
+
+				#Registra un Nuevo Grupo
+					public function registrar_nuevo_grupo(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$data['docentes_disponibles'] = $this->sise_model->devuelve_docente_disponible();
+						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
+						$data['generaciones'] = $this->sise_model->devuelver_generaciones();
+
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/registrar_grupo',$data);
+						$this->load->view('templates/panel/footer');	
+					}
+				#Fin Registra un Nuevo Grupo
 
 				#ver de Alta Semestres, Cuatrimestres, ect
 					public function periodo(){
@@ -591,26 +621,6 @@ class sise extends CI_Controller {
 					}
 				#Fin ver Asignaturas
 
-				#Ver plan de estudios (editar nombre despues)
-					public function conformacion_programamas_programa(){
-						$data['sesion'] = $this->sise_model->datos_sesion();
-						$data['menu'] = $this->sise_model->datos_menu();
-
-						$oferta_academica_consulta = $this->input->post('ofer_aca');
-
-						if ($oferta_academica_consulta!=null) {
-							$programas_devueltos = $this->sise_model->devolver_programas_de_ofertas_educativas($oferta_academica_consulta);
-							echo json_encode($programas_devueltos);
-							die();
-						}
-						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
-
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/ver_programa',$data);
-						$this->load->view('templates/panel/footer');
-					}
-				#Fin ver plan de estudios (editar nombre despues)
 				
 				#Mostrar conformacion de progarama
 					public function conformacion_programamas(){
@@ -1223,9 +1233,10 @@ class sise extends CI_Controller {
 								$data_estatus=array(
 									'id_privilegio'=>$data['est']
 								);
-								//var_dump($data_estatus);
-								//	die();
 								$this->sise_model->cambiar_estatus($data_estatus,$idusuario);
+								if ($data['est']==3) {
+									$this->sise_model->obtener_registrar_materias($idusuario);
+								}
 								header('Location:'.base_url('index.php/sise/aspirantes').'');
 							}
 					#Fin del estatus 
