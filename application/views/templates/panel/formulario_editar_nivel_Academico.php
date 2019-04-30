@@ -21,7 +21,7 @@
                              $atributos = array('class'=>'form-horizontal');
                              echo form_open('sise/edita_nivel_academico/'.$nivel['clave_exp_aca'],$atributos);
                           ?>
-                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Modalidad</label>
+                          <div class="form-group"><label class="col-sm-2 control-label text-right" >Nivel academico</label>
                               <div class="col-sm-10"><input type="text" class="form-control android" name="nom_nivel" value="<?php if(set_value('nom_nivel')) echo set_value('nom_nivel'); else {if($nivel) echo $nivel['nombre_exp_aca'];}?>"></div>
                             </div>
                             <div style="padding:20px;padding-bottom:0px;">
