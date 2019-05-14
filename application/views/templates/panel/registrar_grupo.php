@@ -22,14 +22,15 @@
                             <div class="row">
                               <div class="form-group">
                                 <label class="col-sm-2 control-label text-right" >Nombre grupo:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control android" name="nombre" id="nombre"></div>
+                                <div class="col-sm-10"><input type="text" required="true" class="form-control android" name="nombre" id="nombre"></div>
                               </div>
                             </div>
                             <div class="row">
                               <div class="form-group">
                                 <label class="col-sm-2 control-label text-right" >Docente encargado:</label>
                                 <div class="col-sm-8">
-                                  <select name="docente" id="">
+                                  <select name="docente" required="true" id="">
+                                    <option value="">Seleccione una opción</option>
                                     <?php foreach ($docentes_disponibles as $docentes_disponibles): ?>
                                     
                                       <option value="<?php echo $docentes_disponibles->id_personal ?>">
@@ -45,7 +46,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label text-right" >Generación del Grupo:</label>
                                 <div class="col-sm-8">
-                                  <select name="generacion" id="">
+                                  <select name="generacion" id="" required="true">
+                                    <option value="">Seleccione una opción</option>
                                     <?php foreach ($generaciones as $generaciones): ?>
                                       <option value="<?php echo $generaciones->id_generacion ?>">
                                         <?php echo $generaciones->nombre_generacion; ?>
@@ -59,10 +61,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label text-right" >Oferta educativa al cual pertenece:</label>
                                 <div class="col-sm-8">
-                                  <select name="generacion" id="">
+                                  <select name="oferta" id="" required="true">
+                                    <option value="">Seleccione una opción</option>
                                     <?php foreach ($oferta_academica as $oferta_academica): ?>
-                                      <option value="<?php echo $oferta_academica->id_generacion ?>">
-                                        <?php echo $generaciones->nombre_generacion; ?>
+                                      <option value="<?php echo $oferta_academica->clave_of_aca ?>">
+                                        <?php echo $oferta_academica->nombre_of_aca; ?>
                                       </option>
                                     <?php endforeach ?>
                                   </select>

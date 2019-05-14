@@ -26,16 +26,18 @@
                           </div> 
                         </div>
                         <br>
-                        <br>
                         
-                        <a href="">
+                        
+                        <form method="post" action="<?php echo base_url('index.php/sise'); ?>/conformacion_grupo">
                           <button class="btn ripple-infinite btn-round btn-success">
+                            <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
+                            <input type="hidden" value="<?php echo $grupo_info->oferta_academica;?>" name="oferta_academica">
                             <div>
                               <span>Agregar Alumnos</span>
                             </div>
                           </button>
-                        </a>
-
+                        </form>
+                    <br>
                     <br>  
                     <br>  
                       <div class="responsive-table">

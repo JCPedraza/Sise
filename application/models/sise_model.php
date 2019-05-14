@@ -453,6 +453,13 @@ class sise_model extends CI_Model{
 					return $regresa_datos_alumno->row_array();
 				}
 
+				function alumnos_sin_grupo($oferta_academica_origen){
+					$consulta = "SELECT alu.clave_alumno, alu.nombre_alumno, alu.ap_pa_alumno, alu.ap_ma_alumno from usuario u inner join alumno as alu on alu.clave_alumno = u.id_persona where u.id_privilegio = 3 and alu.oferta_academica = ".$oferta_academica_origen." and not EXISTS (SELECT * from conformacion_alumno_grupo cag where u.id_usuario=cag.alumn)";
+					var_dump($consulta);
+					die();
+					$resultado=$this->db->query($consulta);
+					return $resultado->result();
+				}
 
 			#Fin Consultas
 
@@ -460,13 +467,12 @@ class sise_model extends CI_Model{
 
 
 			#Fin Inserciones
+
+			#Update
 				function cambiar_estatus($data_estatus,$idusuario){
 				 	$this->db->where('id_usuario',$idusuario);
 				 	$this->db->update('usuario',$data_estatus);
-				 }
-			#Update
-
-
+				}
 			#Fin Update
 			
 			#Delete
@@ -782,7 +788,12 @@ class sise_model extends CI_Model{
 			#Fin Consultas
 
 			#Inserciones
+				function registrar_grupo($datos_grupo){
+					$this->db->insert('grupo',$datos_grupo);
+					return $this->db->insert_id();
+				}
 			#Fin Inserciones
+
 			#Fin Update
 			
 			#Delete
@@ -992,7 +1003,7 @@ class sise_model extends CI_Model{
 						$this->db->select('asi.clave_asi');
 						$this->db->from('usuario usu');
 						$this->db->join('alumno as alu','usu.id_persona=alu.clave_alumno');
-						$this->db->join('oferta_academica as of_aca','of_aca.clave_of_aca=alu.clave_of_aca');
+						$this->db->join('oferta_academica as of_aca','of_aca.clave_of_aca=alu.oferta_academica');
 						$this->db->join('programa as pro','pro.oferta_academica=of_aca.clave_of_aca');
 						$this->db->join('programa_conformacion as pc','pc.programa=pro.clave_programa');
 						$this->db->join('asignatura as asi','asi.clave_asi=pc.asignatura');
