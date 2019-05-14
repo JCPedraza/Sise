@@ -72,35 +72,35 @@
                                   <th>Generación</th>
                                   <th>Encargado</th>
                                   <th>Conformación</th>
+                                  <th>Eliminar</th>
                                 </tr>
                               </thead>
                               <tbody>
-                        		      <tr>
+                        		      
                                     <?php foreach ($grupos as $grupo){ ?>
-                          		        <td><?php echo $grupo->nombre_grupo;?></td>
-                          		        <td><?php echo $grupo->nombre_generacion;?></td>
-                                      <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
-                          		        <td>
-                                        <div class="col-md-6" style="margin-top:5px;">
-                                          <form method="post" action="<?php echo base_url();?>index.php/sise/ver_grupo/">
-                                           <input type="hidden" name="grupo" value="<?php echo $grupo->clave_grupo ; ?>">
-                                             <button class="btn ripple-infinite btn-round btn-warning">
-                                              <div>
-                                                <span>Ver</span>
-                                              </div>
-                                            </button>
-                                          </form>
-                                        </div>
-                                      </td>
+                                      <tr>
+                            		        <td><?php echo $grupo->nombre_grupo;?></td>
+                            		        <td><?php echo $grupo->nombre_generacion;?></td>
+                                        <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
+                            		        <td>
+                                          <div class="col-md-6" style="margin-top:5px;">
+                                            <form method="post" action="<?php echo base_url();?>index.php/sise/ver_grupo/">
+                                             <input type="hidden" name="grupo" value="<?php echo $grupo->clave_grupo ; ?>">
+                                               <button class="btn ripple-infinite btn-round btn-warning">
+                                                <div>
+                                                  <span>Ver</span>
+                                                </div>
+                                              </button>
+                                            </form>
+                                          </div>
+                                        </td>
+                                      </tr>
                                     <?php }; ?>
-        		                      </tr>
+        		                      
                               </tbody>
                             <?php ;}?>
-
-
                         </table>
                       </div>
-
                   </div>
                 </div>
               </div>  

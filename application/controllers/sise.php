@@ -27,7 +27,7 @@ class sise extends CI_Controller {
 							$this->form_validation->set_rules('usuario','Correo electrónico', 'required|min_length[3]|max_length[50]|valid_email');
 
 							if($this->form_validation->run()==FALSE){
-								if($this->input->get('error'))
+								if($this->input->get('error'))	
 									$data['error'] = $this->input->get('error');
 								else
 									$data['error'] = false;
@@ -531,6 +531,7 @@ class sise extends CI_Controller {
 					public function grupos(){
 
 						$oferta_recivida=$this->uri->segment(3);
+
 						$oferta = ''.urldecode(str_replace("_", " ", $oferta_recivida));
 						
 						if ($oferta==null) {
@@ -541,6 +542,7 @@ class sise extends CI_Controller {
 							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
 						}else{
 							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($oferta);
+							
 						}
 
 						$data['sesion'] = $this->sise_model->datos_sesion();
@@ -563,8 +565,6 @@ class sise extends CI_Controller {
 						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
 						$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
 						
-						#var_dump($data['alumnos_grupo']);
-						#die();
 						
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
@@ -584,12 +584,68 @@ class sise extends CI_Controller {
 						$data['oferta_academica'] = $this->sise_model->devuelve_oferta_academica();
 						$data['generaciones'] = $this->sise_model->devuelver_generaciones();
 
-						$this->load->view('templates/panel/header',$data);
-						$this->load->view('templates/panel/menu',$data);
-						$this->load->view('templates/panel/registrar_grupo',$data);
-						$this->load->view('templates/panel/footer');	
+						$comprobacion=TRUE;
+						$datos_grupo = array(
+							'nombre_grupo' => $this->input->post('nombre'),
+							'generacion' => $this->input->post('generacion'),
+							'docente_encargado_grupo' => $this->input->post('docente'),
+							'oferta_academica' => $this->input->post('oferta')
+						);
+						foreach ($datos_grupo as $datos) {
+							if (is_null($datos)) {
+								$comprobacion=FALSE;
+							}
+						}
+						if (!$comprobacion) {
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/registrar_grupo',$data);
+							$this->load->view('templates/panel/footer');	
+						}else{
+							$id_grupo = $this->sise_model->registrar_grupo($datos_grupo);
+							$oferta_academica = $this->sise_model->datos_oferta_academica($datos_grupo['oferta_academica']);
+							
+							header('Location:'.base_url('index.php/sise/grupos/'.str_replace(" ", "_", $oferta_academica['nombre_of_aca'])).'');
+						}
+
 					}
 				#Fin Registra un Nuevo Grupo
+
+				#Mostrar conformacion de grupos
+					public function conformacion_grupo(){
+						$this->load->library('form_validation');
+							
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+
+							$this->form_validation->set_rules('programa','programa','required');
+
+							$data['grupo'] = $this->input->post('grupo');
+							
+							$oferta_academica_origen = $this->input->post('oferta_academica');
+
+							$data['alumnos_sin_grupos'] = $this->sise_model->alumnos_sin_grupo($oferta_academica_origen);
+							
+
+							if ($this->form_validation->run() == FALSE||$this->input->post('asignaturas_agregar[]')==null) {
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/asignar_alumnos_grupo',$data);
+								$this->load->view('templates/panel/footer');
+							}else{
+								$grupo = $this->input->post('grupo');
+								foreach ($this->input->post('alumnos_sin_grupos_agregar[]') as $alumno_a_grupo) {
+									$insertar_alumno_grupo = array(
+										'alumno' => $alumno_a_grupo,
+										'grupo' => $grupo
+									);
+									$this->sise_model->agregar_asignatura_programa($insertar_asignatura_programa);
+								}
+								header('Location:'.base_url('index.php/sise/conformacion_programamas/'.$programa.'').'');
+							}
+					}
+				#Fin mostrar conformacion de grupos
 
 				#ver de Alta Semestres, Cuatrimestres, ect
 					public function periodo(){
@@ -723,7 +779,7 @@ class sise extends CI_Controller {
 									'fec_nac_alumno'=>$this->input->post('fecha'),
 									'genero_alumno'=> $this->input->post('g'),
 									'telefono_alumno' => $this->input->post('tel'),
-									'clave_of_aca'=>$this->input->post('carrera')
+									'oferta_academica'=>$this->input->post('carrera')
 								);
 								$clave_alumno=$this->sise_model->insertar_aspirante($data_registro);
 								$data_usuario= array(
