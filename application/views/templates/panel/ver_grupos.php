@@ -94,6 +94,13 @@
                                             </form>
                                           </div>
                                         </td>
+                                        <td>
+                                          <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $grupo->clave_grupo;?>" onclick="borrar(<?php echo $grupo->clave_grupo;?>)"  value="Eliminar" data-whaterver="<?php echo $grupo->clave_grupo;?>">
+                                            <div>
+                                              <span>Eliminar</span>
+                                            </div>
+                                          </button>
+                                        </td>
                                       </tr>
                                     <?php }; ?>
         		                      
@@ -107,3 +114,48 @@
               </div>
             </div>
           <!-- end: content -->
+          <!--modal--> 
+          <div class="modal fade" id="modaleliminar" tabindex="-1" role="dialog" aria-labelledby="modaleliminarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">¿Seguro que desea eliminar?</h4>
+                </div>
+                <form method="post" id="formulario_eliminar" action="<?php echo base_url();?>index.php/sise/eliminar_grupo/">
+                  <input type="hidden" name="eliminar_grupo" id="eliminar_modal">
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" id="cerrar" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </div>
+
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+
+            <script>
+              var fila =0;
+              function borrar(i){
+                fila=i;
+              }
+                $(document).on('click', '.borrar', function (event) {
+                  event.preventDefault();
+                  $('#modaleliminar').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var recipient = button.data('whaterver');
+                    $('#eliminar_modal').val(recipient);
+                  })
+                });
+               $("#formulario_eliminar").submit(function (event){
+                event.preventDefault();
+                $.ajax({
+                  url:$("#formulario_eliminar").attr("action"),
+                  type:$("#formulario_eliminar").attr("method"),
+                  data:$("#formulario_eliminar").serialize(),
+                });
+                $('#modaleliminar').modal("hide");
+                document.getElementById('filaeliminar'+fila).closest('tr').remove();
+              });
+            </script>
