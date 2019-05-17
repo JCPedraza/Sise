@@ -50,7 +50,7 @@
                                 <tr>
                                   <td><?php echo $asignaturas->nombre_asi;?></td>
                                   <td>Duración: <?php echo $asignaturas->duracion_asi;?><br>Descripción: <?php echo $asignaturas->descripcion_asi;?></td>
-                                  <td><button class="btn ripple-infinite btn-round btn-warning" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar" data-whaterver="<?php echo $asignaturas->clave_asi;?>">
+                                  <td><button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $asignaturas->clave_asi;?>" onclick="borrar(<?php echo $asignaturas->clave_asi;?>)"  value="Eliminar" data-whaterver="<?php echo $asignaturas->clave_asi;?>">
                                     <div>
                                       <span>Eliminar</span>
                                     </div>
@@ -91,25 +91,31 @@
           </div><!-- /.modal -->
 
           <script>
-            $(document).ready(function(){
-              $('#modaleliminar').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var recipient = button.data('whaterver');
-                $('#eliminar_modal').val(recipient);
-              })
-            })
-            $("form").submit(function (event){
-    
-                event.preventDefault();
+              var fila =0;
 
+              function borrar(i){
+                fila=i;
+              }
+                
+                $(document).on('click', '.borrar', function (event) {
+                  event.preventDefault();
+                  $('#modaleliminar').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var recipient = button.data('whaterver');
+                    $('#eliminar_modal').val(recipient);
+                  })
+                });
+
+
+               $("form").submit(function (event){
+                event.preventDefault();
                 $.ajax({
                   url:$("form").attr("action"),
                   type:$("form").attr("method"),
                   data:$("form").serialize(),
                 });
-
                 $('#modaleliminar').modal("hide");
-                
+                document.getElementById('filaeliminar'+fila).closest('tr').remove();
               });
 
-          </script>
+            </script>

@@ -453,10 +453,8 @@ class sise_model extends CI_Model{
 					return $regresa_datos_alumno->row_array();
 				}
 
-				function alumnos_sin_grupo($oferta_academica_origen){
-					$consulta = "SELECT alu.clave_alumno, alu.nombre_alumno, alu.ap_pa_alumno, alu.ap_ma_alumno from usuario u inner join alumno as alu on alu.clave_alumno = u.id_persona where u.id_privilegio = 3 and alu.oferta_academica = ".$oferta_academica_origen." and not EXISTS (SELECT * from conformacion_alumno_grupo cag where u.id_usuario=cag.alumn)";
-					var_dump($consulta);
-					die();
+				function alumnos_sin_grupo($oferta_academica_origen,$generacion_perteneciente){
+					$consulta = "SELECT alu.clave_alumno, alu.nombre_alumno, alu.ap_pa_alumno, alu.ap_ma_alumno from usuario u inner join alumno as alu on alu.clave_alumno = u.id_persona where u.id_privilegio = 3 and alu.oferta_academica = ".$oferta_academica_origen." and alu.generacion = ".$generacion_perteneciente." and not EXISTS (SELECT * from conformacion_alumno_grupo cag where  alu.clave_alumno=cag.alumno)";
 					$resultado=$this->db->query($consulta);
 					return $resultado->result();
 				}
@@ -464,7 +462,9 @@ class sise_model extends CI_Model{
 			#Fin Consultas
 
 			#Inserciones
-
+				function agregar_alumno_grupo($insertar_alumno_grupo){
+					$this->db->insert('conformacion_alumno_grupo',$insertar_alumno_grupo);
+				}
 
 			#Fin Inserciones
 
@@ -476,8 +476,10 @@ class sise_model extends CI_Model{
 			#Fin Update
 			
 			#Delete
-
-
+				function eliminar_alumno_grupo($alumno_a_eliminar){
+					$this->db->where('alumno',$alumno_a_eliminar);
+					$this->db->delete('conformacion_alumno_grupo');
+				}
 			#Fin Delete
 	//-----------------fin alumno---------------
 	
@@ -794,11 +796,16 @@ class sise_model extends CI_Model{
 				}
 			#Fin Inserciones
 
+			#Update
 			#Fin Update
 			
 			#Delete
-			
-			#Update
+			function eliminar_grupo($grupo_a_eliminar){
+				$this->db->where('clave_grupo',$grupo_a_eliminar);
+				$this->db->delete('grupo');
+				$this->db->where('grupo',$grupo_a_eliminar);
+				$this->db->delete('conformacion_alumno_grupo');
+			}
 			#Fin Delete
 	//----------------fin grupos--------------------------
 
