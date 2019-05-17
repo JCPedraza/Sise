@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8"/>
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<link rel="stylesheet" href="base.min.css"/>
-<link rel="stylesheet" href="fancy.min.css"/>
-<link rel="stylesheet" href="main.css"/>
-<script src="compatibility.min.js"></script>
-<script src="theViewer.min.js"></script>
-<script>
-try{
-theViewer.defaultViewer = new theViewer.Viewer({});
-}catch(e){}
-</script>
-<title></title>
-</head>
-<body>
+<?php 
+function getPlantilla($productos){
+$plantilla='<body>
 <div id="sidebar">
 <div id="outline">
 </div>
@@ -285,7 +268,7 @@ theViewer.defaultViewer = new theViewer.Viewer({});
 					</div>
 				</div>
 				</div>
-				<div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'>
+				<div class="pi" data-data="{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}">
 				</div>
 			</div>
 
@@ -558,7 +541,7 @@ theViewer.defaultViewer = new theViewer.Viewer({});
 </div>
 </div>
 </div>
-<div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'>
+<div class="pi" data-data="{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}">
 </div>
 </div>
 
@@ -831,7 +814,7 @@ theViewer.defaultViewer = new theViewer.Viewer({});
 </div>
 </div>
 </div>
-<div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'>
+<div class="pi" data-data="{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}">
 </div>
 </div>
 
@@ -1013,7 +996,7 @@ theViewer.defaultViewer = new theViewer.Viewer({});
 </div><div class="t m0 x1 h3 yc1 ff1 fs0 fc0 sc0 ls0 ws0"> 
 	</div>
 </div>
-</div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'>
+</div><div class="pi" data-data="{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}">
 </div>
 </div>
 
@@ -1023,4 +1006,7 @@ theViewer.defaultViewer = new theViewer.Viewer({});
 
 </div>
 </body>
-</html>
+</html>';
+  return $plantilla;
+ }
+ ?>

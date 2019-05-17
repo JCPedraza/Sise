@@ -1,9 +1,9 @@
 <?php  
 require_once('../vendor/autoload.php');
 
-require_once('plantillas/reporte/lolo.php');
+require_once('formato_evaluación/lolo.php');
 //Codigo css de la plantilla
-$css=file_get_contents('plantillas/reporte/style.css');
+$css=file_get_contents('formato_evaluación/main.css');
 require_once('productos.php');
 //Base de datos
 
@@ -13,8 +13,7 @@ $mpdf=new \Mpdf\Mpdf([
 ]);
 $mpdf->setFooter('{PAGENO}');
 
-$plant
-illa2=getPlantilla($productos);
+$plantilla2=getPlantilla($productos);
 
 $mpdf->writeHTML($css,\Mpdf\HTMLParserMode::HEADER_CSS);
 
