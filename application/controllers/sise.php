@@ -460,13 +460,20 @@ class sise extends CI_Controller {
 
 				#vista datos alumnos
 				public function datos_alumno(){
+					
+					
 					$data['sesion'] = $this->sise_model->datos_sesion();
-					$data['menu'] = $this->sise_model->datos_menu();					
+					$data['menu'] = $this->sise_model->datos_menu();
+					
+					$clave_alumno=$data['sesion']["id_persona"];
+					$data['datos_alumno']=$this->sise_model->datos_alumno($clave_alumno);
+					$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();
+					
 
-					$this->load->view('templates/panel/header',$data);
-					$this->load->view('templates/panel/menu',$data);
+					#$this->load->view('templates/panel/header',$data);
+					#$this->load->view('templates/panel/menu',$data);
 					$this->load->view('templates/panel/datos_alumnos',$data);
-					$this->load->view('templates/panel/footer');
+					#$this->load->view('templates/panel/footer');
 
 				}
 				#vistas datos alumnos
@@ -519,11 +526,11 @@ class sise extends CI_Controller {
 				#
 
 				#el que sube los archivos
-					public function pruebas(){
+					public function subir_documentos(){
 						$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();#devolucion de la consulta
 						#var_dump($data);
 						#die();
-						$this->load->view('pruebas/ejemplo',$data);
+						$this->load->view('templates/panel/subir_documentos',$data);
 					}
 				#el que sube los archivos
 
@@ -565,11 +572,18 @@ class sise extends CI_Controller {
 						}else{
 							$clave_grupo = $this->uri->segment(3);
 						}
+						$alumno="";
+						$alumnos_grupo = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
+						foreach ($alumnos_grupo as $k) {
+							if ($alumno=="") {
+								$alumno = $k->alumno;
+							}
+						}
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
 
 						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
 						$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
-						
-						
+						$data['horario'] = $this->sise_model->obtener_horario($clave_grupo);
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						
@@ -635,7 +649,7 @@ class sise extends CI_Controller {
 
 								$data['oferta_academica_origen'] = $this->input->post('oferta_academica');
 
-								$data['alumnos_sin_grupos'] = $this->sise_model->alumnos_sin_grupo($data['generacion_perteneciente'],$data['oferta_academica_origen']);
+								$data['alumnos_sin_grupos'] = $this->sise_model->alumnos_sin_grupo($data['oferta_academica_origen'],$data['generacion_perteneciente']);
 
 								$this->load->view('templates/panel/header',$data);
 								$this->load->view('templates/panel/menu',$data);
@@ -643,12 +657,14 @@ class sise extends CI_Controller {
 								$this->load->view('templates/panel/footer');
 								
 							}else{
+								
 								$grupo = $this->input->post('grupo');
 								foreach ($this->input->post('alumnos_sin_grupos_agregar[]') as $alumno_a_grupo) {
 									$insertar_alumno_grupo = array(
 										'alumno' => $alumno_a_grupo,
 										'grupo' => $grupo
 									);
+
 									$this->sise_model->agregar_alumno_grupo($insertar_alumno_grupo);
 								}
 								header('Location:'.base_url('index.php/sise/ver_grupo/'.$grupo.'').'');
@@ -671,6 +687,69 @@ class sise extends CI_Controller {
 					}
 				#fin eliminar de grupo
 
+				#conformacion del horario
+					public function coformacion_horario(){
+						$alumno="";
+						
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$data['grupo'] = $this->input->post('grupo');
+						
+						/*
+							$existe_horario=$this->sise_model->obtencion_horario($data['grupo'] = $this->input->post('grupo'));
+							var_dump($existe_horario);
+
+							if ($existe_horario['total'] > '0') {
+
+								$alumnos_grupo = $this->sise_model->devolver_grupos_informacion_alumnos($data['grupo']);
+								foreach ($alumnos_grupo as $k) {
+								if ($alumno=="") {
+									$alumno = $k->alumno;
+								}
+							}
+								$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+							}else {
+								echo "<br>string";
+							}
+						*/
+
+						$alumnos_grupo = $this->sise_model->devolver_grupos_informacion_alumnos($data['grupo']);
+						foreach ($alumnos_grupo as $k) {
+							if ($alumno=="") {
+								$alumno = $k->alumno;
+							}
+						}
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/registrar_horario',$data);
+						$this->load->view('templates/panel/footer');	
+					}
+				#fin conformacion del horario
+
+				#agregar horario
+					public function registrar_horario(){
+						
+						$dia = $this->input->post('dia[]');
+						$hrs_inicio = $this->input->post('hrs_inicio[]');
+						$hrs_final = $this->input->post('hrs_final[]');
+						$grupo = $this->input->post('grupo');
+						$materia = $this->input->post('materia');
+						$total_entradas = count($dia);
+						for ($i=0; $i < $total_entradas; $i++) { 
+							$horario = array(
+								'grupo' => $grupo,
+								'dia' => $dia[$i],
+								'hrs_entrada' => $hrs_inicio[$i],
+								'hrs_salida' => $hrs_final[$i],
+								'materia' => $materia
+							);
+						$this->sise_model->insertar_horario($horario);
+						}
+					}
+				#fin agregar horario
 
 				#ver de Alta Semestres, Cuatrimestres, ect
 					public function periodo(){
@@ -2065,7 +2144,7 @@ class sise extends CI_Controller {
 				                    	'nombre_doc' => $config['file_name'] ,
 				                    	'ruta_doc' => $config['upload_path'].$data_archivo['upload_data']['file_name'] ,
 				                    	'tipo_archivo' => $archivos[$i]['tipo_archivo'] ,
-				                    	'clave_externa' => '1'
+				                    	'clave_alumno' => '1'
 				                    );
 				                    #fin datos para insercion en la base de datos
 				                    #insercion a base de datos
@@ -2080,7 +2159,25 @@ class sise extends CI_Controller {
 
 			    #ingresar_datos_alumnos
 			      	public function ingresar_datos_alumnos(){
-			      		$this->input->post('nombre');
+
+			      		$tipo = $this->input->post('tipo');
+			      		$alumno = $this->input->post('alumno');
+
+			      		if (empty($tipo)) {
+			      			$datos_alumno=array(
+					      		'RFC_alumno'=>$this->input->post('rfc'),
+					      		'CURP_alumno'=>$this->input->post('curp'),
+					      		'estado_civil_alumno'=>$this->input->post('ec'),
+					      		'residencia_alumno'=>$this->input->post('residencia'),
+					      		'ciudad_alumno'=>$this->input->post('ciudad'),
+					      		'estado_alumno'=>$this->input->post('estado'),
+					      		'pais_alumno'=>$this->input->post('pais'),
+					      		'institucion_alumno'=>$this->input->post('instituto'),
+					      		'cargo_alumno'=>$this->input->post('cargo')
+			      			);
+			      			$this->sise_model->actualizar_info_alumno($alumno,$datos_alumno);
+			      			header('location:'.base_url('index.php/sise/datos_alumno').'');
+			      		}
 			      	}
 			    #fin ingresar_datos_alumnos
 

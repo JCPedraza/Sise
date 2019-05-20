@@ -459,6 +459,27 @@ class sise_model extends CI_Model{
 					return $resultado->result();
 				}
 
+				function obtencion_materias($alumno){
+					$this->db->select('mcc.materia,asi.nombre_asi');
+					$this->db->from('materias_cursadas_calificaciones mcc');
+					$this->db->join('usuario as u','u.id_usuario = mcc.usuario_alumno');
+					$this->db->join('alumno as alu','u.id_persona = alu.clave_alumno');
+					$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
+					$this->db->where('alu.clave_alumno',$alumno);
+
+					$regresa_materias = $this->db->get();
+					return $regresa_materias->result();
+				}
+
+				function obtencion_horario($grupo){
+					$this->db->select('count(*) as total');
+					$this->db->from('grupo_horario');
+					$this->db->where('grupo',$grupo);
+
+					$regresa_materias = $this->db->get();
+					return $regresa_materias->row();
+				}
+
 			#Fin Consultas
 
 			#Inserciones
@@ -472,6 +493,10 @@ class sise_model extends CI_Model{
 				function cambiar_estatus($data_estatus,$idusuario){
 				 	$this->db->where('id_usuario',$idusuario);
 				 	$this->db->update('usuario',$data_estatus);
+				}
+				function actualizar_info_alumno($alumno,$datos_alumno){
+					$this->db->where('clave_alumno',$alumno);
+				 	$this->db->update('alumno',$datos_alumno);
 				}
 			#Fin Update
 			
@@ -787,6 +812,15 @@ class sise_model extends CI_Model{
 					return $devolver_grupos_existenetes->result();
 				}
 				
+				function obtener_horario($grupo){
+					$this->db->select('gh.materia,asi.nombre_asi, gh.hrs_entrada, gh.hrs_salida, gh.dia');
+					$this->db->from('grupo_horario gh');
+					$this->db->join('asignatura as asi','asi.clave_asi = gh.materia');
+					$this->db->where('gh.grupo',$grupo);
+					$devolver_horario = $this->db->get();
+					return $devolver_horario->result();
+				}
+
 			#Fin Consultas
 
 			#Inserciones
@@ -794,6 +828,12 @@ class sise_model extends CI_Model{
 					$this->db->insert('grupo',$datos_grupo);
 					return $this->db->insert_id();
 				}
+
+				function insertar_horario($horario){
+					$this->db->insert('grupo_horario',$horario);
+				}
+
+
 			#Fin Inserciones
 
 			#Update
