@@ -1,4 +1,30 @@
 	<?php 
+
+
+  foreach ($materias_obtenidas as $m) {
+      $array[]=get_object_vars($m);
+  }
+
+  foreach ($horario as $a) {
+      $array_2[]=get_object_vars($a);
+  }
+
+  #for ($i=0; $i < count($array) ; $i++) { 
+   # foreach ($array_2 as $a) {
+    #  if ($a['materia']==$array[$i]['materia']) {
+     # }else{
+      #}
+    #}
+  #}
+$array_3=array();
+  for ($i=0; $i <count($array) ; $i++) { 
+    $array_3=array(1,$array[$i]['materia']);
+  }
+
+
+var_dump($array_3);
+
+die();
   foreach ($grupo_info as $grupo_info) {
    ?>
   <!-- start: Content -->
@@ -99,11 +125,24 @@
                             <br>
                             <h4 class="text-center">Aqui se presenta el horario designado para el grupo</h4>
                             <br>
+                            
+                            <form method="post" action="<?php echo base_url('index.php/sise'); ?>/coformacion_horario">
+                              <button class="btn ripple-infinite btn-round btn-success">
+                                <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
+                              <div>
+                                  <span>Modificar Horario</span>
+                                </div>
+                              </button>
+                            </form>
+
+                            <br>
+                            <br>
+                            <?php #var_dump($materias_obtenidas);die(); ?>
                                 <div class="table-responsive-md">
                                   <table class="table table-bordered">
                                     <thead>
                                       <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">Materia</th>
                                         <th scope="col">Lunes</th>
                                         <th scope="col">Martes</th>
                                         <th scope="col">Miercoles</th>
@@ -112,13 +151,45 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                      </tr>
+                                      <?php foreach ($materias_obtenidas as $materias): ?>
+                                        <?php foreach ($horario as $h): ?>
+                                          <?php if ($materias->materia==$horario->materia): ?>
+                                            <tr>
+                                              <td><?php echo $materias->nombre_asi;?></td>
+                                              <td>
+                                                <?php if ($horario->dia=="lunes"): ?>
+                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
+                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php endif ?>
+                                              </td>
+                                              <td>
+                                                <?php if ($horario->dia=="martes"): ?>
+                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
+                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php endif ?>
+                                              </td>
+                                              <td>
+                                                <?php if ($horario->dia=="miercoles"): ?>
+                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
+                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php endif ?>
+                                              </td>
+                                              <td>
+                                                <?php if ($horario->dia=="jueves"): ?>
+                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
+                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php endif ?>
+                                              </td>
+                                              <td>
+                                                <?php if ($horario->dia=="viernes"): ?>
+                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
+                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php endif ?>
+                                              </td>
+                                            </tr>
+                                          <?php endif ?>
+                                        <?php endforeach ?>
+                                      <?php endforeach ?>                                      
                                       
                                     </tbody>
                                   </table>

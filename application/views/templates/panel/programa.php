@@ -88,7 +88,7 @@
 
       for (var i = 0; i < registros.length; i++) {
         html +="<tr><td>"+registros[i]["nombre_programa"]+"</td><td>"+registros[i]["descripcion_programa"]+"</td><td>";
-        html +="<a href=\"http://localhost/Sise/index.php/sise/conformacion_programamas/"+registros[i]["clave_programa"]+"\">";
+        html +="<a href=\"<?php echo base_url('index.php/sise') ?>/conformacion_programamas/"+registros[i]["clave_programa"]+"\">";
         html +="<button class=\"btn ripple-infinite btn-round btn-warning\">";
         html +="<div><span>Ver</span></div></button></a>";
         html +="</td>";

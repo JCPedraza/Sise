@@ -101,8 +101,8 @@ if ($alumno["genero_alumno"]=='M') {
                                 $institucion=$alumno['institucion_alumno'];
                                 $cargo=$alumno['cargo_alumno'];
                                 $ec=$alumno['estado_civil_alumno'];
-
                                 } 
+                                $clave_alumno=$alumno['clave_alumno'];
                               ?>
 
                               <h1>Información General</h1>
@@ -117,7 +117,7 @@ if ($alumno["genero_alumno"]=='M') {
                                   <div class="form-group">
                                     <label class="col-sm-2 control-label text-right">Estado Civil: </label>
                                     <div class="col-sm-8">
-                                        <select name="ec" class="form-control">
+                                        <select name="ec" required="true" class="form-control">
                                             <option>Seleccione un estado civil</option>
                                             <option <?php if($ec=='D'){ echo 'selected=""';} ?> value="d">Divorciad@</option>
                                             <option <?php if($ec=='C'){ echo 'selected=""';} ?> value="c">Casad@</option>
@@ -127,33 +127,48 @@ if ($alumno["genero_alumno"]=='M') {
                                     </div>
                                   </div>
                                 </div>  
+                              <?php else: ?>
+                                <div class="row">
+                                  <div class="form-group">
+                                    <label class="col-sm-2 control-label text-right">Estado Civil: </label>
+                                    <div class="col-sm-8">
+                                        <select name="ec" required="true" class="form-control">
+                                            <option>Seleccione un estado civil</option>
+                                            <option value="d">Divorciad@</option>
+                                            <option value="c">Casad@</option>
+                                            <option value="s">Solter@</option>
+                                            <option value="v">Viud@</option>                                        
+                                        </select>
+                                    </div>
+                                  </div>
+                                </div>
                               <?php endif ?>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">RFC:  </label>
-                                  <div class="col-sm-8"><input type="text"  value="<?php echo $rfc; ?>" class="form-control android" minlength="12" maxlength="13" name="rfc"></div>
+                                  <div class="col-sm-8"><input type="text"  value="<?php echo $rfc; ?>" required="true" class="form-control android" minlength="12" maxlength="13" name="rfc"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">CURP:  </label>
-                                  <div class="col-sm-8"><input type="text"  value="<?php echo $curp; ?>" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
+                                  <div class="col-sm-8"><input type="text"  value="<?php echo $curp; ?>" required="true" class="form-control android" minlength="18" maxlength="18" name="curp"></div>
                               </div>
                               <br>
                               
                               <h2>información de Vivienda</h2>
                                 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Residencia:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $residencia; ?>" name="residencia"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $residencia; ?>" name="residencia"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Ciudad:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $ciudad; ?>" name="ciudad"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $ciudad; ?>" name="ciudad"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Estado:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $estado; ?>" name="estado"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $estado; ?>" name="estado"></div>
                               </div>
 
                               <div class="form-group"><label class="col-sm-2 control-label text-right">País:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $pais; ?>" name="pais"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $pais; ?>" name="pais"></div>
                               </div>
 
                               <?php if ($url=="editar"): ?>
@@ -168,16 +183,18 @@ if ($alumno["genero_alumno"]=='M') {
                               <br>
                               <h3>información de cargo desempañado</h3>
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Institución:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $institucion ?>" name="instituto"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $institucion ?>" name="instituto"></div>
                               </div>
                               <div class="form-group"><label class="col-sm-2 control-label text-right">Cargo desempeñado en la Institución:  </label>
-                                  <div class="col-sm-8"><input type="text" class="form-control android" value="<?php echo $cargo;?>" name="cargo"></div>
+                                  <div class="col-sm-8"><input type="text" required="true" class="form-control android" value="<?php echo $cargo;?>" name="cargo"></div>
                               </div>
 
 
                               <br>
                               <br>
                               <div class="form-group">
+                                <input type="hidden" value="<?php echo $url ?>" name="tipo">
+                                <input type="hidden" value="<?php echo $clave_alumno ?>" name="alumno">
                                 <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0">
                                         <button type="submit" class="btn ripple-infinite btn-round btn-warning">Enviar</button>
