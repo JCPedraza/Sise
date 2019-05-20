@@ -19,10 +19,10 @@
                     	  
                         <div class="row">
                            <div class="col-md-6" style="margin-top:5px;">
-                              <a href="<?php echo base_url();?>index.php/sise/nuevo_privilegio">
+                              <a href="<?php echo base_url();?>index.php/sise/registrar_nuevo_grupo">
                                   <button class="btn ripple-infinite btn-raised btn-success">
                                    <div>
-                                    <span>Conformar Grupo</span>
+                                    <span>Agregar Nuevo Grupo</span>
                                    </div>
                                   </button>
                               </a>
@@ -40,7 +40,7 @@
                                 <tr>
                                   <th>Oferta Académica</th>
                                   <th>Descripción</th>
-                                  <th>Ver</th>
+                                  <th>Ver Grupos Pertenecientes</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -72,37 +72,90 @@
                                   <th>Generación</th>
                                   <th>Encargado</th>
                                   <th>Conformación</th>
+                                  <th>Eliminar</th>
                                 </tr>
                               </thead>
                               <tbody>
-                        		      <tr>
+                        		      
                                     <?php foreach ($grupos as $grupo){ ?>
-                          		        <td><?php echo $grupo->nombre_grupo;?></td>
-                          		        <td><?php echo $grupo->nombre_generacion;?></td>
-                                      <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
-                          		        <td>
-                                        <div class="col-md-6" style="margin-top:5px;">
-                                           <a href="<?php echo base_url();?>index.php/sise/ver_grupo/<?php echo $grupo->clave_grupo ; ?>">
-                                             <button class="btn ripple-infinite btn-round btn-warning">
-                                              <div>
-                                                <span>Ver</span>
-                                              </div>
-                                            </button>
-                                            </a>
-                                        </div>
-                                      </td>
+                                      <tr>
+                            		        <td><?php echo $grupo->nombre_grupo;?></td>
+                            		        <td><?php echo $grupo->nombre_generacion;?></td>
+                                        <td><?php echo $grupo->nombres_personal." ".$grupo->ap_paterno_personal." ".$grupo->ap_materno_personal;?></td>
+                            		        <td>
+                                          <div class="col-md-6" style="margin-top:5px;">
+                                            <form method="post" action="<?php echo base_url();?>index.php/sise/ver_grupo/">
+                                             <input type="hidden" name="grupo" value="<?php echo $grupo->clave_grupo ; ?>">
+                                               <button class="btn ripple-infinite btn-round btn-warning">
+                                                <div>
+                                                  <span>Ver</span>
+                                                </div>
+                                              </button>
+                                            </form>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $grupo->clave_grupo;?>" onclick="borrar(<?php echo $grupo->clave_grupo;?>)"  value="Eliminar" data-whaterver="<?php echo $grupo->clave_grupo;?>">
+                                            <div>
+                                              <span>Eliminar</span>
+                                            </div>
+                                          </button>
+                                        </td>
+                                      </tr>
                                     <?php }; ?>
-        		                      </tr>
+        		                      
                               </tbody>
                             <?php ;}?>
-
-
                         </table>
                       </div>
-
                   </div>
                 </div>
               </div>  
               </div>
             </div>
           <!-- end: content -->
+          <!--modal--> 
+          <div class="modal fade" id="modaleliminar" tabindex="-1" role="dialog" aria-labelledby="modaleliminarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">¿Seguro que desea eliminar?</h4>
+                </div>
+                <form method="post" id="formulario_eliminar" action="<?php echo base_url();?>index.php/sise/eliminar_grupo/">
+                  <input type="hidden" name="eliminar_grupo" id="eliminar_modal">
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" id="cerrar" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </div>
+
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+
+            <script>
+              var fila =0;
+              function borrar(i){
+                fila=i;
+              }
+                $(document).on('click', '.borrar', function (event) {
+                  event.preventDefault();
+                  $('#modaleliminar').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var recipient = button.data('whaterver');
+                    $('#eliminar_modal').val(recipient);
+                  })
+                });
+               $("#formulario_eliminar").submit(function (event){
+                event.preventDefault();
+                $.ajax({
+                  url:$("#formulario_eliminar").attr("action"),
+                  type:$("#formulario_eliminar").attr("method"),
+                  data:$("#formulario_eliminar").serialize(),
+                });
+                $('#modaleliminar').modal("hide");
+                document.getElementById('filaeliminar'+fila).closest('tr').remove();
+              });
+            </script>

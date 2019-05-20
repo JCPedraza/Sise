@@ -21,25 +21,7 @@
      
     <script type="text/javascript">
           $(document).ready(function(){
-            $('#datatables-example').DataTable({
-              "languaje":{
-                "lengtMenu":"Mostrar _MENU_ registros por pagina",
-                "zeroRecords":"No se encontraron resultados en su busqueda",
-                "searchPlaceholder":"Escriba lo que desea buscar",
-                "info":"Mostrando registros de _START_ al _END_ de un total de ",
-                "infoEmpty":"No existen registros",
-                "infoFiltered":"(Filtrando un total de _MAX_ registros)",
-                "search":"Buscar",
-                "paginate":{
-                  "first":"Primero",
-                  "last":"Ultimo",
-                  "next":"Siguiente",
-                  "previous":"Anterior"
-                }
-
-              }
-            });
-
+            $('#datatables-example').DataTable();
           });
     </script>
     

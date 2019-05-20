@@ -162,6 +162,14 @@ class sise_model extends CI_Model{
 	//-----------------------usuarios-------------------------
 		
 		#Consultas
+			function devuelve_docente_disponible(){
+				$this->db->select('p.*');
+				$this->db->from('personal p');
+				$this->db->join('usuario as u','u.id_persona=p.id_personal');
+				$this->db->where('u.id_privilegio','2');
+				$docentes_disponibles = $this->db->get();
+				return $docentes_disponibles->result();
+			}
 		#Fin consultas
 		
 		#Inserciones
@@ -457,24 +465,57 @@ class sise_model extends CI_Model{
 					$query = $this->db->get();
 					return $query->result();
 			}
+				function alumnos_sin_grupo($oferta_academica_origen,$generacion_perteneciente){
+					$consulta = "SELECT alu.clave_alumno, alu.nombre_alumno, alu.ap_pa_alumno, alu.ap_ma_alumno from usuario u inner join alumno as alu on alu.clave_alumno = u.id_persona where u.id_privilegio = 3 and alu.oferta_academica = ".$oferta_academica_origen." and alu.generacion = ".$generacion_perteneciente." and not EXISTS (SELECT * from conformacion_alumno_grupo cag where  alu.clave_alumno=cag.alumno)";
+					$resultado=$this->db->query($consulta);
+					return $resultado->result();
+				}
+
+				function obtencion_materias($alumno){
+					$this->db->select('mcc.materia,asi.nombre_asi');
+					$this->db->from('materias_cursadas_calificaciones mcc');
+					$this->db->join('usuario as u','u.id_usuario = mcc.usuario_alumno');
+					$this->db->join('alumno as alu','u.id_persona = alu.clave_alumno');
+					$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
+					$this->db->where('alu.clave_alumno',$alumno);
+
+					$regresa_materias = $this->db->get();
+					return $regresa_materias->result();
+				}
+
+				function obtencion_horario($grupo){
+					$this->db->select('count(*) as total');
+					$this->db->from('grupo_horario');
+					$this->db->where('grupo',$grupo);
+
+					$regresa_materias = $this->db->get();
+					return $regresa_materias->row();
+				}
 			#Fin Consultas
 
 			#Inserciones
-
+				function agregar_alumno_grupo($insertar_alumno_grupo){
+					$this->db->insert('conformacion_alumno_grupo',$insertar_alumno_grupo);
+				}
 
 			#Fin Inserciones
+
+			#Update
 				function cambiar_estatus($data_estatus,$idusuario){
 				 	$this->db->where('id_usuario',$idusuario);
 				 	$this->db->update('usuario',$data_estatus);
-				 }
-			#Update
-
-
+				}
+				function actualizar_info_alumno($alumno,$datos_alumno){
+					$this->db->where('clave_alumno',$alumno);
+				 	$this->db->update('alumno',$datos_alumno);
+				}
 			#Fin Update
 			
 			#Delete
-
-
+				function eliminar_alumno_grupo($alumno_a_eliminar){
+					$this->db->where('alumno',$alumno_a_eliminar);
+					$this->db->delete('conformacion_alumno_grupo');
+				}
 			#Fin Delete
 	//-----------------fin alumno---------------
 	
@@ -633,7 +674,8 @@ class sise_model extends CI_Model{
 				$this->db->from('oferta_academica');
 				$this->db->where('nombre_of_aca',$data);
 				$id=$this->db->get();
-				return $id->result();
+				return $id->result_array();
+
 			}
 			function datos_oferta_academica($data){
 				$this->db->select('*');
@@ -748,13 +790,16 @@ class sise_model extends CI_Model{
 	//-------------------grupos---------------------------
 
 			#Consultas
-				function devolver_grupos_existenetes($data){
-					$this->db->select('g.*,ge.*,p.*');
+				function devolver_grupos_existenetes($oferta){
+					
+					$id=$this->id_oferta_academica($oferta);
+
+					$this->db->select('g.nombre_grupo,g.clave_grupo,ge.nombre_generacion,p.nombres_personal,p.ap_materno_personal,p.ap_paterno_personal');
 					$this->db->from('grupo g');
 					$this->db->join('generacion as ge','ge.id_generacion=g.generacion','inner');
 					$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo','inner');
-					#$this->db->join('asignatura as as','as.clave_asi=g.asignatura','inner');
-					$this->db->where('clave_grupo',$data);
+					$this->db->join('oferta_academica as ofe_aca', 'g.oferta_academica=ofe_aca.clave_of_aca');
+					$this->db->where('g.oferta_academica',$id[0]['clave_of_aca']);
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
@@ -777,20 +822,45 @@ class sise_model extends CI_Model{
 					$devolver_grupos_existenetes = $this->db->get();
 					return $devolver_grupos_existenetes->result();
 				}
+				
+				function obtener_horario($grupo){
+					$this->db->select('gh.materia,asi.nombre_asi, gh.hrs_entrada, gh.hrs_salida, gh.dia');
+					$this->db->from('grupo_horario gh');
+					$this->db->join('asignatura as asi','asi.clave_asi = gh.materia');
+					$this->db->where('gh.grupo',$grupo);
+					$devolver_horario = $this->db->get();
+					return $devolver_horario->result();
+				}
+
 			#Fin Consultas
 
 			#Inserciones
+				function registrar_grupo($datos_grupo){
+					$this->db->insert('grupo',$datos_grupo);
+					return $this->db->insert_id();
+				}
+
+				function insertar_horario($horario){
+					$this->db->insert('grupo_horario',$horario);
+				}
+
+
 			#Fin Inserciones
-			
+
 			#Update
 			#Fin Update
 			
 			#Delete
+			function eliminar_grupo($grupo_a_eliminar){
+				$this->db->where('clave_grupo',$grupo_a_eliminar);
+				$this->db->delete('grupo');
+				$this->db->where('grupo',$grupo_a_eliminar);
+				$this->db->delete('conformacion_alumno_grupo');
+			}
 			#Fin Delete
 	//----------------fin grupos--------------------------
 
 	//-----------------------personal-------------------------
-		
 		#Consultas
 			function debuelve_personal(){
 				$this->db->select('p.*,pri.*');
@@ -829,7 +899,8 @@ class sise_model extends CI_Model{
 		#Fin consultas
 		
 		#Inserciones
-			function insertar_personal($data){
+			function insertar_personal($data){	
+
 				$this->db->insert('personal',$data);
 				return $this->db->insert_id();
 			}
@@ -982,6 +1053,69 @@ class sise_model extends CI_Model{
 			#Fin Delete
 	//-----------------fin plan de estudios---------------
 	
+	//-----------------materias---------------------------
+				#Consultas
+					function obtener_registrar_materias($idalumno){
+						$materias_vaciar=array();
+						$mv=array();
+						$this->db->select('asi.clave_asi');
+						$this->db->from('usuario usu');
+						$this->db->join('alumno as alu','usu.id_persona=alu.clave_alumno');
+						$this->db->join('oferta_academica as of_aca','of_aca.clave_of_aca=alu.oferta_academica');
+						$this->db->join('programa as pro','pro.oferta_academica=of_aca.clave_of_aca');
+						$this->db->join('programa_conformacion as pc','pc.programa=pro.clave_programa');
+						$this->db->join('asignatura as asi','asi.clave_asi=pc.asignatura');
+						$this->db->where('usu.id_usuario',$idalumno);
+						$materias= $this->db->get();
+						$materias_vaciar = $materias->result();
+						
+						$i=0;
+						foreach ($materias_vaciar as $materia) {
+							$mv[$i]=(get_object_vars($materia));
+							$i++;
+						}	
+						foreach ($mv as $m) {
+							foreach ($m as $m) {
+								$materias_asignadas = array(
+									'materia'=>$m,
+									'usuario_alumno'=>$idalumno
+								);
+								$this->db->insert('materias_cursadas_calificaciones',$materias_asignadas);
+							}
+						}
+				
+					}
+				#Fin Consultas
+				
+				#Inserciones
+				#Fin Inserciones
+				
+				#Update
+				#Fin Update
+				
+				#Delete
+				#Fin Delete
+	//-----------------fin materias-----------------------
+	
+	//-----------------generacion---------------
+			#Consultas
+					function devuelver_generaciones(){
+						$this->db->select('*');
+						$this->db->from('generacion');
+						$devolver_generaciones = $this->db->get();
+						return $devolver_generaciones->result();
+					}
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin generacion---------------
 
 
 	#plantilla
