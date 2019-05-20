@@ -94,6 +94,23 @@ class sise extends CI_Controller {
 					}
 				#fin muestra los aspirantes registrados
 
+				#muestra los alumnos registrados
+					public function alumnos(){
+						$this->sise_model->valida_sesion();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$alumno=$this->sise_model->devuelve_alumno_privilegio();
+						$data['alumno']=$alumno;
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/alumno',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin muestra los aspirantes registrados
+
 				#formulario para la edición de los datos de aspirantes
 						public function edita_aspirante(){
 								$this->sise_model->valida_sesion();

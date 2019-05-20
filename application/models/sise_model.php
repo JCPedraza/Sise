@@ -445,7 +445,18 @@ class sise_model extends CI_Model{
 					return $regresa_datos_alumno->row_array();
 				}
 
-
+				function devuelve_alumno_privilegio(){
+					$this->db->select('u.*, a.*,p.*');
+					$this->db->from('usuario u');
+					$this->db->join('alumno as a',' a.clave_alumno = u.id_persona','left');
+					$this->db->join('privilegio as p',' p.id_privilegio=u.id_privilegio','left');
+					$this->db->where('u.id_privilegio=3');
+					$this->db->where('u.id_privilegio!=1');
+					$this->db->where('u.id_privilegio!=2');
+					$this->db->where('u.id_privilegio!=6');
+					$query = $this->db->get();
+					return $query->result();
+			}
 			#Fin Consultas
 
 			#Inserciones
