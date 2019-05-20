@@ -1136,4 +1136,43 @@ class sise_model extends CI_Model{
 		#Fin delete
 	//-------------------fin evaluacion-------------------------
 
+		//-----------------------generacion-------------------------
+		
+		#Consultas
+			function devuelve_generacion(){
+				$this->db->select('*');
+                $this->db->from('generacion');
+                $devuelve_generacion = $this->db->get();
+                return $devuelve_generacion->result();
+			}
+			function datos_generacion($data){
+				$this->db->select('*');
+				$this->db->from('generacion');
+				$this->db->where('id_generacion',$data);
+
+				$regresa_datos_generacion = $this->db->get();
+				return $regresa_datos_generacion->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_generacion($data){
+				$this->db->insert('generacion',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_generacion($clave_mod,$data){
+				$this->db->where('id_generacion', $clave_mod);
+				$this->db->update('generacion',$data);
+			}
+		#Fin update
+
+		#Delete
+			function eliminar_generacion($a){
+				$this->db->where('id_generacion',$a);
+				$this->db->delete('generacion');
+			}
+		#Fin delete
+	//-------------------fin generacion-------------------------
 }
