@@ -498,18 +498,43 @@ class sise extends CI_Controller {
 					$data['sesion'] = $this->sise_model->datos_sesion();
 					$data['menu'] = $this->sise_model->datos_menu();
 					
-					$clave_alumno=$data['sesion']["id_persona"];
+					if ($this->input->post('alumno')) {
+						$clave_alumno=$this->input->post('alumno');
+						$data['edicion_administrativa']=true;
+					}elseif (!empty($this->uri->segment(3))) {
+						$clave_alumno=$this->uri->segment(3);
+					}else{
+						$clave_alumno=$data['sesion']["id_persona"];
+					}
+					
 					$data['datos_alumno']=$this->sise_model->datos_alumno($clave_alumno);
-					$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();
+					$data['documentos'] = $this->sise_model->devolver_archivos_subidos($clave_alumno);
 					
 
-					#$this->load->view('templates/panel/header',$data);
-					#$this->load->view('templates/panel/menu',$data);
+					$this->load->view('templates/panel/header',$data);
+					$this->load->view('templates/panel/menu',$data);
 					$this->load->view('templates/panel/datos_alumnos',$data);
-					#$this->load->view('templates/panel/footer');
+					$this->load->view('templates/panel/footer');
 
 				}
 				#vistas datos alumnos
+
+				#descargar archivos (no utilizado)
+					public function descargar_archivo(){
+				        //$clave_documento = $this->uri->segment(3);
+				        echo 'string';
+				        if(!empty($clave_documento)){
+				            //cargar la libreria de descarga
+				            $this->load->helper('download');
+				            
+				            //tomar ruta de la base de datos
+				            $ruta = $this->sise_model->ruta_documento($clave_documento);
+				            var_dump(base_url().substr($ruta['ruta_doc'], 2));
+				            //descargar el archivo
+				            force_download('http://localhost/Sise/archivos/acta_nacimiento/0acta_nacimiento.pdf', NULL);
+				        }
+				    }
+				#descargar archivos
 
 				#
 					public function mostrar_tipos_documento(){
@@ -560,10 +585,21 @@ class sise extends CI_Controller {
 
 				#el que sube los archivos
 					public function subir_documentos(){
-						$data['documentos'] = $this->sise_model->devolver_tipo_archivos_activos();#devolucion de la consulta
-						#var_dump($data);
-						#die();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+
+						if ($this->input->post('alumno')) {
+							$clave_alumno=$this->input->post('alumno');
+						}else{
+							$clave_alumno=$data['sesion']["id_persona"];
+						}
+
+						$data['documentos'] = $this->sise_model->devolver_archivos_no_subidos($clave_alumno);#devolucion de la consulta
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/subir_documentos',$data);
+						$this->load->view('templates/panel/footer');
 					}
 				#el que sube los archivos
 
@@ -1856,7 +1892,12 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 
-						$clave_alumno=$data['sesion']["id_persona"];
+						if ($this->input->post('alumno')) {
+							$clave_alumno=$this->input->post('alumno');
+						}else{
+							$clave_alumno=$data['sesion']["id_persona"];
+						}
+
 						$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
 
 						$this->load->view('templates/panel/header',$data);
@@ -2212,6 +2253,7 @@ class sise extends CI_Controller {
 
 				#función subir de archivos
 					public function subir_archivos(){
+							$data['sesion'] = $this->sise_model->datos_sesion();
 							$contador=0;
 							$archivos=array();
 
@@ -2234,7 +2276,7 @@ class sise extends CI_Controller {
 				                #configuracion para los tipos de archivos y la ruta de subida del archivo
 								$config['upload_path']          = './archivos/'.$archivos[$i]['ruta'];
 				                $config['allowed_types']        = 'pdf|doc|docx';
-				                $config['file_name']        = $i.substr($archivos[$i]['ruta'],0,-1);
+				                $config['file_name']        = $data['sesion']['nombre'].$data['sesion']["id_persona"].substr($archivos[$i]['ruta'],0,-1);
 				                #configuracion para los tipos de archivos y la ruta de subida del archivo
 
 				                #en caso de no existir la ruta, la crea
@@ -2258,11 +2300,12 @@ class sise extends CI_Controller {
 				                    	'nombre_doc' => $config['file_name'] ,
 				                    	'ruta_doc' => $config['upload_path'].$data_archivo['upload_data']['file_name'] ,
 				                    	'tipo_archivo' => $archivos[$i]['tipo_archivo'] ,
-				                    	'clave_alumno' => '1'
+				                    	'clave_alumno' => $data['sesion']['id_persona']
 				                    );
 				                    #fin datos para insercion en la base de datos
 				                    #insercion a base de datos
 				                    $this->sise_model->insertar_archivo($data_insercion);
+				                    header('location:'.base_url('index.php/sise/datos_alumno').'');
 				                    #fin insercion a base de datos
 
 				                }
@@ -2291,6 +2334,20 @@ class sise extends CI_Controller {
 			      			);
 			      			$this->sise_model->actualizar_info_alumno($alumno,$datos_alumno);
 			      			header('location:'.base_url('index.php/sise/datos_alumno').'');
+			      		}else{
+			      			$datos_alumno=array(
+					      		'RFC_alumno'=>$this->input->post('rfc'),
+					      		'CURP_alumno'=>$this->input->post('curp'),
+					      		'estado_civil_alumno'=>$this->input->post('ec'),
+					      		'residencia_alumno'=>$this->input->post('residencia'),
+					      		'ciudad_alumno'=>$this->input->post('ciudad'),
+					      		'estado_alumno'=>$this->input->post('estado'),
+					      		'pais_alumno'=>$this->input->post('pais'),
+					      		'institucion_alumno'=>$this->input->post('instituto'),
+					      		'cargo_alumno'=>$this->input->post('cargo')
+			      			);
+			      			$this->sise_model->actualizar_info_alumno($alumno,$datos_alumno);
+			      			header('location:'.base_url('index.php/sise/datos_alumno/'.$alumno).'');
 			      		}
 			      	}
 			    #fin ingresar_datos_alumnos
