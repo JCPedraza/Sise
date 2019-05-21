@@ -465,7 +465,15 @@ class sise extends CI_Controller {
 					$data['sesion'] = $this->sise_model->datos_sesion();
 					$data['menu'] = $this->sise_model->datos_menu();
 					
-					$clave_alumno=$data['sesion']["id_persona"];
+					if ($this->input->post('alumno')) {
+						$clave_alumno=$this->input->post('alumno');
+						$data['edicion_administrativa']=true;
+					}elseif (!empty($this->uri->segment(3))) {
+						$clave_alumno=$this->uri->segment(3);
+					}else{
+						$clave_alumno=$data['sesion']["id_persona"];
+					}
+					
 					$data['datos_alumno']=$this->sise_model->datos_alumno($clave_alumno);
 					$data['documentos'] = $this->sise_model->devolver_archivos_subidos($clave_alumno);
 					
@@ -547,7 +555,11 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 
-						$clave_alumno = $data['sesion']["id_persona"];
+						if ($this->input->post('alumno')) {
+							$clave_alumno=$this->input->post('alumno');
+						}else{
+							$clave_alumno=$data['sesion']["id_persona"];
+						}
 
 						$data['documentos'] = $this->sise_model->devolver_archivos_no_subidos($clave_alumno);#devolucion de la consulta
 						
@@ -1766,7 +1778,12 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 
-						$clave_alumno=$data['sesion']["id_persona"];
+						if ($this->input->post('alumno')) {
+							$clave_alumno=$this->input->post('alumno');
+						}else{
+							$clave_alumno=$data['sesion']["id_persona"];
+						}
+
 						$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
 
 						$this->load->view('templates/panel/header',$data);
@@ -2203,6 +2220,20 @@ class sise extends CI_Controller {
 			      			);
 			      			$this->sise_model->actualizar_info_alumno($alumno,$datos_alumno);
 			      			header('location:'.base_url('index.php/sise/datos_alumno').'');
+			      		}else{
+			      			$datos_alumno=array(
+					      		'RFC_alumno'=>$this->input->post('rfc'),
+					      		'CURP_alumno'=>$this->input->post('curp'),
+					      		'estado_civil_alumno'=>$this->input->post('ec'),
+					      		'residencia_alumno'=>$this->input->post('residencia'),
+					      		'ciudad_alumno'=>$this->input->post('ciudad'),
+					      		'estado_alumno'=>$this->input->post('estado'),
+					      		'pais_alumno'=>$this->input->post('pais'),
+					      		'institucion_alumno'=>$this->input->post('instituto'),
+					      		'cargo_alumno'=>$this->input->post('cargo')
+			      			);
+			      			$this->sise_model->actualizar_info_alumno($alumno,$datos_alumno);
+			      			header('location:'.base_url('index.php/sise/datos_alumno/'.$alumno).'');
 			      		}
 			      	}
 			    #fin ingresar_datos_alumnos

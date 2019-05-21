@@ -6,19 +6,10 @@ $datos_completos=false;
 		}
 	}
 
- $a=true;
- $a=false;
-if ($a) {?>
-	
-<?php } ;
-
-$b=true;
-$b=false;
-
-if ($b) {?>
-	<br>	
-		
-<?php } ;?>
+	if(!isset($edicion_administrativa)){
+		$edicion_administrativa=false;
+	}
+?>
 
 <div class="container-fluid mimin-wrapper">
     <!-- start: Content -->
@@ -27,7 +18,7 @@ if ($b) {?>
             <div class="panel box-shadow-none content-header">
               <div class="panel-body">
                 <div class="col-md-12">
-                    <h3 class="animated fadeInLeft">Form Element</h3>
+                    <h3 class="animated fadeInLeft">Panel de Datos del Alumno</h3>
                     <p class="animated fadeInDown">
                       Form <span class="fa-angle-right fa"></span> Form Element
                     </p>
@@ -143,8 +134,8 @@ if ($b) {?>
 										</table>
 			                        </div>
 
-										<?php if (!$datos_completos): ?>
-											<a onclick="location.href = '<?php echo base_url('index.php/sise/');?>ingreso_datos_alumno/'" href="#">
+										<?php if (!$datos_completos||$edicion_administrativa): ?>
+											<a onclick="location.href = '<?php echo base_url('index.php/sise/');?>ingreso_datos_alumno/<?php echo 'editar' ;?>'" href="#">
 									        	<button type="" class="btn ripple-infinite btn-round btn-warning">completar</button>
 									        </a>
 										<?php endif ?>	
@@ -159,7 +150,7 @@ if ($b) {?>
 		                
 		                <div class="panel form-element-padding">
 		                    <div class="panel-heading">
-		                     	<h4>Basic Element</h4>
+		                     	<h4>Documentos</h4>
 		                    </div>
 		                    <div class="panel-body" style="padding-bottom:30px;">
 		                      	<div class="col-md-12">
@@ -177,7 +168,7 @@ if ($b) {?>
 									<br>
 
 									<a onclick="location.href = '<?php echo base_url('index.php/sise/');?>subir_documentos/'" href="#">
-	        							<button type="" class="btn ripple-infinite btn-round btn-warning">completar</button>
+	        							<button type="" class="btn ripple-infinite btn-round btn-warning">Subir</button>
 	        						</a>	
 
 		                      	</div>
