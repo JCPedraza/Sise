@@ -200,6 +200,32 @@ class sise_model extends CI_Model{
                 return $resultado->result();
             }
 
+            function devolver_archivos_subidos($clave_alumno){
+            	$this->db->select('tp.nombre_tipo_doc, d.ruta_doc');
+                $this->db->from('tipo_documento tp');
+                $this->db->join('documento as d','tp.clave_tipo_doc=d.tipo_archivo');
+                $this->db->where('tp.activo_tipo_doc','1');
+                $this->db->where('d.clave_alumno',$clave_alumno);
+
+                $resultado = $this->db->get();
+                return $resultado->result();
+            }
+
+            function devolver_archivos_no_subidos($clave_alumno){
+            	$consulta = "SELECT * FROM tipo_documento td WHERE td.activo_tipo_doc=1 AND NOT EXISTS (SELECT * FROM documento d WHERE td.clave_tipo_doc = d.tipo_archivo AND d.clave_alumno=".$clave_alumno.")";
+					$resultado=$this->db->query($consulta);
+				return $resultado->result();
+            }
+
+            function ruta_documento($clave_documento){
+            	$this->db->select('ruta_doc');
+                $this->db->from('documento');
+                $this->db->where('clave_doc',$clave_documento);
+
+                $resultado = $this->db->get();
+                return $resultado->row_array();	
+            }
+
             function devolver_tipo_archivos(){
                 $this->db->select('*');
                 $this->db->from('tipo_documento');
