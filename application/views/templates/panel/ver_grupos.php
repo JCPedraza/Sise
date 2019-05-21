@@ -3,9 +3,9 @@
                <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Privilegios</h3>
+                        <h3 class="animated fadeInLeft">Grupos</h3>
                         <p class="animated fadeInDown">
-                         Privilegios con los que se cuenta
+                         Grupos con los que se cuenta
                         </p>
                     </div>
                   </div>
@@ -14,7 +14,7 @@
               <div class="col-md-12 top-20 padding-0">
                 <div class="col-md-12">
                   <div class="panel">
-                    <div class="panel-heading"><h3>Privilegios</h3></div>
+                    <div class="panel-heading"><h3>Grupos</h3></div>
                     <div class="panel-body">
                     	  
                         <div class="row">
