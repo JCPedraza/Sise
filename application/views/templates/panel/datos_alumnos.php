@@ -2,7 +2,7 @@
 $datos_completos=false;
 	foreach ($datos_alumno as $alumno) {
 		if (!is_null($alumno)||!empty($alumno)) {
-			$datos_completos=true;
+			$datos_completos=false;
 		}
 	}
 
@@ -135,7 +135,7 @@ $datos_completos=false;
 			                        </div>
 
 										<?php if (!$datos_completos||$edicion_administrativa): ?>
-											<a onclick="location.href = '<?php echo base_url('index.php/sise/');?>ingreso_datos_alumno/<?php echo 'editar' ;?>'" href="#">
+											<a onclick="location.href = '<?php echo base_url('index.php/sise/');?>ingreso_datos_alumno/<?php if($edicion_administrativa){ echo 'editar' ;}?>'" href="#">
 									        	<button type="" class="btn ripple-infinite btn-round btn-warning">completar</button>
 									        </a>
 										<?php endif ?>	
