@@ -479,6 +479,18 @@ class sise_model extends CI_Model{
 					return $regresa_datos_alumno->row_array();
 				}
 
+				function devuelve_alumno_privilegio(){
+					$this->db->select('u.*, a.*,p.*');
+					$this->db->from('usuario u');
+					$this->db->join('alumno as a',' a.clave_alumno = u.id_persona','left');
+					$this->db->join('privilegio as p',' p.id_privilegio=u.id_privilegio','left');
+					$this->db->where('u.id_privilegio=3');
+					$this->db->where('u.id_privilegio!=1');
+					$this->db->where('u.id_privilegio!=2');
+					$this->db->where('u.id_privilegio!=6');
+					$query = $this->db->get();
+					return $query->result();
+			}
 				function alumnos_sin_grupo($oferta_academica_origen,$generacion_perteneciente){
 					$consulta = "SELECT alu.clave_alumno, alu.nombre_alumno, alu.ap_pa_alumno, alu.ap_ma_alumno from usuario u inner join alumno as alu on alu.clave_alumno = u.id_persona where u.id_privilegio = 3 and alu.oferta_academica = ".$oferta_academica_origen." and alu.generacion = ".$generacion_perteneciente." and not EXISTS (SELECT * from conformacion_alumno_grupo cag where  alu.clave_alumno=cag.alumno)";
 					$resultado=$this->db->query($consulta);
@@ -505,7 +517,6 @@ class sise_model extends CI_Model{
 					$regresa_materias = $this->db->get();
 					return $regresa_materias->row();
 				}
-
 			#Fin Consultas
 
 			#Inserciones
@@ -1296,4 +1307,43 @@ class sise_model extends CI_Model{
 		#Fin delete
 	//-------------------fin evaluacion-------------------------
 
+		//-----------------------generacion-------------------------
+		
+		#Consultas
+			function devuelve_generacion(){
+				$this->db->select('*');
+                $this->db->from('generacion');
+                $devuelve_generacion = $this->db->get();
+                return $devuelve_generacion->result();
+			}
+			function datos_generacion($data){
+				$this->db->select('*');
+				$this->db->from('generacion');
+				$this->db->where('id_generacion',$data);
+
+				$regresa_datos_generacion = $this->db->get();
+				return $regresa_datos_generacion->row_array();
+			}
+		#Fin consultas
+		
+		#Inserciones
+			function inserta_generacion($data){
+				$this->db->insert('generacion',$data);
+			}
+		#Fin inserciones
+		
+		#Update
+			function actualiza_datos_generacion($clave_mod,$data){
+				$this->db->where('id_generacion', $clave_mod);
+				$this->db->update('generacion',$data);
+			}
+		#Fin update
+
+		#Delete
+			function eliminar_generacion($a){
+				$this->db->where('id_generacion',$a);
+				$this->db->delete('generacion');
+			}
+		#Fin delete
+	//-------------------fin generacion-------------------------
 }

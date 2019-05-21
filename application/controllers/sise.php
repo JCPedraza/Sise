@@ -94,6 +94,23 @@ class sise extends CI_Controller {
 					}
 				#fin muestra los aspirantes registrados
 
+				#muestra los alumnos registrados
+					public function alumnos(){
+						$this->sise_model->valida_sesion();
+						$this->load->library('form_validation');
+						$this->load->helper(array('form', 'url'));
+						$this->sise_model->Estar_aqui();
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$alumno=$this->sise_model->devuelve_alumno_privilegio();
+						$data['alumno']=$alumno;
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/alumno',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#fin muestra los aspirantes registrados
+
 				#formulario para la edición de los datos de aspirantes
 						public function edita_aspirante(){
 								$this->sise_model->valida_sesion();
@@ -455,6 +472,22 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 						}
 				#Fin de subir calificaciones 
+				#Ver las generaciones
+						public function generacion(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['generacion']= $this->sise_model->devuelve_generacion();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/generacion',$data);
+							$this->load->view('templates/panel/footer');
+						}
+				#Fin de generacunes
 
 			//joan alonso
 
@@ -1235,6 +1268,77 @@ class sise extends CI_Controller {
 						}
 					#fin edita modalidad
 					
+					#Nueva generación
+						public function nueva_generacion(){
+							$this->load->library('form_validation');
+							$this->load->helper('form','url');
+							$this->sise_model->valida_sesion();
+
+
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+							$this->form_validation->set_rules('nom_gen','Nombre de la Generación', 'required');
+
+							if($this->form_validation->run()==FALSE){
+								$this->load->view('templates/panel/header',$data);
+								$this->load->view('templates/panel/menu',$data);
+								$this->load->view('templates/panel/generacion',$data);
+								$this->load->view('templates/panel/footer',$data);
+							}else{
+								$data_nueva_generacion = array(
+									'nombre_generacion' => $this->input->post('nom_gen'),
+									);
+							$this->sise_model->inserta_generacion($data_nueva_generacion);
+							header('Location:'.base_url('index.php/sise/generacion/'));
+							}
+						}
+					#Fin generación
+
+					#edita generacion
+						public function edita_generacion(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							if(!empty($this->uri->segment(3))){
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$data['menu'] = $this->sise_model->datos_menu();
+
+							$data['clave'] = $this->uri->segment(3);
+							$data['emod'] = $this->sise_model->datos_generacion($data['clave']);
+							$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Alerta </strong>','</div>');
+
+							$this->form_validation->set_rules('nom_gen','Nombre de la modalidad','required');
+
+
+							if ($this->form_validation->run() == FALSE){
+
+							$data['clave_modalidad'] = $this->uri->segment(3);
+							$data['emod'] = $this->sise_model->datos_generacion($data['clave']);
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/formulario_editar_generacion',$data);
+							$this->load->view('templates/panel/footer',$data);
+							
+							}else{
+								$data_edita_generacion=array(
+									'nombre_generacion'=>$this->input->post('nom_gen'),
+								);
+									$this->sise_model->actualiza_datos_generacion($this->input->post('clave_generacion'),$data_edita_generacion);
+									header('Location:'.base_url('index.php/sise/generacion').'');
+								}
+							}else{
+								header('Location:'.base_url('index.php/sise/generacion').'');}
+						}
+					#fin edita generacion
+
 					#Formulario de nueva oferta academica
 						public function registro_nueva_oferta_academica(){
 							$this->load->library('form_validation');
@@ -1542,6 +1646,16 @@ class sise extends CI_Controller {
 							header('Location:'.base_url('index.php/sise/agregar_pregunta/').$a.'');
 						}
 					#fin de eliminar pregunta
+
+					#Eliminar generacion
+						public function eliminar_generacion(){
+							$a=$this->input->post('id');
+							#var_dump($a);
+							#die();
+							$this->sise_model->eliminar_generacion($a);
+							header('Location:'.base_url('index.php/sise/generacion/'));
+						}
+					#fin de eliminar generacion
 
 					#Actulizar opciones de la pregunta
 						public function actualizar_opciones(){

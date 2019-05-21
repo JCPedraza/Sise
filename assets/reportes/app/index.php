@@ -1,10 +1,9 @@
 <?php  
 require_once('../vendor/autoload.php');
 
-require_once('plantillas/reporte/lolo.php');
+require_once('formato_evaluación/lolo.php');
 //Codigo css de la plantilla
-$css=file_get_contents('plantillas/reporte/style.css');
-require_once('productos.php');
+$css=file_get_contents('formato_evaluación/main.css');
 //Base de datos
 
 $mpdf=new \Mpdf\Mpdf([
@@ -13,12 +12,10 @@ $mpdf=new \Mpdf\Mpdf([
 ]);
 $mpdf->setFooter('{PAGENO}');
 
-$plant
-illa2=getPlantilla($productos);
 
 $mpdf->writeHTML($css,\Mpdf\HTMLParserMode::HEADER_CSS);
 
-$mpdf->writeHTML($plantilla2,\Mpdf\HTMLParserMode::HTML_BODY);
+$mpdf->writeHTML(Mpdf\HTMLParserMode::HTML_BODY);
 
 $mpdf->AddPage('L');
 $mpdf->writeHTML("<p>Pagina Orizontal</p>",\Mpdf\HTMLParserMode::HTML_BODY);
