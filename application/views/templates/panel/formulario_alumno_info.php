@@ -38,9 +38,9 @@ if ($alumno["genero_alumno"]=='M') {
                 <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Form Element</h3>
+                        <h3 class="animated fadeInLeft">Completar Información</h3>
                         <p class="animated fadeInDown">
-                          Form <span class="fa-angle-right fa"></span> Form Element
+                          Información <span class="fa-angle-right fa"></span> Faltante
                         </p>
                     </div>
                   </div>
@@ -50,7 +50,7 @@ if ($alumno["genero_alumno"]=='M') {
                     <div class="col-md-10">
                       <div class="panel form-element-padding">
                         <div class="panel-heading">
-                         <h4>Basic Element</h4>
+                         <h4>Información</h4>
                         </div>
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
@@ -198,7 +198,17 @@ if ($alumno["genero_alumno"]=='M') {
                                 <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0">
                                         <button type="submit" class="btn ripple-infinite btn-round btn-warning">Enviar</button>
+                                        <a href="<?php echo base_url();?>index.php/sise/datos_alumno/">
+                                          <button type="button" class="btn btn-raised btn-info">
+                                           <div>
+                                            <span>Regresar</span>
+                                           </div>
+                                          </button>
+                                      </a>
                                     </div>
+                                    <div class="col-sm-5">
+                                          
+                                      </div>
                                 </div>
                               </div>
                               </div>
