@@ -53,6 +53,16 @@
                               </select>
 
                             </div>
+                            <div class="form-group"><label class="col-sm control-label text-right">Docente que impartira la Asignatura</label>
+                              
+                              <select name="doc_asi">
+                                <option value="">seleccione un campo</option>
+                                <?php foreach ($dc_asi as $da): ?>
+                                  <option value="<?php echo $da->id_personal;?>"<?php if($da->id_personal == $doc_asi['clave_asignatura']) echo 'selected="selected"'; ?>><?php echo $da->nombres_personal; ?></option>
+                                <?php endforeach ?>
+                              </select>
+
+                            </div>
 
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">

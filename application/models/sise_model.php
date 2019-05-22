@@ -977,6 +977,14 @@ class sise_model extends CI_Model{
 					return $devolver_periodo->row_array();
 				}
 
+				function datos_docente_asignatura($data){
+					$this->db->select('*');
+					$this->db->from('asignatura_personal');
+					$this->db->where('clave_asignatura',$data);
+					$devolver_docente_asignatura = $this->db->get();
+					return $devolver_docente_asignatura->row_array();
+				}
+
 				function asignatura_programa($id_programa){
 					$this->db->select('asi.*');
 					$this->db->from('programa_conformacion pc');
@@ -996,11 +1004,25 @@ class sise_model extends CI_Model{
 					$devolver_asignatura_no_asignadas = $this->db->get();
 					return $devolver_asignatura_no_asignadas->result();
 				}
+				function devolver_docente_asignatura(){
+					$this->db->select('pe.*');
+					$this->db->from('usuario u');
+					$this->db->join('privilegio as p','p.id_privilegio = u.id_privilegio','left');
+					$this->db->join('personal as pe','pe.id_personal = u.id_persona');
+					$this->db->where('u.id_privilegio',2);
+					$this->db->where('u.activo','1');
+					$devolver_docente_asignatura = $this->db->get();
+					return $devolver_docente_asignatura->result();
+				}
 			#Fin Consultas
 
 			#Inserciones
 				function insertar_asignatura($data){
 					$this->db->insert('asignatura',$data);
+					return $this->db->insert_id();
+				}
+				function insertar_Docente_asignatura($data){
+					$this->db->insert('asignatura_personal',$data);
 				}
 			#Fin Inserciones
 			
@@ -1008,6 +1030,10 @@ class sise_model extends CI_Model{
 				function actualiza_datos_asignatura($id,$data){
 					$this->db->where('clave_asi',$id);
 					$this->db->update('asignatura',$data);
+				}
+				function actualiza_datos_docente_asignatura($id,$data){
+					$this->db->where('clave_asignatura',$id);
+					$this->db->update('asignatura_personal',$data);
 				}
 			#Fin Update
 			
