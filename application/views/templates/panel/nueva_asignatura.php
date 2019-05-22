@@ -61,6 +61,13 @@
                                       <span>Guardar</span>
                                     </div>
                                   </button>
+                                  <a href="<?php echo base_url();?>index.php/sise/asignaturas/">
+                                          <button type="button" class="btn ripple-infinite btn-round btn-info">
+                                           <div>
+                                            <span>Regresar</span>
+                                           </div>
+                                          </button>
+                                      </a> 
                               </div>
                         </div>
 
