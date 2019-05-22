@@ -1185,7 +1185,7 @@ class sise extends CI_Controller {
 								$this->sise_model->inserta_privilegio_seccion($data);
 								header('Location:'.base_url('index.php/sise/agrega_seccion/'.$this->input->post('id_privilegio').'').'');
 							}
-						}else{
+							}else{
 							header('Location:'.base_url('index.php/sise/privilegios_secciones').'');
 						}
 					 }

@@ -4,7 +4,7 @@
                   <div class="panel-body">
                     <div class="col-md-12">
                         <h3 class="animated fadeInLeft">Formulario</h3>
-                        <p class="animated fadeInDown"> Edicion de Aspirantes
+                        <p class="animated fadeInDown"> Alta de Personal
                         </p>
                     </div>
                   </div>
@@ -14,7 +14,7 @@
                     <div class="col-md-8">
                       <div class="panel form-element-padding">
                         <div class="panel-heading">
-                         <h4>Datos del Aspirante</h4>
+                         <h4>Datos del Personal</h4>
                         </div>
                         <?php
                              $atributos = array('class'=>'form-horizontal');
@@ -23,19 +23,19 @@
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
                             <div class="form-group"><label class="col-sm-2 control-label text-right" >Nombre</label>
-                              <div class="col-sm-10"><input type="text" class="form-control android" name="nombre" value="<?php echo set_value('nombre');?>"></div>
+                              <div class="col-sm-10"><input type="text" class="form-control android" required="" name="nombre" value="<?php echo set_value('nombre');?>"></div>
                               <?php echo form_error('nombre'); ?>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Paterno</label>
-                              <div class="col-sm-10"><input type="text" name="a_p" class="form-control android" value="<?php echo set_value('a_p');?>"></div>
+                              <div class="col-sm-10"><input type="text" name="a_p" required="" class="form-control android" value="<?php echo set_value('a_p');?>"></div>
                               <?php echo form_error('a_p'); ?>
                             </div>
                            <div class="form-group"><label class="col-sm-2 control-label text-right">Apellido Materno</label>
-                              <div class="col-sm-10"><input type="text" name="a_m" class="form-control android" value="<?php echo set_value('a_m');?>"></div>
+                              <div class="col-sm-10"><input type="text" name="a_m" required="" class="form-control android" value="<?php echo set_value('a_m');?>"></div>
                               <?php echo form_error('a_m'); ?>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label text-right">RFC</label>
-                              <div class="col-sm-10"><input type="text" name="rfc" class="form-control android" value="<?php echo set_value('rfc');?>"></div>
+                              <div class="col-sm-10"><input type="text" required="" maxlength="13" minlength="13" name="rfc" class="form-control android" value="<?php echo set_value('rfc');?>"></div>
                               <?php echo form_error('rfc'); ?>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label text-right">Fecha de ingreso</label>
@@ -43,19 +43,19 @@
                             <span class="bar"></span></div>
                             </div>
                              <div class="form-group"><label class="col-sm-2 control-label text-right">Genero</label>
-                              <div class="col-sm-10"><select name="g" id="" class="form-text mask-placeholder">
+                              <div class="col-sm-10"><select name="g" id="" required="" class="form-text mask-placeholder">
                                     <option value="" selected="selected">Seleccionar</option>
                                     <option value="M">Masculino</option>
                                     <option value="F">Femenino</option>
                             </select></div>
                           </div>
                           <div class="form-group"><label class="col-sm-2 control-label text-right">Especialidad</label>
-                              <div class="col-sm-10"><input type="text" name="especialidad" class="form-control android" value=""></div>
+                              <div class="col-sm-10"><input type="text" required="" name="especialidad" class="form-control android" value=""></div>
                           </div>
                           <div class="form-group" style="margin-top:40px !important;">
                              <label class="col-sm-2 control-label text-right">Seleccionar cargo para la persona</label>
                              <div class="col-sm-10">
-                              <select name="privilegio" id="" class="form-control form-control android">
+                              <select name="privilegio" id="" required="" class="form-control form-control android">
                                     <option value="" selected="selected">Seleccionar</option>
                                     <?php foreach ($cargo as $c) {?>                                   
                                     <option value="<?php echo $c->id_privilegio; ?>"><?php echo $c->nombre_privilegio; ?></option>
