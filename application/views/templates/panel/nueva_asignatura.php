@@ -53,7 +53,17 @@
                               </select>
 
                             </div>
+                            
+                            <div class="form-group"><label class="col-sm control-label text-right">Dcente que la impartira</label>
+                              
+                              <select name="doc_asi">
+                                <option value="">seleccione un campo</option>
+                                <?php foreach ($dc_asi as $doc_asi): ?>
+                                  <option value="<?php echo $doc_asi->id_personal; ?>"><?php echo $doc_asi->nombres_personal; ?></option>
+                                <?php endforeach ?>
+                              </select>
 
+                            </div>
                           </div>
                           <div class="col-md-6" style="margin-top:5px;">
                                    <button type="submit" name="formulario" class="btn ripple-infinite btn-round btn-warning">

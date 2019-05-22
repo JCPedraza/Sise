@@ -849,8 +849,13 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin ver Asignaturas
+					public function calif(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+					}
+				#Calificaciones
 
-				
+				#fin Calificaciones
 				#Mostrar conformacion de progarama
 					public function conformacion_programamas(){
 						$data['sesion'] = $this->sise_model->datos_sesion();
@@ -1985,6 +1990,7 @@ class sise extends CI_Controller {
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
+						$data['dc_asi'] = $this->sise_model->devolver_docente_asignatura();
 
 						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -2010,9 +2016,14 @@ class sise extends CI_Controller {
 									'descripcion_asi' => $this->input->post('des_asi'),
 									'tipo_asignatura' => $this->input->post('tipo_asi')
 								);
-
 								
-								$this->sise_model->insertar_asignatura($data_nueva_asignatura);
+								
+								$clave_asignatura=$this->sise_model->insertar_asignatura($data_nueva_asignatura);
+								$data_docente_asignatura = array(
+									'clave_asignatura' => $clave_asignatura,
+									'clave_personal' => $this->input->post('doc_asi')
+								);
+								$this->sise_model->insertar_Docente_asignatura($data_docente_asignatura);
 								header('Location:'.base_url('index.php/sise/asignaturas').'');
 							}
 					}
@@ -2028,6 +2039,8 @@ class sise extends CI_Controller {
 						$data['menu'] = $this->sise_model->datos_menu();
 						$data['tp_asi'] = $this->sise_model->devolver_tipo_asignatura();
 						$data['asignatura'] = $this->sise_model->datos_asignatura($id_asignatura);
+						$data['doc_asi'] = $this->sise_model->datos_docente_asignatura($id_asignatura);
+						$data['dc_asi'] = $this->sise_model->devolver_docente_asignatura();
 
 						$this->form_validation->set_error_delimiters('<div class="alert alert-danger">
 								  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -2056,6 +2069,10 @@ class sise extends CI_Controller {
 								);
 
 								$this->sise_model->actualiza_datos_asignatura($id_asignatura,$data_edita_asignatura);
+								$data_edita_docente_asignatura = array(
+									'clave_personal' => $this->input->post('doc_asi')
+								);
+								$this->sise_model->actualiza_datos_docente_asignatura($id_asignatura,$data_edita_docente_asignatura);
 								header('Location:'.base_url('index.php/sise/asignaturas').'');
 							}
 					}
