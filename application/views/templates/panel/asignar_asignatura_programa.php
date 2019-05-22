@@ -66,6 +66,7 @@
                                 <div class="form-group">
                                   <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0">
+                                      <div class="form-group"><label class="col-sm-2 control-label text-right" >Periodo </label>
                                       <select name="periodo" id="">
                                         <?php foreach ($periodo as $per): ?>
                                           <option value="<?php echo $per->id_periodo; ?>"><?php echo $per->nombre_periodo; ?></option>
@@ -80,6 +81,17 @@
                                 <div class="form-group">
                                   <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0"> 
+                                      <div class="row">
+                                        <div class="col-sm-4" style="text-align: center">
+                                          <h5 style="font-weight: bold">Asignaturas Disponibles</h5>
+                                        </div>
+                                        
+                                        <div class="col-sm-4"></div>
+
+                                        <div class="col-sm-4">
+                                          <h5 style="font-weight: bold">Asignaturas Seleccionadas</h5>
+                                        </div>
+                                      </div>
                                       <select id="optgroup" name="asignaturas_agregar[]" class="ms" multiple="multiple">
                                           <?php foreach ($asignaturas as $asignatura): ?>
                                             <option value="<?php echo $asignatura->clave_asi; ?>"><?php echo $asignatura->nombre_asi; ?></option>

@@ -16,15 +16,15 @@
       #}
     #}
   #}
-$array_3=array();
-  for ($i=0; $i <count($array) ; $i++) { 
-    $array_3=array(1,$array[$i]['materia']);
-  }
+#$array_3=array();
+#  for ($i=0; $i <count($array) ; $i++) { 
+#    $array_3=array(1,$array[$i]['materia']);
+# }
 
 
-var_dump($array_3);
+#var_dump($array_3);
 
-die();
+#die();
   foreach ($grupo_info as $grupo_info) {
    ?>
   <!-- start: Content -->
