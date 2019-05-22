@@ -6,24 +6,32 @@
 	                <div class="panel box-shadow-none content-header">
 	                  <div class="panel-body">
 	                    <div class="col-md-12">
-	                        <h3 class="animated fadeInLeft">Form Element</h3>
+	                        <h3 class="animated fadeInLeft">Documentos</h3>
 	                        <p class="animated fadeInDown">
-	                          Form <span class="fa-angle-right fa"></span> Form Element
+	                          Subir <span class="fa-angle-right fa"></span> Documentos
 	                        </p>
 	                    </div>
 	                  </div>
 	                </div>
 	                <div class="form-element">
 	                  <div class="col-md-12 padding-0">
-	                    <div class="col-md-10">
+	                    <div class="col-md-12">
 	                      <div class="panel form-element-padding">
 	                        <div class="panel-heading">
-	                         <h4>Basic Element</h4>
+
+	                         <h4>Documentos</h4> 
+	                        	<a href="<?php echo base_url();?>index.php/sise/datos_alumno/">
+					                                <button type="button" class="btn ripple-infinite btn-raised btn-info">
+					                                 <div>
+					                                  <span>Regresar</span>
+					                                 </div>
+					                                </button>
+					                            </a>  
 	                        </div>
 	                         <div class="panel-body" style="padding-bottom:30px;">
 	                          <div class="col-md-12">
 
-		                            <h1>Documentos</h1>
+		                            <h1>Faltantes</h1>
 
 		                            <?php 
 										if(count($documentos)==0){

@@ -5,7 +5,7 @@ function getPlantilla($productos){
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="logo.png">
+        <img src="../img/logo.png">
       </div>
       <h1>INVOICE 3-2-1</h1>
       <div id="company" class="clearfix">

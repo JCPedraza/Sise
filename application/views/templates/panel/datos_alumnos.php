@@ -2,7 +2,7 @@
 $datos_completos=false;
 	foreach ($datos_alumno as $alumno) {
 		if (!is_null($alumno)||!empty($alumno)) {
-			$datos_completos=true;
+			$datos_completos=false;
 		}
 	}
 
