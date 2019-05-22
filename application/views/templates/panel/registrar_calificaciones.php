@@ -7,9 +7,9 @@
                 <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Asignar Horario al Grupo</h3>
+                        <h3 class="animated fadeInLeft">Registrar Calificacion</h3>
                         <p class="animated fadeInDown">
-                          Grupo <span class="fa-angle-right fa"></span> Asignara Horario
+                          Grupo <span class="fa-angle-right fa"></span> Calificaciones de alumnos
                         </p>
                     </div>
                   </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-10">
                       <div class="panel form-element-padding">
                         <div class="panel-heading">
-                         <h4>Seleccione las materias para registrar horas</h4>
+                         <h4>Seleccione los alumnos que se asignaran al grupo</h4>
                         </div>
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">

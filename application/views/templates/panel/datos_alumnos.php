@@ -9,6 +9,7 @@ $datos_completos=false;
 	if(!isset($edicion_administrativa)){
 		$edicion_administrativa=false;
 	}
+
 ?>
 
 <div class="container-fluid mimin-wrapper">
@@ -160,7 +161,7 @@ $datos_completos=false;
 											<?php foreach ($documentos as $d): ?>
 												<tr>
 													<td><?php echo $d->nombre_tipo_doc; ?>: </td>
-													<td>Completado/<a href="#" id="archivo" data-target="<?php echo base_url().substr($d->ruta_doc, 2); ?>">descargar</a></td>
+													<td>Completado<!--/<a href="#" id="archivo" data-target="<?php echo base_url().substr($d->ruta_doc, 2); ?>">descargar</a>--></td>
 												</tr>	
 											<?php endforeach ?>
 										</table>
