@@ -798,6 +798,25 @@ class sise extends CI_Controller {
 					}
 				#fin conformacion del horario
 
+				#registro de calificaciones
+					public function Registro_calificacion(){
+						
+						
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$data['alumno'] = $this->input->post('alumno');
+						
+						
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/registrar_calificaciones',$data);
+						$this->load->view('templates/panel/footer');	
+					}
+				#fin registro de calificaciones
+
 				#agregar horario
 					public function registrar_horario(){
 						
@@ -1526,7 +1545,7 @@ class sise extends CI_Controller {
 											'activo'=>1
 										);
 										$usuario=$this->sise_model->inserta_usuario($data_usuario_personal);
-										header('Location:'.base_url('index.php/sise/panel').'');
+										header('Location:'.base_url('index.php/sise/personal_registrado').'');
 
 									}
 							}
