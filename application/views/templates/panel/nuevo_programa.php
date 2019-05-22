@@ -51,6 +51,13 @@
                                       <span>Guardar Cambios</span>
                                     </div>
                                   </button>
+                                  <a href="<?php echo base_url();?>index.php/sise/oferta_academica/">
+                                          <button type="button" class="btn ripple-infinite btn-round btn-info">
+                                           <div>
+                                            <span>Regresar</span>
+                                           </div>
+                                          </button>
+                                      </a>
                               </div>
                         </div>
                       </form>
