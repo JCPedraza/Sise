@@ -41,6 +41,7 @@
                                   <th>Oferta Académica</th>
                                   <th>Descripción</th>
                                   <th>Ver Grupos Pertenecientes</th>
+                                  <th>Descripcion</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -51,6 +52,17 @@
                                       <td>
                                         <div class="col-md-6" style="margin-top:5px;">
                                            <a href="<?php echo base_url();?>index.php/sise/grupos/<?php echo str_replace(" ", "_", $oferta->nombre_of_aca) ; ?>">
+                                             <button class="btn ripple-infinite btn-round btn-warning">
+                                              <div>
+                                                <span>Ver</span>
+                                              </div>
+                                            </button>
+                                            </a>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="col-md-6" style="margin-top:5px;">
+                                           <a href="<?php echo base_url();?>index.php/sise/calif/<?php echo $oferta->clave_of_aca;?>">
                                              <button class="btn ripple-infinite btn-round btn-warning">
                                               <div>
                                                 <span>Ver</span>
@@ -73,6 +85,7 @@
                                   <th>Encargado</th>
                                   <th>Conformación</th>
                                   <th>Eliminar</th>
+
                                 </tr>
                               </thead>
                               <tbody>
