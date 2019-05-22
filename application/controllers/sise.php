@@ -472,6 +472,7 @@ class sise extends CI_Controller {
 							$this->load->view('templates/panel/footer');
 						}
 				#Fin de subir calificaciones 
+						
 				#Ver las generaciones
 						public function generacion(){
 							$this->sise_model->valida_sesion();
