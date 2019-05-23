@@ -75,16 +75,18 @@
                                 </div> 
                               </div>
                                 <br>
-                              <form method="post" action="<?php echo base_url('index.php/sise'); ?>/conformacion_grupo">
-                                <button class="btn ripple-infinite btn-round btn-success">
-                                  <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
-                                  <input type="hidden" value="<?php echo $grupo_info->id_generacion;?>" name="generacion">
-                                  <input type="hidden" value="<?php echo $grupo_info->oferta_academica;?>" name="oferta_academica">
-                                  <div>
-                                    <span>Agregar Alumnos</span>
-                                  </div>
-                                </button>
-                              </form>
+                                <?php if ($sesion['id_privilegio']==1): ?>
+                                    <form method="post" action="<?php echo base_url('index.php/sise'); ?>/conformacion_grupo">
+                                      <button class="btn ripple-infinite btn-round btn-success">
+                                        <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
+                                        <input type="hidden" value="<?php echo $grupo_info->id_generacion;?>" name="generacion">
+                                        <input type="hidden" value="<?php echo $grupo_info->oferta_academica;?>" name="oferta_academica">
+                                        <div>
+                                          <span>Agregar Alumnos</span>
+                                        </div>
+                                      </button>
+                                  </form>
+                                <?php endif ?>
                                 <br>
                                 <br>  
                                 <br>  
@@ -95,7 +97,13 @@
                                       <th>Nombre</th>
                                       <th>Apellido Paterno</th>
                                       <th>Apellido Materno</th>
-                                      <th>Eliminar</th>
+                                      <?php if ($sesion['id_privilegio']==2): ?>
+                                        <th>Registrar Calificación</th>
+                                      <?php endif ?>
+                                        
+                                      <?php if ($sesion['id_privilegio']==1): ?>
+                                        <th>Eliminar</th>
+                                      <?php endif ?>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -104,13 +112,28 @@
                                         <td><?php echo $alumnos->nombre_alumno;?></td>
                                         <td><?php echo $alumnos->ap_pa_alumno;?></td>
                                         <td><?php echo $alumnos->ap_ma_alumno;?></td>
-                                        <td>
-                                          <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $alumnos->clave_alumno;?>" onclick="borrar(<?php echo $alumnos->clave_alumno;?>)"  value="Eliminar" data-whaterver="<?php echo $alumnos->clave_alumno;?>">
-                                            <div>
-                                              <span>Eliminar</span>
-                                            </div>
-                                          </button>
-                                        </td>
+                                        <?php if ($sesion['id_privilegio']==2): ?>
+                                          <td>
+                                            <form action="<?php echo base_url('index.php/sise/registro_calificacion'); ?>" method="post">
+                                              <input type="hidden" name="alumno" value="<?php echo $alumnos->clave_alumno;?>">
+                                              <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
+                                              <button type="submit" class="btn ripple-infinite btn-round btn-info">
+                                                <div>
+                                                  <span>Registrar</span>
+                                                </div>
+                                              </button>
+                                            </form>
+                                          </td>
+                                        <?php endif ?>
+                                        <?php if ($sesion['id_privilegio']==1): ?>
+                                          <td>
+                                            <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $alumnos->clave_alumno;?>" onclick="borrar(<?php echo $alumnos->clave_alumno;?>)"  value="Eliminar" data-whaterver="<?php echo $alumnos->clave_alumno;?>">
+                                              <div>
+                                                <span>Eliminar</span>
+                                              </div>
+                                            </button>
+                                          </td>
+                                        <?php endif ?>
                                       </tr>
                                       <?php } ?>
                                   </tbody>
@@ -206,71 +229,6 @@
                 </div>
               </div>
             </div>
-
-
-
-             <!-- <div class="col-md-12 top-20 padding-0">
-                <div class="col-md-12">
-                  <div class="panel">
-                    <div class="panel-heading"><h3>Grupo</h3></div>
-                    <div class="panel-body">
-                        <div class="row">
-                           <div class="col-md-6" style="margin-top:5px;">
-                          </div> 
-                        </div>
-                        <br>
-                        <form method="post" action="<?php echo base_url('index.php/sise'); ?>/conformacion_grupo">
-                          <button class="btn ripple-infinite btn-round btn-success">
-                            <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
-                            <input type="hidden" value="<?php echo $grupo_info->id_generacion;?>" name="generacion">
-                            <input type="hidden" value="<?php echo $grupo_info->oferta_academica;?>" name="oferta_academica">
-                            <div>
-                              <span>Agregar Alumnos</span>
-                            </div>
-                          </button>
-                        </form>
-                        <br>
-                        <br>  
-                        <br>  
-                        <div class="responsive-table">
-                        <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
-                            
-                            
-                            <thead>
-                              <tr>
-                                <th>Nombre</th>
-                                <th>Apellido Paterno</th>
-                                <th>Apellido Materno</th>
-                                <th>Eliminar</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach ($alumnos_grupo as $alumnos){?>
-                      		      <tr>
-                                  <td><?php echo $alumnos->nombre_alumno;?></td>
-                                  <td><?php echo $alumnos->ap_pa_alumno;?></td>
-                                  <td><?php echo $alumnos->ap_ma_alumno;?></td>
-                                  <td>
-                                    <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $alumnos->clave_alumno;?>" onclick="borrar(<?php echo $alumnos->clave_alumno;?>)"  value="Eliminar" data-whaterver="<?php echo $alumnos->clave_alumno;?>">
-                                      <div>
-                                        <span>Eliminar</span>
-                                      </div>
-                                    </button>
-                                  </td>
-      		                      </tr>
-                                <?php } ?>
-                            </tbody>
-                            
-
-                        </table>
-                        </div>
-                    </div>
-                  </div>
-                </div>  
-              </div>-->
-
-          <!-- end: content -->
-
 
 
           <!--modal--> 
