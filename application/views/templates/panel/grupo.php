@@ -153,37 +153,37 @@
                                     <tbody>
                                       <?php foreach ($materias_obtenidas as $materias): ?>
                                         <?php foreach ($horario as $h): ?>
-                                          <?php if ($materias->materia==$horario->materia): ?>
+                                          <?php if ($materias->materia==$h->materia): ?>
                                             <tr>
                                               <td><?php echo $materias->nombre_asi;?></td>
                                               <td>
-                                                <?php if ($horario->dia=="lunes"): ?>
-                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
-                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php if ($h->dia=="lunes"): ?>
+                                                  Entrada:<?php echo $h->hrs_entrada; ?>
+                                                  Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($horario->dia=="martes"): ?>
-                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
-                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php if ($h->dia=="martes"): ?>
+                                                  Entrada:<?php echo $h->hrs_entrada; ?>
+                                                  Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($horario->dia=="miercoles"): ?>
-                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
-                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php if ($h->dia=="miercoles"): ?>
+                                                  Entrada:<?php echo $h->hrs_entrada; ?>
+                                                  Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($horario->dia=="jueves"): ?>
-                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
-                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php if ($h->dia=="jueves"): ?>
+                                                  Entrada:<?php echo $h->hrs_entrada; ?>
+                                                  Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($horario->dia=="viernes"): ?>
-                                                  Entrada:<?php echo $horario->hrs_entrada; ?>
-                                                  Salida:<?php echo $horario->hrs_salida; ?>
+                                                <?php if ($h->dia=="viernes"): ?>
+                                                  Entrada:<?php echo $h->hrs_entrada; ?>
+                                                  Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                             </tr>
