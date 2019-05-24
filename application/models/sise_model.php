@@ -500,7 +500,7 @@ class sise_model extends CI_Model{
 				function obtencion_materias($alumno){
 					$this->db->select('mcc.materia,asi.nombre_asi');
 					$this->db->from('materias_cursadas_calificaciones mcc');
-					$this->db->join('usuario as u','u.id_usuario = mcc.usuario_alumno');
+					$this->db->join('usuario as u','u.id_usuario = mcc.alumno');
 					$this->db->join('alumno as alu','u.id_persona = alu.clave_alumno');
 					$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
 					$this->db->where('alu.clave_alumno',$alumno);

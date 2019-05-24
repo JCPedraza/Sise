@@ -151,45 +151,46 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <?php foreach ($materias_obtenidas as $materias): ?>
-                                        <?php foreach ($horario as $h): ?>
-                                          <?php if ($materias->materia==$h->materia): ?>
+                                      <?php $a=""; ?>
+                                      <?php foreach ($materias_obtenidas as $materias){ ?>
+                                        <?php foreach ($horario as $h){ ?>
+                                          <?php  if ($materias->materia!=$a){ ?>
                                             <tr>
-                                              <td><?php echo $materias->nombre_asi;?></td>
+                                              <td><?php echo $materias->nombre_asi;
+                                              $a=$h->materia;}?></td>
                                               <td>
-                                                <?php if ($h->dia=="lunes"): ?>
+                                                <?php if ($h->dia=='lunes'): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>
                                                   Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($h->dia=="martes"): ?>
+                                                <?php if ($h->dia=='martes'): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>
                                                   Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($h->dia=="miercoles"): ?>
+                                                <?php if ($h->dia=='miercoles'): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>
                                                   Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($h->dia=="jueves"): ?>
+                                                <?php if ($h->dia==="jueves"): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>
                                                   Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                               <td>
-                                                <?php if ($h->dia=="viernes"): ?>
+                                                <?php if ($h->dia==="viernes"): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>
                                                   Salida:<?php echo $h->hrs_salida; ?>
                                                 <?php endif ?>
                                               </td>
                                             </tr>
-                                          <?php endif ?>
-                                        <?php endforeach ?>
-                                      <?php endforeach ?>                                      
+                                        <?php } ?>
+                                      <?php } ?>                                      
                                       
                                     </tbody>
                                   </table>
