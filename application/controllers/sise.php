@@ -1571,9 +1571,9 @@ class sise extends CI_Controller {
 									'id_privilegio'=>$data['est']
 								);
 								$this->sise_model->cambiar_estatus($data_estatus,$idusuario);
-								if ($data['est']==3) {
+								/*if ($data['est']==3) {
 									$this->sise_model->obtener_registrar_materias($idusuario);
-								}
+								}*/
 								header('Location:'.base_url('index.php/sise/aspirantes').'');
 							}
 					#Fin del estatus 
