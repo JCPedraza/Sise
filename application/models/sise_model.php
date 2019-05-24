@@ -502,6 +502,7 @@ class sise_model extends CI_Model{
 					$this->db->from('materias_cursadas_calificaciones mcc');
 					$this->db->join('usuario as u','u.id_usuario = mcc.alumno');
 					$this->db->join('alumno as alu','u.id_persona = alu.clave_alumno');
+					$this->db->join('alumno as alu', 'alu.clave_alumno = mcc.usuario');
 					$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
 					$this->db->where('alu.clave_alumno',$alumno);
 
@@ -1111,15 +1112,15 @@ class sise_model extends CI_Model{
 						$materias_vaciar=array();
 						$mv=array();
 						$this->db->select('asi.clave_asi');
-						$this->db->from('usuario usu');
-						$this->db->join('alumno as alu','usu.id_persona=alu.clave_alumno');
+						$this->db->from('alumno alu');
 						$this->db->join('oferta_academica as of_aca','of_aca.clave_of_aca=alu.oferta_academica');
 						$this->db->join('programa as pro','pro.oferta_academica=of_aca.clave_of_aca');
 						$this->db->join('programa_conformacion as pc','pc.programa=pro.clave_programa');
 						$this->db->join('asignatura as asi','asi.clave_asi=pc.asignatura');
-						$this->db->where('usu.id_usuario',$idalumno);
+						$this->db->where('alu.clave_alumno',$idalumno);
 						$materias= $this->db->get();
 						$materias_vaciar = $materias->result();
+						
 						
 						$i=0;
 						foreach ($materias_vaciar as $materia) {
@@ -1129,8 +1130,8 @@ class sise_model extends CI_Model{
 						foreach ($mv as $m) {
 							foreach ($m as $m) {
 								$materias_asignadas = array(
-									'materia'=>$m,
-									'usuario_alumno'=>$idalumno
+									'materia'=>$m, 
+									'usuario'=>$idalumno
 								);
 								$this->db->insert('materias_cursadas_calificaciones',$materias_asignadas);
 							}
@@ -1168,6 +1169,28 @@ class sise_model extends CI_Model{
 			#Delete
 			#Fin Delete
 	//-----------------fin generacion---------------
+
+	//-----------------calificaciones---------------
+			#Consultas
+					function obtencion_materia_impartida_alumno($clave_alumno,$docente){
+						$this->db->select('*');
+						$this->db->from('materias_cursadas_calificaciones mcc');
+						$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
+						$this->db->where('mcc.usuario',$clave_alumno);
+						$this->db->where('asi.docente',$docente);
+					}
+			#Fin Consultas
+
+			#Inserciones
+			#Fin Inserciones
+			
+			#Update
+			#Fin Update
+			
+			#Delete
+			#Fin Delete
+	//-----------------fin calificaciones---------------
+
 
 
 	#plantilla

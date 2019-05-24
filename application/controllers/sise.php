@@ -649,6 +649,8 @@ class sise extends CI_Controller {
 								$alumno = $k->alumno;
 							}
 						}
+						
+						
 						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
 
 						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
@@ -790,7 +792,7 @@ class sise extends CI_Controller {
 								$alumno = $k->alumno;
 							}
 						}
-						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+						var_dump($data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno));
 						
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -800,16 +802,20 @@ class sise extends CI_Controller {
 				#fin conformacion del horario
 
 				#registro de calificaciones
-					public function Registro_calificacion(){
+					public function registro_calificacion(){
 						
 						
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						
-						$data['alumno'] = $this->input->post('alumno');
+						$docente = $data['sesion']['id_persona'];
+
+						$clave_alumno = $this->input->post('alumno');
+						$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
 						
+						$data['grupo'] = $this->input->post('grupo');
 						
-						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materia_impartida_alumno($clave_alumno,$docente);
 						
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
