@@ -7,7 +7,7 @@
                 <div class="panel box-shadow-none content-header">
                   <div class="panel-body">
                     <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Registrar Calificacion</h3>
+                        <h3 class="animated fadeInLeft">Registrar Calificación</h3>
                         <p class="animated fadeInDown">
                           Grupo <span class="fa-angle-right fa"></span> Calificaciones de alumnos
                         </p>
@@ -19,11 +19,11 @@
                     <div class="col-md-10">
                       <div class="panel form-element-padding">
                         <div class="panel-heading">
-                         <h4>Seleccione los alumnos que se asignaran al grupo</h4>
+                         <h4>Registre la calificación del alumno:<?php echo $alumno['nombre_alumno']." ".$alumno['ap_pa_alumno']." ".$alumno['ap_ma_alumno'] ?> </h4>
                         </div>
                          <div class="panel-body" style="padding-bottom:30px;">
                           <div class="col-md-12">
-                                <h1>Materias</h1>
+                                <h2>Materia:</h2>
                                 <hr>
                                 <div class="form-group">
                                   <div class="col-sm-10">
@@ -36,7 +36,7 @@
                                         </select>
                                         <br><br>
                                         <form action="#" id="numero" hidden="true">
-                                            <label class="col-sm-2 control-label text-right" id="select">Agregar dias: </label>
+                                            <label class="col-sm-2 control-label text-right" id="select">Agregar Calificación: </label>
                                             <div class="col-sm-2"><input type="number" min="1" id="numero_dias" class="form-control android"></div>
                                             <button type="submit" class="btn ripple-infinite btn-round btn-info">Agregar</button>
                                         </form>
@@ -61,18 +61,7 @@
                                         </form>
                                         <br>
                                         <br>
-                                        <br> 
-                                        <!--<div class="row">
-                                          <div class="col-sm-4" style="text-align: center">
-                                            <h5 style="font-weight: bold">Alumnos Disponibles</h5>
-                                          </div>
-                                          
-                                          <div class="col-sm-4"></div>
-
-                                          <div class="col-sm-4">
-                                            <h5 style="font-weight: bold">Alumnos Seleccionados</h5>
-                                          </div>
-                                        </div>-->
+                                        <br>
                                         
                                     </div>
                                   </div>
