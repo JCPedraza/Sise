@@ -1,13 +1,7 @@
 	<?php 
 
 
-  foreach ($materias_obtenidas as $m) {
-      $array[]=get_object_vars($m);
-  }
-
-  foreach ($horario as $a) {
-      $array_2[]=get_object_vars($a);
-  }
+ 
 
   #for ($i=0; $i < count($array) ; $i++) { 
    # foreach ($array_2 as $a) {
@@ -114,7 +108,7 @@
                                         <td><?php echo $alumnos->ap_ma_alumno;?></td>
                                         <?php if ($sesion['id_privilegio']==2): ?>
                                           <td>
-                                            <form action="<?php echo base_url('index.php/sise/registro_calificacion'); ?>" method="post">
+                                            <form action="<?php echo base_url('index.php/sise/ver_calificacion'); ?>" method="post">
                                               <input type="hidden" name="alumno" value="<?php echo $alumnos->clave_alumno;?>">
                                               <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
                                               <button type="submit" class="btn ripple-infinite btn-round btn-info">
