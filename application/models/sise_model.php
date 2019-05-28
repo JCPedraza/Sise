@@ -502,7 +502,7 @@ class sise_model extends CI_Model{
 					$this->db->from('materias_cursadas_calificaciones mcc');
 					$this->db->join('usuario as u','u.id_usuario = mcc.alumno');
 					$this->db->join('alumno as alu','u.id_persona = alu.clave_alumno');
-					$this->db->join('alumno as alu', 'alu.clave_alumno = mcc.usuario');
+					$this->db->join('alumno as alus', 'alus.clave_alumno = mcc.alumno');
 					$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
 					$this->db->where('alu.clave_alumno',$alumno);
 
@@ -1178,6 +1178,18 @@ class sise_model extends CI_Model{
 						$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
 						$this->db->where('mcc.usuario',$clave_alumno);
 						$this->db->where('asi.docente',$docente);
+					}
+					function materias_docente($dato){
+						$this->db->select('g.nombre_grupo as grupo,p.nombres_personal as Tutor, a.nombre_asi as materia, pe.nombres_personal as Maestro');
+						$this->db->from('grupo_horario as gh');
+						$this->db->join('grupo as g','g.clave_grupo=gh.grupo');
+						$this->db->join('personal as p','p.id_personal=g.docente_encargado_grupo');
+						$this->db->join('asignatura_personal as ap','ap.clave_asignatura=gh.materia');
+						$this->db->join('asignatura as a','a.clave_asi=ap.clave_asignatura');
+						$this->db->join('personal as pe','pe.id_personal=ap.clave_personal');
+						$this->db->where('p.id_personal',$dato);
+						$md = $this->db->get();
+						return $md->result();
 					}
 			#Fin Consultas
 
