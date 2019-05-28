@@ -177,10 +177,9 @@
                                       <?php $a=""; ?>
                                       <?php foreach ($materias_obtenidas as $materias){ ?>
                                         <?php foreach ($horario as $h){ ?>
-                                          <?php  if ($materias->materia!=$a){ ?>
                                             <tr>
                                               <td><?php echo $materias->nombre_asi;
-                                              $a=$h->materia;}?></td>
+                                              $a=$h->materia;?></td>
                                               <td>
                                                 <?php if ($h->dia=='lunes'): ?>
                                                   Entrada:<?php echo $h->hrs_entrada; ?>

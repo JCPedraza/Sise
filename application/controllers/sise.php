@@ -476,6 +476,26 @@ class sise extends CI_Controller {
 						}
 				#Fin de generacunes
 
+				#materias docente
+						public function materias_docente(){
+							$this->sise_model->valida_sesion();
+							$this->load->library('form_validation');
+							$this->load->helper(array('form', 'url'));
+
+							$data['sesion'] = $this->sise_model->datos_sesion();
+							$docente=$data['sesion']['id_persona'];
+							$data['menu'] = $this->sise_model->datos_menu();
+							$data['materia_docentes']=$this->sise_model->materias_docente($docente);
+							#var_dump($data['materia_docentes']);
+							#die();
+
+							$this->load->view('templates/panel/header',$data);
+							$this->load->view('templates/panel/menu',$data);
+							$this->load->view('templates/panel/materia_docente',$data);
+							$this->load->view('templates/panel/footer');
+						}
+				#fin matereias docente
+
 			//joan alonso
 
 				#vista datos alumnos

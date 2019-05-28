@@ -24,7 +24,7 @@
                                    <div>
                                     <span>Agregar Nuevo Grupo</span>
                                    </div>
-                                  </button>
+                                  </button>{}
                               </a>
                           </div> 
                         </div>
@@ -82,7 +82,12 @@
                                 <tr>
                                   <th>Grupo</th>
                                   <th>Generación</th>
+                                  <?php if ($sesion['id_privilegio']==1){ ?>
                                   <th>Encargado</th>
+                                <?php } ?>
+                                <?php if ($sesion['id_privilegio']==2){ ?>
+                                <th>Encargado</th>
+                              <?php } ?>
                                   <th>Conformación</th>
                                   <th>Eliminar</th>
 
