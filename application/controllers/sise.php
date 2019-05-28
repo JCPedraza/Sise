@@ -457,21 +457,7 @@ class sise extends CI_Controller {
 						}
 				# fin del personal registrado
 
-				#Subir Calificaciones pendiente
-						public function subir_calificaciones(){
-							$this->sise_model->valida_sesion();
-							$this->load->library('form_validation');
-							$this->load->helper(array('form', 'url'));
-
-							$data['sesion'] = $this->sise_model->datos_sesion();
-							$data['menu'] = $this->sise_model->datos_menu();
-
-							$this->load->view('templates/panel/header',$data);
-							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/ver_personal',$data);
-							$this->load->view('templates/panel/footer');
-						}
-				#Fin de subir calificaciones 
+				 
 						
 				#Ver las generaciones
 						public function generacion(){
@@ -626,6 +612,8 @@ class sise extends CI_Controller {
 
 				#Muestran lista de grupos conformados
 					public function grupos(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
 						$oferta_recivida=$this->uri->segment(3);
 
@@ -639,11 +627,8 @@ class sise extends CI_Controller {
 							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
 						}else{
 							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($oferta);
-							
 						}
 
-						$data['sesion'] = $this->sise_model->datos_sesion();
-						$data['menu'] = $this->sise_model->datos_menu();
 						
 						$this->load->view('templates/panel/header',$data);
 						$this->load->view('templates/panel/menu',$data);
@@ -821,10 +806,29 @@ class sise extends CI_Controller {
 					}
 				#fin conformacion del horario
 
-				#registro de calificaciones
+				#formulario ver calificacion
+					public function ver_calificacion(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						
+						$docente = $data['sesion']['id_persona'];
+
+						$clave_alumno = $this->input->post('alumno');
+						$data['alumno']=$this->sise_model->datos_alumno($clave_alumno);
+						
+						$data['grupo'] = $this->input->post('grupo');
+						
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materia_impartida_alumno($clave_alumno,$docente);
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_calificaciones',$data);
+						$this->load->view('templates/panel/footer');	
+					}
+				#fin formulario ver calificacion
+
+				#formulario registro de calificaciones
 					public function registro_calificacion(){
-						
-						
 						$data['sesion'] = $this->sise_model->datos_sesion();
 						$data['menu'] = $this->sise_model->datos_menu();
 						
@@ -841,6 +845,35 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/menu',$data);
 						$this->load->view('templates/panel/registrar_calificaciones',$data);
 						$this->load->view('templates/panel/footer');	
+					}
+				#fin formulario registro de calificaciones
+
+				#registro de calificaciones
+					public function registrar_calificacion(){
+						$calificacion_numero="calificacion_";
+						$parcial=$this->input->post('parcial');
+
+						if ($parcial!="4") {
+							$calificacion_numero.=$parcial;
+						}else{
+							$calificacion_numero.="final";
+						}
+
+						
+							$alumno = $this->input->post('alumno');
+							$materia = $this->input->post('materia');
+
+							$calificacion = array(
+								$calificacion_numero => $this->input->post('calificacion'),
+							);
+
+
+						$this->sise_model->registrar_calificacion($alumno,$materia,$calificacion);
+
+						echo json_encode([
+							'estatus'=>'correcto'
+						]);
+						
 					}
 				#fin registro de calificaciones
 
@@ -895,13 +928,7 @@ class sise extends CI_Controller {
 						$this->load->view('templates/panel/footer');
 					}
 				#Fin ver Asignaturas
-					public function calif(){
-						$data['sesion'] = $this->sise_model->datos_sesion();
-						$data['menu'] = $this->sise_model->datos_menu();
-					}
-				#Calificaciones
-
-				#fin Calificaciones
+					
 				#Mostrar conformacion de progarama
 					public function conformacion_programamas(){
 						$data['sesion'] = $this->sise_model->datos_sesion();

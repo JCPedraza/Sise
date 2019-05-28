@@ -466,14 +466,11 @@ class sise_model extends CI_Model{
 				}*/
 
 				function datos_alumno($data){
-					$datos_alumno = $this->datos_sesion();
-					
 
 					$this->db->select('al.*,us.usuario');
 					$this->db->from('alumno as al');
-					$this->db->join('usuario us ' ,' al.clave_alumno = us.id_persona','inner');
+					$this->db->join('usuario as us' ,' al.clave_alumno = us.id_persona','inner');
 					$this->db->where('al.clave_alumno',$data);
-					$this->db->where('us.id_privilegio',$datos_alumno['id_privilegio']);
 
 					$regresa_datos_alumno = $this->db->get();
 					return $regresa_datos_alumno->row_array();
@@ -859,6 +856,7 @@ class sise_model extends CI_Model{
 					return $devolver_horario->result();
 				}
 
+
 			#Fin Consultas
 
 			#Inserciones
@@ -1176,8 +1174,12 @@ class sise_model extends CI_Model{
 						$this->db->select('*');
 						$this->db->from('materias_cursadas_calificaciones mcc');
 						$this->db->join('asignatura as asi','asi.clave_asi = mcc.materia');
-						$this->db->where('mcc.usuario',$clave_alumno);
-						$this->db->where('asi.docente',$docente);
+						$this->db->join('asignatura_personal as ap','asi.clave_asi = ap.clave_asignatura');
+						$this->db->where('mcc.alumno',$clave_alumno);
+						$this->db->where('ap.clave_personal',$docente);
+
+						$devolver_materia_impartida = $this->db->get();
+						return $devolver_materia_impartida->result();
 					}
 					function materias_docente($dato){
 						$this->db->select('g.nombre_grupo as grupo,p.nombres_personal as Tutor, a.nombre_asi as materia, pe.nombres_personal as Maestro');
@@ -1194,9 +1196,15 @@ class sise_model extends CI_Model{
 			#Fin Consultas
 
 			#Inserciones
+
 			#Fin Inserciones
 			
 			#Update
+					function registrar_calificacion($alumno,$materia,$calificacion){
+						$this->db->where('alumno',$alumno);
+						$this->db->where('materia',$materia);
+						$this->db->update('materias_cursadas_calificaciones',$calificacion);
+					}
 			#Fin Update
 			
 			#Delete

@@ -28,39 +28,48 @@
                                 <div class="form-group">
                                   <div class="col-sm-10">
                                     <div class="col-sm-12 padding-0"> 
+                                        <label class="control-label" id="select"><h4>Seleccione la materia a registrar:</h4> </label>
                                         <select name="" id="materia">
                                           <option>seleccione una materia</option>
                                           <?php foreach ($materias_obtenidas as $materias): ?>
                                             <option value="<?php echo $materias->materia; ?>"><?php echo $materias->nombre_asi; ?></option>  
                                           <?php endforeach ?>
                                         </select>
-                                        <br><br>
-                                        <form action="#" id="numero" hidden="true">
-                                            <label class="col-sm-2 control-label text-right" id="select">Agregar Calificación: </label>
-                                            <div class="col-sm-2"><input type="number" min="1" id="numero_dias" class="form-control android"></div>
-                                            <button type="submit" class="btn ripple-infinite btn-round btn-info">Agregar</button>
-                                        </form>
-
-                                        <form method="post" id="datos_horario" action="<?php echo base_url('index.php/sise/');?>registrar_horario">
+                                        <br>
+                                        <div class="row">
+                                          <div class="col-sm-12 padding-0">
+                                            <div id="numero" hidden="true">
+                                              <label class="control-label" id="select">Agregar Calificación del parcial: </label>
+                                              <select id="numero_parcial">
+                                                <option value="">seleccione un parcial</option>
+                                                <option value="1">Primer parcial</option>
+                                                <option value="2">Segundo parcial</option>
+                                                <option value="3">Tercer parcial</option>
+                                                <option value="final">Final</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <form method="post" id="datos_calificacion" action="<?php echo base_url('index.php/sise/');?>registrar_calificacion">
                                           <br>
                                           <br>
-                                          <input type="hidden" name="grupo" value="<?php echo $grupo; ?>">
+                                          <input type="hidden" name="alumno" value="<?php echo $alumno['clave_alumno']; ?>">
                                           <input type="hidden" name="materia" value="0" id="materia_selcionada">
+                                          <input type="hidden" name="parcial" value="0" id="parcial">
                                           <br>
                                           <h4 id="nombre_materia"></h4>
                                           <div class="responsive-table">
-                                            <table id="horas">
+                                            <table id="calificacion">
                                             </table>
+                                            <div id="mensaje_a"></div>
                                           </div>
                                           <div class="row">
                                               <div class="col-sm-10"></div>
                                               <div class="col-sm-2">
-                                                <button type="submit" id="Registrar_horas" style="visibility: hidden;" class="btn ripple-infinite btn-round btn-success">Registrar</button>
+                                                <button type="submit" id="Registrar_calificacion" style="visibility: hidden;" class="btn ripple-infinite btn-round btn-success">Registrar</button>
                                               </div>
                                           </div>
                                         </form>
-                                        <br>
-                                        <br>
                                         <br>
                                         
                                     </div>
@@ -98,51 +107,78 @@
         $('#materia_selcionada').val(val);
         $('#nombre_materia').html(nombre);
         $('#numero').removeAttr("hidden");
-        $("#horas").empty();
-        $('#numero_dias').val(0);
-        $("#Registrar_horas").css('display','none');
+        $("#calificacion").empty();
+        $("#Registrar_calificacion").css('display','none');
+        
       });
       
-      $("#numero").submit(function (event){
-        event.preventDefault();
-        var val = $('#numero_dias').val();
-        html="";
-        for (var i = 0; i < val; i++) {
-          html +="<table>";
-          html +="<tr>";
-          html +="<td>";
-          html +="<label class=\"col-sm-2 control-label text-right\" id=\"select\">Dia: </label>";
-          html +="<div class=\"col-sm-4\">";
-          html +="<select name=\"dia[]\" required=\"true\" id=\"select\">";
-          html +="<option value=\"lunes\">lunes</option>";
-          html +="<option value=\"martes\">martes</option>";
-          html +="<option value=\"miercoles\">miercoles</option>";
-          html +="<option value=\"jueves\">jueves</option>";
-          html +="<option value=\"viernes\">viernes</option>";
-          html +="</select>";
-          html +="</div>";
-          html +="</td>";
-          html +="<td>";
-          html +="<label class=\"col-sm-2 control-label text-right\" id=\"select\">Hora Inicio: </label>";
-          html +="<div class=\"col-sm-10\"><input type=\"time\" required=\"true\" name=\"hrs_inicio[]\" class=\"form-control android\"></div>";
-          html +="</td>";
-          html +="<td>";
-          html +="<label class=\"col-sm-2 control-label text-right\" id=\"select\">Hora Fin: </label>";
-          html +="<div class=\"col-sm-10\"><input type=\"time\" required=\"true\" name=\"hrs_final[]\" class=\"form-control android\"></div>";
-          html +="</td>";
-          html +="</tr>";
-          html +="</table>";
-        };
-        $("#horas").html(html);
-        $("#Registrar_horas").removeAttr("style");
-      });
+      $('#numero_parcial').on('change', function(){
+        var numero_parcial = document.getElementById('numero_parcial');
+        var val = numero_parcial.options[numero_parcial.selectedIndex].value;
+        $('#parcial').val(val);
 
-      $("#datos_horario").submit(function (event){
+        html="";
+        parcial="";
+        
+          
+          switch(val){
+            
+            case '1':
+              parcial="Parcial Uno";
+            break;
+
+            case '2':
+              parcial="Parcial Dos";
+            break;
+
+            case '3':
+              parcial="Parcial Tres";
+            break;
+
+            default:
+              parcial="Final";
+          }
+            html +="<table>";
+            html +="<tr>";
+            html +="<td>";
+            html +="<label class=\" control-label text-right\" id=\"select\">"+parcial+" </label>";
+            html +="</div>";
+            html +="</td>";
+            html +="<td>";
+            html +="<label class=\"control-label text-right\" id=\"select\">Calificación: </label>";
+            html +="<input type=\"number\" step=\"any\" required=\"true\" name=\"calificacion\" class=\"form-control col-sm-10 android\">";
+            html +="</td>";
+            html +="</tr>";
+            html +="</table>";
+          $("#calificacion").html(html);
+          $("#Registrar_calificacion").removeAttr("style");
+      });
+      
+      $("#datos_calificacion").submit(function (event){
         event.preventDefault();
         $.ajax({
-          url:$("#datos_horario").attr("action"),
-          type:$("#datos_horario").attr("method"),
-          data:$("#datos_horario").serialize(),
+          url:$("#datos_calificacion").attr("action"),
+          type:$("#datos_calificacion").attr("method"),
+          data:$("#datos_calificacion").serialize(),
+          success:function(res){
+            var respuesta = jQuery.parseJSON(res);
+            if (respuesta.estatus=="correcto") {
+              html="";
+              html+="<div class=\"alert alert-success col-md-6 col-sm-6  alert-icon alert-dismissible fade in\" role=\"alert\">";
+              html+="<div class=\"col-md-2 col-sm-2 icon-wrapper text-center\">";
+              html+="<span class=\"fa fa-check fa-2x\"></span>";
+              html+="</div>";
+              html+="<div class=\"col-md-10 col-sm-10\">";
+              html+="<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>";
+              html+="<p><strong>Hecho!</strong> se ha registrado.</p>";
+              html+="</div>";
+              html+="</div>";
+              $("#calificacion").empty();
+
+              $("#mensaje_a").html(html);
+
+            };
+          }
         });
       });
       
