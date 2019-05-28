@@ -42,8 +42,8 @@
                                 <th>Asignatura</th>
                                 <th>Duración<!-- de la asignatura--></th>
                                 <th>Créditos<!-- de la asignatura--></th>
-                                <th>Créditos<!-- de la asignatura--></th>
                                 <th>Descripción<!-- de la asignatura--></th>
+                                <th>Valor<!-- de la asignatura--></th>
                                 <th>Editar</th>
                               </tr>
                             </thead>
