@@ -94,46 +94,22 @@
                                 <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
                                   <thead>
                                     <tr>
-                                      <th>Nombre</th>
-                                      <th>Apellido Paterno</th>
-                                      <th>Apellido Materno</th>
+                                      <th>Materias</th>
                                       <?php if ($sesion['id_privilegio']==2): ?>
-                                        <th>Registrar Calificación</th>
                                       <?php endif ?>
                                         
                                       <?php if ($sesion['id_privilegio']==1): ?>
-                                        <th>Eliminar</th>
                                       <?php endif ?>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <?php foreach ($alumnos_grupo as $alumnos){?>
+                                    <?php foreach ($materia_docentes as $md){?>
                                       <tr>
-                                        <td><?php echo $alumnos->nombre_alumno;?></td>
-                                        <td><?php echo $alumnos->ap_pa_alumno;?></td>
-                                        <td><?php echo $alumnos->ap_ma_alumno;?></td>
+                                        <td><?php echo $md->materia;?></td>
                                         <?php if ($sesion['id_privilegio']==2): ?>
-                                          <td>
-                                            <form action="<?php echo base_url('index.php/sise/registro_calificacion'); ?>" method="post">
-                                              <input type="hidden" name="alumno" value="<?php echo $alumnos->clave_alumno;?>">
-                                              <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
-                                              <button type="submit" class="btn ripple-infinite btn-round btn-info">
-                                                <div>
-                                                  <span>Registrar</span>
-                                                </div>
-                                              </button>
-                                            </form>
-                                          </td>
+                                          
                                         <?php endif ?>
-                                        <?php if ($sesion['id_privilegio']==1): ?>
-                                          <td>
-                                            <button class="btn ripple-infinite btn-round btn-warning borrar" data-toggle="modal" data-target="#modaleliminar" id="filaeliminar<?php echo $alumnos->clave_alumno;?>" onclick="borrar(<?php echo $alumnos->clave_alumno;?>)"  value="Eliminar" data-whaterver="<?php echo $alumnos->clave_alumno;?>">
-                                              <div>
-                                                <span>Eliminar</span>
-                                              </div>
-                                            </button>
-                                          </td>
-                                        <?php endif ?>
+                                        
                                       </tr>
                                       <?php } ?>
                                   </tbody>
@@ -143,84 +119,6 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="tabs-demo6-area2">
-                          <div class="col-md-12">
-                            <br>
-                            <h4 class="text-center">Aqui se presenta el horario designado para el grupo</h4>
-                            <br>
-                            
-                            <form method="post" action="<?php echo base_url('index.php/sise'); ?>/coformacion_horario">
-                              <button class="btn ripple-infinite btn-round btn-success">
-                                <input type="hidden" value="<?php echo $grupo_info->clave_grupo;?>" name="grupo">
-                              <div>
-                                  <span>Modificar Horario</span>
-                                </div>
-                              </button>
-                            </form>
-
-                            <br>
-                            <br>
-                            <?php #var_dump($materias_obtenidas);die(); ?>
-                                <div class="table-responsive-md">
-                                  <table class="table table-bordered">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">Materia</th>
-                                        <th scope="col">Lunes</th>
-                                        <th scope="col">Martes</th>
-                                        <th scope="col">Miercoles</th>
-                                        <th scope="col">Jueves</th>
-                                        <th scope="col">Viernes</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <?php $a=""; ?>
-                                      <?php foreach ($materias_obtenidas as $materias){ ?>
-                                        <?php foreach ($horario as $h){ ?>
-                                            <tr>
-                                              <td><?php echo $materias->nombre_asi;
-                                              $a=$h->materia;?></td>
-                                              <td>
-                                                <?php if ($h->dia=='lunes'): ?>
-                                                  Entrada:<?php echo $h->hrs_entrada; ?>
-                                                  Salida:<?php echo $h->hrs_salida; ?>
-                                                <?php endif ?>
-                                              </td>
-                                              <td>
-                                                <?php if ($h->dia=='martes'): ?>
-                                                  Entrada:<?php echo $h->hrs_entrada; ?>
-                                                  Salida:<?php echo $h->hrs_salida; ?>
-                                                <?php endif ?>
-                                              </td>
-                                              <td>
-                                                <?php if ($h->dia=='miercoles'): ?>
-                                                  Entrada:<?php echo $h->hrs_entrada; ?>
-                                                  Salida:<?php echo $h->hrs_salida; ?>
-                                                <?php endif ?>
-                                              </td>
-                                              <td>
-                                                <?php if ($h->dia==="jueves"): ?>
-                                                  Entrada:<?php echo $h->hrs_entrada; ?>
-                                                  Salida:<?php echo $h->hrs_salida; ?>
-                                                <?php endif ?>
-                                              </td>
-                                              <td>
-                                                <?php if ($h->dia==="viernes"): ?>
-                                                  Entrada:<?php echo $h->hrs_entrada; ?>
-                                                  Salida:<?php echo $h->hrs_salida; ?>
-                                                <?php endif ?>
-                                              </td>
-                                            </tr>
-                                        <?php } ?>
-                                      <?php } ?>                                      
-                                      
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
 
                         <div class="clearfix"></div>
                       </div>

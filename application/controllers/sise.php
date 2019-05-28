@@ -485,17 +485,90 @@ class sise extends CI_Controller {
 							$data['sesion'] = $this->sise_model->datos_sesion();
 							$docente=$data['sesion']['id_persona'];
 							$data['menu'] = $this->sise_model->datos_menu();
+							$oferta_recivida=$this->uri->segment(3);
+
+						$oferta = ''.urldecode(str_replace("_", " ", $oferta_recivida));
+						
+						if ($oferta==null) {
+							$oferta="";
+						}	
+
+						if ($oferta=="") {
+							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
+						}else{
+							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($oferta);
+						}
 							$data['materia_docentes']=$this->sise_model->materias_docente($docente);
 							#var_dump($data['materia_docentes']);
 							#die();
 
 							$this->load->view('templates/panel/header',$data);
 							$this->load->view('templates/panel/menu',$data);
-							$this->load->view('templates/panel/materia_docente',$data);
+							$this->load->view('templates/panel/m_d',$data);
 							$this->load->view('templates/panel/footer');
 						}
 				#fin matereias docente
+				#Muestran lista de grupos conformados
+					public function asigna(){
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
 
+						$oferta_recivida=$this->uri->segment(3);
+
+						$oferta = ''.urldecode(str_replace("_", " ", $oferta_recivida));
+						
+						if ($oferta==null) {
+							$oferta="";
+						}	
+
+						if ($oferta=="") {
+							$data['oferta_academica']=$this->sise_model->devuelve_oferta_academica();
+						}else{
+							$data['grupos'] = $this->sise_model->devolver_grupos_existenetes($oferta);
+						}
+
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/ver_grupos2',$data);
+						$this->load->view('templates/panel/footer');
+
+					}
+				#Fin muestran lista de grupos conformados
+				#Muestra la conformacion de materias
+					public function ver_asignatura(){
+						
+						$clave_grupo = "";
+						if (!is_null($this->input->post('grupo'))) {
+							$clave_grupo = $this->input->post('grupo');
+						}else{
+							$clave_grupo = $this->uri->segment(3);
+						}
+						$alumno="";
+						$alumnos_grupo = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
+						foreach ($alumnos_grupo as $k) {
+							if ($alumno=="") {
+								$alumno = $k->alumno;
+							}
+						}
+						
+						
+						$data['materias_obtenidas'] = $this->sise_model->obtencion_materias($alumno);
+
+						$data['alumnos_grupo'] = $this->sise_model->devolver_grupos_informacion_alumnos($clave_grupo);
+						$data['grupo_info'] = $this->sise_model->devolver_grupos_informacion($clave_grupo);
+						$data['horario'] = $this->sise_model->obtener_horario($clave_grupo);
+						$data['sesion'] = $this->sise_model->datos_sesion();
+						$data['menu'] = $this->sise_model->datos_menu();
+						$docente=$data['sesion']['id_persona'];
+						$data['materia_docentes']=$this->sise_model->materias_docente($docente);
+						
+						$this->load->view('templates/panel/header',$data);
+						$this->load->view('templates/panel/menu',$data);
+						$this->load->view('templates/panel/asignatura',$data);
+						$this->load->view('templates/panel/footer');
+					}
+				#Muestra la conformacion del grupo
 			//joan alonso
 
 				#vista datos alumnos
